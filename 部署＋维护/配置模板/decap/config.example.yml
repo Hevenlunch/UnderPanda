@@ -1,0 +1,27 @@
+# 这是模板，不是可以直接上线使用的完整 CMS 配置。
+# 必须先完成上线前改造、确认所有 site.json 字段都已映射，再复制到 public/admin/config.yml。
+backend:
+  name: github
+  repo: Hevenlunch/UnderPanda
+  branch: main
+  base_url: https://YOUR_OAUTH_WORKER.workers.dev
+  auth_endpoint: auth
+
+publish_mode: editorial_workflow
+
+media_folder: public/images/uploads
+public_folder: /images/uploads
+
+collections:
+  - name: site
+    label: 网站内容
+    files:
+      - name: site-content
+        label: 全站内容
+        file: src/content/site.json
+        # 这里的字段必须在完成 schema 对齐后补全。
+        # 不能只映射部分字段，否则保存时存在未映射字段被删除的风险。
+        fields:
+          - label: 占位字段
+            name: _placeholder
+            widget: hidden

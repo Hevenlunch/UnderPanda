@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" role="img" aria-label="Mountain road placeholder">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9da9a7"/><stop offset=".55" stop-color="#d9c4a9"/><stop offset="1" stop-color="#806d5e"/></linearGradient>
+    <linearGradient id="far" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6f817d"/><stop offset="1" stop-color="#465d5a"/></linearGradient>
+    <linearGradient id="near" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3c4f4d"/><stop offset="1" stop-color="#243534"/></linearGradient>
+    <filter id="grain"><feTurbulence baseFrequency=".75" numOctaves="2" stitchTiles="stitch"/><feComponentTransfer><feFuncA type="table" tableValues="0 .05"/></feComponentTransfer></filter>
+  </defs>
+  <rect width="900" height="1200" fill="url(#sky)"/>
+  <path d="M0 540 230 238 409 465 605 180 900 570v630H0z" fill="url(#far)" opacity=".8"/>
+  <path d="M0 735 210 505 347 650 528 408 900 760v440H0z" fill="url(#near)"/>
+  <path d="M325 1200c30-146 31-223 71-327 31-82 75-178 116-256" fill="none" stroke="#cfbb9d" stroke-opacity=".68" stroke-width="25"/>
+  <path d="M330 1200c30-146 31-223 71-327 31-82 75-178 116-256" fill="none" stroke="#f3e5d0" stroke-opacity=".22" stroke-width="3"/>
+  <path d="M0 625c160 29 287-17 451 12 141 25 271-12 449 25" fill="none" stroke="#f0dfc9" stroke-opacity=".28" stroke-width="3"/>
+  <rect width="900" height="1200" filter="url(#grain)" opacity=".45"/>
+</svg>

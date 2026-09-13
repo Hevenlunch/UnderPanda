@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-label="Street corner placeholder">
+  <defs>
+    <linearGradient id="wall" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a9a29a"/><stop offset="1" stop-color="#565b5c"/></linearGradient>
+    <linearGradient id="road" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#676d6e"/><stop offset="1" stop-color="#242b2e"/></linearGradient>
+    <filter id="grain"><feTurbulence baseFrequency=".8" numOctaves="2" stitchTiles="stitch"/><feComponentTransfer><feFuncA type="table" tableValues="0 .055"/></feComponentTransfer></filter>
+  </defs>
+  <rect width="1200" height="900" fill="#c8c0b5"/>
+  <path d="M0 0h1200v620H0z" fill="url(#wall)"/>
+  <path d="M0 620 340 900h570l290-280v280H0z" fill="url(#road)"/>
+  <path d="M0 0 370 555v345H0z" fill="#6f746f"/>
+  <path d="M1200 0 850 560v340h350z" fill="#4d5556"/>
+  <path d="M370 555h480l350 345H0z" fill="#c5b5a2" opacity=".3"/>
+  <path d="M582 586h36l35 314H548z" fill="#e4d4bd" opacity=".42"/>
+  <path d="M0 615h1200" stroke="#e7dccf" stroke-opacity=".25" stroke-width="3"/>
+  <rect x="503" y="0" width="194" height="555" fill="#d3c4b2" opacity=".28"/>
+  <rect width="1200" height="900" filter="url(#grain)" opacity=".45"/>
+</svg>

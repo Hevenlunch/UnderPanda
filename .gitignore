@@ -1,0 +1,22 @@
+node_modules
+dist
+.pnpm-store
+.vite
+*.log
+
+# Local backups and release archives
+backups/
+部署＋维护/发布包/
+相关使用图片/
+对话.docx
+
+# Secrets and local environment files
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# OS/editor files
+.DS_Store
+Thumbs.db

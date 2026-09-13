@@ -1,0 +1,28 @@
+{
+  "Version": "1",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "oss:ListObjects",
+        "oss:GetObject",
+        "oss:PutObject",
+        "oss:DeleteObject"
+      ],
+      "Resource": [
+        "acs:oss:*:*:YOUR_BUCKET",
+        "acs:oss:*:*:YOUR_BUCKET/*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "cdn:RefreshObjectCaches",
+        "cdn:DescribeRefreshTasks"
+      ],
+      "Resource": [
+        "acs:cdn:*:*:domain/YOUR_DOMAIN"
+      ]
+    }
+  ]
+}

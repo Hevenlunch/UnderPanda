@@ -1,0 +1,628 @@
+{
+  "pageText": {
+    "browserTitle": "王光庆｜摄影、旅行与生活",
+    "navigation": {
+      "home": "首页",
+      "about": "关于",
+      "photography": "摄影",
+      "hobbies": "生活",
+      "travel": "旅行",
+      "contact": "联系"
+    },
+    "actions": {
+      "viewPhotos": "看看我的照片",
+      "meetMe": "先认识我",
+      "photoAction": "查看大图 ↗",
+      "hobbyAction": "展开看看 ↗",
+      "cityAction": "查看城市记录 ↗",
+      "backToTop": "BACK TO TOP ↑"
+    },
+    "hero": {
+      "meta": "PHOTO / TRAVEL / LIFE",
+      "imageLabel": "HOME / 首页影像",
+      "scroll": "SCROLL TO EXPLORE"
+    },
+    "about": {
+      "note": "不是简历，只是关于一个真实的人。"
+    },
+    "photography": {
+      "kicker": "PHOTOGRAPHY / 摄影",
+      "title": "我拍下的，不只是风景。",
+      "note": "光线、城市、海风，还有那些不想忘记的普通瞬间。",
+      "all": "全部",
+      "emptyTitle": "这个分类暂时还没有照片",
+      "emptyNote": "在 DEV 的“摄影管理”里添加一张吧。",
+      "lightboxLabel": "PHOTO"
+    },
+    "hobbies": {
+      "kicker": "LIFE / 爱好",
+      "title": "喜欢的事情很多，生活也因此很具体。",
+      "note": "这些爱好不是标签，是我真的会花时间去做的部分。",
+      "drawerKicker": "LIFE / 生活"
+    },
+    "travel": {
+      "kicker": "TRAVEL / 旅行",
+      "title": "走过的城市，慢慢变成自己的地图。",
+      "note": "点击城市卡片，看照片和当时留下的几句话。",
+      "drawerKicker": "TRAVEL / 旅行"
+    },
+    "footer": {
+      "tagline": "摄影 / 旅行 / 生活"
+    },
+    "mobileMenu": {
+      "kicker": "WELCOME / 欢迎"
+    }
+  },
+  "travelRouteStyle": {
+    "desktop": {
+      "rowHeight": 90,
+      "cityFontSize": 20,
+      "cityPaddingX": 12,
+      "cityPaddingY": 6,
+      "dotSize": 29,
+      "innerDotSize": 12,
+      "lineWidth": 2,
+      "dashLength": 7,
+      "dashGap": 9
+    },
+    "mobile": {
+      "rowHeight": 58,
+      "cityFontSize": 13,
+      "cityPaddingX": 9,
+      "cityPaddingY": 4,
+      "dotSize": 22,
+      "innerDotSize": 10,
+      "lineWidth": 2,
+      "dashLength": 6,
+      "dashGap": 8
+    }
+  },
+  "profile": {
+    "name": "垫底熊猫",
+    "englishName": "UNDER PANDA",
+    "eyebrow": "摄影 · 旅行 · 认真生活",
+    "title": "一个乐观、幽默、靠谱的 ENFJ",
+    "intro": "喜欢用镜头收藏城市与日常，也喜欢把每一次出发、遇见和普通但闪光的瞬间认真记下来。",
+    "location": "青岛 · 中国",
+    "avatar": "/images/avatar.svg",
+    "heroImage": "/images/hero-harbor.webp",
+    "heroImageSmall": "/images/hero-harbor-small.webp",
+    "heroImagePosition": "center 56%",
+    "heroImageMobilePosition": "center 58%"
+  },
+  "about": {
+    "kicker": "ABOUT ME / 关于我",
+    "heading": "把生活过具体，也把自己慢慢讲清楚。",
+    "lead": "你好，我是垫底熊猫。一个愿意认真做事，也不想把生活过得太严肃的人。",
+    "paragraphs": [
+      "我喜欢摄影，喜欢在城市和自然之间走走停停。拍照对我来说不是提醒，更像一种习惯：慢一点，多看一眼，把容易被忽略的瞬间留下来。",
+      "我的生活里有很多不同的侧面。会认真做研究，也会研究一段音乐、一次远行和一张照片的后期；喜欢和人交流，也享受一个人安静放空大脑的时刻。"
+    ],
+    "traits": [
+      {
+        "title": "乐观",
+        "text": "遇到问题先找办法，也相信事情会慢慢变好。"
+      },
+      {
+        "title": "幽默",
+        "text": "不把生活过得太严肃，偶尔也拿自己开开玩笑。"
+      },
+      {
+        "title": "靠谱",
+        "text": "答应的事情认真完成，不轻易画大饼。"
+      }
+    ],
+    "current": {
+      "label": "最近的我在做什么",
+      "title": "继续研究，也继续拍照。",
+      "text": "把专业上的问题做扎实，也慢慢整理走过的城市、遇见的人和那些值得记住的日常。"
+    }
+  },
+  "photoCategories": [
+    "城市",
+    "自然",
+    "旅行",
+    "日常",
+    "未分类"
+  ],
+  "photography": [
+    {
+      "id": "city-light",
+      "title": "霓虹",
+      "category": "城市",
+      "image": "/images/uploads/1789218357516-IMG_20250805_191603.webp",
+      "caption": "傍晚的光落在建筑上，城市像刚刚醒来。",
+      "note": "摄于令我震撼的上海北外滩。",
+      "wide": true
+    },
+    {
+      "id": "photo-1789218543399",
+      "title": "落日余晖",
+      "category": "城市",
+      "image": "/images/uploads/1789218556684-IMG_20250605_182217_1.webp",
+      "caption": "摩天大楼与小渔船的碰撞",
+      "note": "拍摄于一次夕阳的散步",
+      "visible": true,
+      "wide": false,
+      "tall": true
+    },
+    {
+      "id": "photo-1789219187101",
+      "title": "跨年之夜",
+      "category": "城市",
+      "image": "/images/uploads/1789219213499-IMG_20250101_000125.webp",
+      "caption": "气球如星星闪闪，甚是好看啊。",
+      "note": "拍摄于五四广场的跨年夜。",
+      "visible": true,
+      "wide": false,
+      "tall": true
+    },
+    {
+      "id": "sea-dusk",
+      "title": "海边黄昏",
+      "category": "自然",
+      "image": "/images/photo-sea.svg",
+      "caption": "风很大，海面却慢慢安静下来。",
+      "note": "青岛的海边，是经常想再去的地方。"
+    },
+    {
+      "id": "mountain-road",
+      "title": "山路之上",
+      "category": "自然",
+      "image": "/images/photo-mountain.svg",
+      "caption": "路延伸进云里，答案可以晚一点再找。",
+      "note": "旅行途中遇到的风景。",
+      "tall": true
+    },
+    {
+      "id": "street-corner",
+      "title": "街角",
+      "category": "城市",
+      "image": "/images/photo-street.svg",
+      "caption": "普通街角也有自己的秩序和节奏。",
+      "note": "喜欢观察城市里不经意的小细节。"
+    },
+    {
+      "id": "cloud-layer",
+      "title": "云层",
+      "category": "自然",
+      "image": "/images/photo-cloud.svg",
+      "caption": "抬头的时候，天空刚好在换一种颜色。",
+      "note": "拍摄于一次傍晚出行。",
+      "wide": true
+    },
+    {
+      "id": "night-walk",
+      "title": "夜行",
+      "category": "城市",
+      "image": "/images/photo-night.svg",
+      "caption": "夜色把熟悉的地方变得陌生了一点。",
+      "note": "夜晚适合散步，也适合重新认识一座城市。"
+    },
+    {
+      "id": "travel-window",
+      "title": "车窗之外",
+      "category": "旅行",
+      "image": "/images/photo-travel.svg",
+      "caption": "目的地还没到，沿途已经开始发生故事。",
+      "note": "关于出发的记录。",
+      "tall": true
+    },
+    {
+      "id": "daily-detail",
+      "title": "日常细节",
+      "category": "日常",
+      "image": "/images/photo-detail.svg",
+      "caption": "生活大多不是大场面，而是一些很小的瞬间。",
+      "note": "留给平常日子的照片。"
+    }
+  ],
+  "hobbies": [
+    {
+      "id": "photography",
+      "title": "摄影",
+      "summary": "用照片保存光线、城市和情绪。",
+      "detail": "喜欢风景、城市和日常记录。比起追求器材参数，更在意照片有没有留下当时的感觉。",
+      "image": "/images/photo-city.svg",
+      "paragraphs": [
+        "真的成功了嘛"
+      ],
+      "photos": [
+        "/images/uploads/1789220033282-photo.webp",
+        "/images/uploads/1789220104717-IMG_20250101_000125.webp"
+      ]
+    },
+    {
+      "id": "travel",
+      "title": "旅行",
+      "summary": "去没有去过的地方，也重新看看熟悉的地方。",
+      "detail": "旅行对我最大的吸引力，不只是目的地，而是路上发生的意外、遇见的人和回来之后仍然记得的细节。",
+      "image": "/images/photo-travel.svg"
+    },
+    {
+      "id": "drone",
+      "title": "无人机",
+      "summary": "换一个高度，看熟悉世界的新样子。",
+      "detail": "喜欢用航拍观察城市、山川和海岸的线条。它让我意识到，同一片风景换个高度看会完全不同。",
+      "image": "/images/photo-cloud.svg"
+    },
+    {
+      "id": "editing",
+      "title": "图片后期",
+      "summary": "把拍摄当下的感受重新还回来。",
+      "detail": "后期不是把照片改得不像原来的样子，而是调整颜色、光线和氛围，让记忆更接近当时的感觉。",
+      "image": "/images/photo-detail.svg"
+    },
+    {
+      "id": "music",
+      "title": "音乐",
+      "summary": "给通勤、夜晚和整理照片加一点背景。",
+      "detail": "喜欢的风格比较杂，开心时听节奏，安静时听旋律。很多照片的记忆里都有一首对应的歌。",
+      "image": "/images/photo-night.svg"
+    },
+    {
+      "id": "dance",
+      "title": "街舞",
+      "summary": "身体动起来的时候，生活也会轻一点。",
+      "detail": "曾经参与过校园街舞社团和演出。它让我在表达、节奏和团队配合里找到另一种快乐。",
+      "image": "/images/photo-street.svg"
+    }
+  ],
+  "cities": [
+    {
+      "id": "qingdao",
+      "name": "青岛",
+      "date": "反复拍摄的城市",
+      "note": "海风、坡路、红瓦和傍晚的光，构成了我很多照片的背景。",
+      "image": "/images/uploads/1789291047133-IMG_20250101_000125.webp",
+      "photos": [
+        "/images/photo-sea.svg",
+        "/images/photo-city.svg",
+        "/images/photo-street.svg"
+      ],
+      "paragraphs": [
+        "啊手动阀啊手动阀阿松大发"
+      ]
+    },
+    {
+      "id": "shanghai",
+      "name": "上海",
+      "date": "城市散步",
+      "note": "高楼之间也有细小的生活缝隙，适合慢慢走、慢慢看。",
+      "image": "/images/uploads/1789291070385-IMG_20250805_191603.webp",
+      "photos": [
+        "/images/photo-night.svg",
+        "/images/photo-city.svg",
+        "/images/photo-detail.svg"
+      ]
+    },
+    {
+      "id": "beijing",
+      "name": "北京",
+      "date": "关于尺度",
+      "note": "城市很大，历史也很重，但真正留下来的往往还是某个普通的下午。",
+      "image": "/images/photo-street.svg",
+      "photos": [
+        "/images/photo-city.svg",
+        "/images/photo-street.svg",
+        "/images/photo-travel.svg"
+      ]
+    },
+    {
+      "id": "xian",
+      "name": "西安",
+      "date": "城墙与夜色",
+      "note": "古老和日常叠在一起，走几步就像换了一个时间。",
+      "image": "/images/photo-night.svg",
+      "photos": [
+        "/images/photo-night.svg",
+        "/images/photo-detail.svg",
+        "/images/photo-travel.svg"
+      ]
+    },
+    {
+      "id": "chengdu",
+      "name": "成都",
+      "date": "慢一点",
+      "note": "这里的节奏提醒我，生活不一定总要赶着去下一站。",
+      "image": "/images/photo-detail.svg",
+      "photos": [
+        "/images/photo-street.svg",
+        "/images/photo-mountain.svg",
+        "/images/photo-detail.svg"
+      ]
+    },
+    {
+      "id": "hangzhou",
+      "name": "杭州",
+      "date": "山水之间",
+      "note": "水面、树影和远处的山，适合在没有安排的日子里消磨时间。",
+      "image": "/images/photo-cloud.svg",
+      "photos": [
+        "/images/photo-mountain.svg",
+        "/images/photo-cloud.svg",
+        "/images/photo-sea.svg"
+      ]
+    }
+  ],
+  "work": {
+    "kicker": "WHAT I DO / 我在做什么",
+    "heading": "专业是我生活的一部分，但不是全部。",
+    "text": "我目前从事土木工程与钢结构方向的学习和研究，关注结构材料、试验分析和工程问题。它让我习惯把复杂的问题拆开、把模糊的判断变得具体。",
+    "note": "这一部分会保持克制，不堆论文、不列项目清单。想深入了解时，再慢慢补充。"
+  },
+  "contact": {
+    "kicker": "CONTACT / 联系我",
+    "heading": "如果你也喜欢这些，欢迎来聊。",
+    "text": "摄影、旅行、音乐，或者只是一个普通但有意思的话题，都可以写信给我。",
+    "links": [
+      {
+        "label": "邮箱",
+        "value": "2044927177@qq.com",
+        "href": "mailto:hello@example.com"
+      },
+      {
+        "label": "GitHub",
+        "value": "github.com/yourname",
+        "href": "https://github.com/"
+      },
+      {
+        "label": "小红书",
+        "value": "稍后补充",
+        "href": "#"
+      }
+    ]
+  },
+  "appearance": {
+    "desktop": {
+      "cardRadius": 4,
+      "moduleLabelScale": 1.27,
+      "moduleIntroScale": 1.14,
+      "hero": {
+        "radiusTopLeft": 32,
+        "radiusTopRight": 32,
+        "radiusBottomRight": 14,
+        "radiusBottomLeft": 32,
+        "borderWidth": 1,
+        "borderColor": "rgba(255, 255, 255, 0.3)",
+        "innerInset": 14,
+        "shadow": "0 28px 72px rgba(28, 58, 67, 0.12)"
+      },
+      "text": {
+        "nav": {
+          "fontSize": "var(--nav-font-size)",
+          "lineHeight": "1.2",
+          "letterSpacing": "0em",
+          "fontWeight": "400"
+        },
+        "eyebrow": {
+          "fontSize": "0.7rem",
+          "lineHeight": "1.2",
+          "letterSpacing": "0.18em",
+          "fontWeight": "700"
+        },
+        "heroTitle": {
+          "fontSize": "clamp(1.8rem, 3.5vw, 4rem)",
+          "lineHeight": "1.03",
+          "letterSpacing": "-0.045em",
+          "fontWeight": "500"
+        },
+        "heroIntro": {
+          "fontSize": "1.22rem",
+          "lineHeight": "var(--body-line-height)",
+          "letterSpacing": "0em",
+          "fontWeight": "400"
+        },
+        "sectionTitle": {
+          "fontSize": "clamp(2.6rem, 5vw, 4.6rem)",
+          "lineHeight": "1.02",
+          "letterSpacing": "-0.045em",
+          "fontWeight": "500"
+        },
+        "sectionNote": {
+          "fontSize": "1rem",
+          "lineHeight": "var(--body-line-height)",
+          "letterSpacing": "0em",
+          "fontWeight": "400"
+        },
+        "body": {
+          "fontSize": "var(--content-body-font-size)",
+          "lineHeight": "var(--content-body-line-height)",
+          "letterSpacing": "0em",
+          "fontWeight": "400"
+        },
+        "button": {
+          "fontSize": "0.84rem",
+          "lineHeight": "1.2",
+          "letterSpacing": "0em",
+          "fontWeight": "400"
+        },
+        "aboutLead": {
+          "fontSize": "1.58rem",
+          "lineHeight": "1.55",
+          "letterSpacing": "0em",
+          "fontWeight": "400"
+        },
+        "currentCardTitle": {
+          "fontSize": "1.7rem",
+          "lineHeight": "1.2",
+          "letterSpacing": "0em",
+          "fontWeight": "500"
+        },
+        "hobbyTitle": {
+          "fontSize": "1.6rem",
+          "lineHeight": "1.2",
+          "letterSpacing": "0em",
+          "fontWeight": "500"
+        },
+        "cityTitle": {
+          "fontSize": "1.8rem",
+          "lineHeight": "1.2",
+          "letterSpacing": "0em",
+          "fontWeight": "500"
+        },
+        "photoTitle": {
+          "fontSize": "1.3rem",
+          "lineHeight": "1.2",
+          "letterSpacing": "0em",
+          "fontWeight": "500"
+        },
+        "contactLink": {
+          "fontSize": "1.15rem",
+          "lineHeight": "1.2",
+          "letterSpacing": "0em",
+          "fontWeight": "500"
+        },
+        "footer": {
+          "fontSize": "0.74rem",
+          "lineHeight": "1.4",
+          "letterSpacing": "0.08em",
+          "fontWeight": "500"
+        },
+        "backToTop": {
+          "fontSize": "0.72rem",
+          "lineHeight": "1.4",
+          "letterSpacing": "0.08em",
+          "fontWeight": "500"
+        },
+        "mobileMenuTitle": {
+          "fontSize": "clamp(2rem, 8vw, 3.7rem)",
+          "lineHeight": "1.04",
+          "letterSpacing": "-0.055em",
+          "fontWeight": "500"
+        },
+        "drawerTitle": {
+          "fontSize": "2.65rem",
+          "lineHeight": "1.05",
+          "letterSpacing": "-0.045em",
+          "fontWeight": "500"
+        }
+      }
+    },
+    "mobile": {
+      "cardRadius": 4,
+      "moduleLabelScale": 1.08,
+      "moduleIntroScale": 0.97,
+      "hero": {
+        "radiusTopLeft": 0,
+        "radiusTopRight": 0,
+        "radiusBottomRight": 0,
+        "radiusBottomLeft": 0,
+        "borderWidth": 0,
+        "borderColor": "rgba(255, 255, 255, 0)",
+        "innerInset": 0,
+        "shadow": "none"
+      },
+      "text": {
+        "nav": {
+          "fontSize": "var(--nav-font-size)",
+          "lineHeight": "1.2",
+          "letterSpacing": "0em",
+          "fontWeight": "400"
+        },
+        "eyebrow": {
+          "fontSize": "0.7rem",
+          "lineHeight": "1.2",
+          "letterSpacing": "0.18em",
+          "fontWeight": "700"
+        },
+        "heroTitle": {
+          "fontSize": "clamp(2.85rem, 14vw, 4.7rem)",
+          "lineHeight": "0.97",
+          "letterSpacing": "-0.045em",
+          "fontWeight": "500"
+        },
+        "heroIntro": {
+          "fontSize": "0.98rem",
+          "lineHeight": "var(--body-line-height)",
+          "letterSpacing": "0em",
+          "fontWeight": "400"
+        },
+        "sectionTitle": {
+          "fontSize": "clamp(2.25rem, 11vw, 3.5rem)",
+          "lineHeight": "1.02",
+          "letterSpacing": "-0.045em",
+          "fontWeight": "500"
+        },
+        "sectionNote": {
+          "fontSize": "1rem",
+          "lineHeight": "var(--body-line-height)",
+          "letterSpacing": "0em",
+          "fontWeight": "400"
+        },
+        "body": {
+          "fontSize": "var(--content-body-font-size)",
+          "lineHeight": "var(--content-body-line-height)",
+          "letterSpacing": "0em",
+          "fontWeight": "400"
+        },
+        "button": {
+          "fontSize": "0.84rem",
+          "lineHeight": "1.2",
+          "letterSpacing": "0em",
+          "fontWeight": "400"
+        },
+        "aboutLead": {
+          "fontSize": "1.3rem",
+          "lineHeight": "1.5",
+          "letterSpacing": "0em",
+          "fontWeight": "400"
+        },
+        "currentCardTitle": {
+          "fontSize": "1.7rem",
+          "lineHeight": "1.2",
+          "letterSpacing": "0em",
+          "fontWeight": "500"
+        },
+        "hobbyTitle": {
+          "fontSize": "1.6rem",
+          "lineHeight": "1.2",
+          "letterSpacing": "0em",
+          "fontWeight": "500"
+        },
+        "cityTitle": {
+          "fontSize": "1.8rem",
+          "lineHeight": "1.2",
+          "letterSpacing": "0em",
+          "fontWeight": "500"
+        },
+        "photoTitle": {
+          "fontSize": "0.88rem",
+          "lineHeight": "1.2",
+          "letterSpacing": "0em",
+          "fontWeight": "500"
+        },
+        "contactLink": {
+          "fontSize": "1.15rem",
+          "lineHeight": "1.2",
+          "letterSpacing": "0em",
+          "fontWeight": "500"
+        },
+        "footer": {
+          "fontSize": "0.66rem",
+          "lineHeight": "1.4",
+          "letterSpacing": "0.07em",
+          "fontWeight": "500"
+        },
+        "backToTop": {
+          "fontSize": "0.65rem",
+          "lineHeight": "1.4",
+          "letterSpacing": "0.07em",
+          "fontWeight": "500"
+        },
+        "mobileMenuTitle": {
+          "fontSize": "clamp(2rem, 8vw, 3.7rem)",
+          "lineHeight": "1.04",
+          "letterSpacing": "-0.055em",
+          "fontWeight": "500"
+        },
+        "drawerTitle": {
+          "fontSize": "2.1rem",
+          "lineHeight": "1.05",
+          "letterSpacing": "-0.045em",
+          "fontWeight": "500"
+        }
+      }
+    }
+  }
+}

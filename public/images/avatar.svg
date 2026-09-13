@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" role="img" aria-label="Portrait placeholder">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#d9b49d"/>
+      <stop offset=".5" stop-color="#a86d51"/>
+      <stop offset="1" stop-color="#4e5f5b"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".7" cy=".22" r=".65">
+      <stop offset="0" stop-color="#f6e7d8" stop-opacity=".8"/>
+      <stop offset="1" stop-color="#f6e7d8" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix in="noise" type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="table" tableValues="0 .055"/></feComponentTransfer>
+    </filter>
+  </defs>
+  <rect width="900" height="1200" fill="url(#bg)"/>
+  <rect width="900" height="1200" fill="url(#glow)"/>
+  <circle cx="450" cy="460" r="180" fill="#2f3734" opacity=".88"/>
+  <path d="M250 1200c12-240 86-374 200-420 114 46 188 180 200 420z" fill="#2f3734" opacity=".92"/>
+  <path d="M350 455c23-87 177-92 205-3-27 83-171 93-205 3z" fill="#c18e72" opacity=".82"/>
+  <path d="M328 380c22-122 234-151 275 19-79-56-185-70-275-19z" fill="#252b29" opacity=".92"/>
+  <path d="M440 645c-30 66-62 142-60 247" stroke="#c9a58d" stroke-width="18" stroke-linecap="round" opacity=".5"/>
+  <circle cx="722" cy="182" r="74" fill="none" stroke="#f8f0e6" stroke-opacity=".35" stroke-width="2"/>
+  <rect width="900" height="1200" filter="url(#grain)" opacity=".4"/>
+</svg>

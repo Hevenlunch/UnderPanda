@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200" role="img" aria-label="Travel landscape placeholder">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#92a3a4"/><stop offset=".54" stop-color="#d6b59c"/><stop offset="1" stop-color="#855f4d"/></linearGradient>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6d7669"/><stop offset="1" stop-color="#303b36"/></linearGradient>
+    <filter id="grain"><feTurbulence baseFrequency=".75" numOctaves="2" stitchTiles="stitch"/><feComponentTransfer><feFuncA type="table" tableValues="0 .05"/></feComponentTransfer></filter>
+  </defs>
+  <rect width="900" height="1200" fill="url(#sky)"/>
+  <circle cx="690" cy="240" r="86" fill="#f5ddbd" opacity=".65"/>
+  <path d="M0 640 155 450 268 590 407 344 585 588 705 444 900 690v510H0z" fill="#536362" opacity=".88"/>
+  <path d="M0 770 145 642 260 748 420 582 580 760 702 655 900 825v375H0z" fill="url(#ground)"/>
+  <path d="M280 1200c72-198 102-316 172-443 61-111 132-201 214-287" fill="none" stroke="#d9c7ae" stroke-opacity=".63" stroke-width="22"/>
+  <path d="M0 920c177 25 335-20 514 13 152 28 271-11 386 2" fill="none" stroke="#f1d8b8" stroke-opacity=".2" stroke-width="2"/>
+  <rect width="900" height="1200" filter="url(#grain)" opacity=".43"/>
+</svg>
