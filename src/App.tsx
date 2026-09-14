@@ -8,6 +8,7 @@ import { SiteOpening } from "./components/SiteOpening";
 import { TravelRoute } from "./components/TravelRoute";
 import {
   loadTypography,
+  normalizeTypography,
   saveTypography,
   typographyCssVariables,
   type TypographySettings,
@@ -61,7 +62,14 @@ function App() {
     items: LightboxItem[];
     index: number;
   } | null>(null);
-  const [typography, setTypography] = useState<TypographySettings>(loadTypography);
+  const [typography, setTypography] = useState<TypographySettings>(() =>
+    initialContent.typography ? normalizeTypography(initialContent.typography) : loadTypography(),
+  );
+  const editorEnabled = Boolean(
+    import.meta.env.DEV ||
+      window.location.pathname.startsWith("/admin") ||
+      new URLSearchParams(window.location.search).get("dev") === "1",
+  );
   const siteRef = useRef<HTMLDivElement>(null);
   const appearanceStyle = useMemo(
     () => appearanceCssVariables(content.appearance),
@@ -448,9 +456,10 @@ function App() {
         }}
         onClose={() => setDrawer(null)}
       />
-      {import.meta.env.DEV && (
+      {editorEnabled && (
         <Suspense fallback={null}>
           <DevEditor
+            enabled={editorEnabled}
             content={content}
             onChange={setContent}
             typography={typography}

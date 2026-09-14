@@ -2,6 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import type { CityItem, HobbyItem, PhotographyItem, SiteContent } from "../types";
 import { normalizeAppearance } from "../appearance";
 import {
+  clearDevAuth,
+  loadDevAuth,
+  loginWithGitHub,
+  saveSiteContent,
+  uploadPreparedImage,
+  type DevAuth,
+} from "../devBackend";
+import {
   defaultTypography,
   fontPresets,
   type FontKey,
@@ -11,6 +19,7 @@ import {
 } from "../typography";
 
 interface DevEditorProps {
+  enabled: boolean;
   content: SiteContent;
   onChange: (content: SiteContent) => void;
   typography: TypographySettings;
@@ -160,8 +169,16 @@ async function preparePhotoForUpload(file: File) {
   return { fileName: optimizedFile.name, dataUrl: await readFileAsDataUrl(optimizedFile) };
 }
 
-async function uploadImageFile(file: File) {
+async function uploadImageFile(
+  file: File,
+  options: { online: boolean; token?: string },
+) {
   const prepared = await preparePhotoForUpload(file);
+  if (options.online) {
+    if (!options.token) throw new Error("请先登录 GitHub，再上传图片。");
+    return uploadPreparedImage(prepared, options.token);
+  }
+
   const response = await fetch("/__dev-editor/upload", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -179,6 +196,7 @@ async function uploadImageFile(file: File) {
 }
 
 export function DevEditor({
+  enabled,
   content,
   onChange,
   typography,
@@ -194,6 +212,9 @@ export function DevEditor({
   const [newCategory, setNewCategory] = useState("");
   const [draftTypography, setDraftTypography] = useState<TypographySettings>(typography);
   const [typographyMode, setTypographyMode] = useState<TypographyMode>("desktop");
+  const [auth, setAuth] = useState<DevAuth | null>(() => loadDevAuth());
+  const [authBusy, setAuthBusy] = useState(false);
+  const isOnline = !import.meta.env.DEV;
   const jsonTextareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -212,7 +233,27 @@ export function DevEditor({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, []);
 
-  if (!import.meta.env.DEV) return null;
+  if (!enabled) return null;
+
+  const handleLogin = async () => {
+    setAuthBusy(true);
+    setStatus("正在打开 GitHub 登录…");
+    try {
+      const nextAuth = await loginWithGitHub();
+      setAuth(nextAuth);
+      setStatus(`已登录 @${nextAuth.login}，可以发布内容了`);
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : "GitHub 登录失败");
+    } finally {
+      setAuthBusy(false);
+    }
+  };
+
+  const handleLogout = () => {
+    clearDevAuth();
+    setAuth(null);
+    setStatus("已退出线上编辑");
+  };
 
   const updateProfile = (key: keyof SiteContent["profile"], value: string) => {
     onChange({ ...content, profile: { ...content.profile, [key]: value } });
@@ -445,6 +486,12 @@ export function DevEditor({
   };
 
   const saveContent = async (nextContent: SiteContent) => {
+    if (isOnline) {
+      if (!auth?.token) throw new Error("请先登录 GitHub，再发布内容。");
+      await saveSiteContent(nextContent, auth.token);
+      return;
+    }
+
     const response = await fetch("/__dev-editor/save", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -475,7 +522,7 @@ export function DevEditor({
   const uploadPhoto = async (id: string, file: File) => {
     setStatus("正在优化并上传图片…");
     try {
-      const uploadedPath = await uploadImageFile(file);
+      const uploadedPath = await uploadImageFile(file, { online: isOnline, token: auth?.token });
       const nextContent = {
         ...content,
         photography: content.photography.map((photo) =>
@@ -592,7 +639,7 @@ export function DevEditor({
   const uploadHobbyCover = async (id: string, file: File) => {
     setStatus("正在优化并上传爱好封面…");
     try {
-      const uploadedPath = await uploadImageFile(file);
+      const uploadedPath = await uploadImageFile(file, { online: isOnline, token: auth?.token });
       const nextContent = updateHobbyItem(id, (hobby) => ({ ...hobby, image: uploadedPath }));
       await finishUpload(nextContent, "爱好封面已上传并保存");
     } catch (error) {
@@ -606,7 +653,7 @@ export function DevEditor({
       const uploadedPaths: string[] = [];
       for (const [index, file] of files.entries()) {
         setStatus(`正在优化并上传详情照片 ${index + 1}/${files.length}…`);
-        uploadedPaths.push(await uploadImageFile(file));
+        uploadedPaths.push(await uploadImageFile(file, { online: isOnline, token: auth?.token }));
       }
       const nextContent = updateHobbyItem(id, (hobby) => ({
         ...hobby,
@@ -722,7 +769,7 @@ export function DevEditor({
   const uploadCityCover = async (id: string, file: File) => {
     setStatus("正在优化并上传城市封面…");
     try {
-      const uploadedPath = await uploadImageFile(file);
+      const uploadedPath = await uploadImageFile(file, { online: isOnline, token: auth?.token });
       const nextContent = updateCityItem(id, (city) => ({ ...city, image: uploadedPath }));
       await finishUpload(nextContent, "城市封面已上传并保存");
     } catch (error) {
@@ -736,7 +783,7 @@ export function DevEditor({
       const uploadedPaths: string[] = [];
       for (const [index, file] of files.entries()) {
         setStatus(`正在优化并上传城市照片 ${index + 1}/${files.length}…`);
-        uploadedPaths.push(await uploadImageFile(file));
+        uploadedPaths.push(await uploadImageFile(file, { online: isOnline, token: auth?.token }));
       }
       const nextContent = updateCityItem(id, (city) => ({
         ...city,
@@ -794,12 +841,16 @@ export function DevEditor({
   };
 
   const save = async () => {
-    setStatus("正在保存…");
+    setStatus(isOnline ? "正在发布…" : "正在保存…");
     try {
       await saveContent(contentForJson(content));
-      setStatus("已保存到 src/content/site.json");
-    } catch {
-      setStatus("保存失败，请确认是通过本地开发模式打开");
+      setStatus(
+        isOnline
+          ? "已发布，Cloudflare 正在自动部署，约 1 分钟后刷新网页"
+          : "已保存到 src/content/site.json",
+      );
+    } catch (error) {
+      setStatus(error instanceof Error ? error.message : "保存失败");
     }
   };
 
@@ -848,13 +899,29 @@ export function DevEditor({
       <aside className={`dev-editor ${open ? "is-open" : ""}`} aria-hidden={!open}>
         <div className="dev-editor-head">
           <div>
-            <span>LOCAL CONTENT STUDIO</span>
+            <span>{isOnline ? "ONLINE CONTENT STUDIO" : "LOCAL CONTENT STUDIO"}</span>
             <h2>内容与字体设置</h2>
           </div>
           <button onClick={() => setOpen(false)} aria-label="关闭编辑器">
             ×
           </button>
         </div>
+
+        {isOnline && (
+          <div className="dev-auth-panel">
+            <div>
+              <strong>{auth ? `已登录 @${auth.login}` : "登录 GitHub 后即可发布"}</strong>
+              <small>修改会立即在右侧网页预览，发布后约 1 分钟自动上线。</small>
+            </div>
+            {auth ? (
+              <button onClick={handleLogout}>退出</button>
+            ) : (
+              <button onClick={handleLogin} disabled={authBusy}>
+                {authBusy ? "登录中…" : "登录 GitHub"}
+              </button>
+            )}
+          </div>
+        )}
 
         <div className="dev-editor-tabs">
           <button className={view === "content" ? "active" : ""} onClick={() => setView("content")}>
@@ -1679,7 +1746,7 @@ export function DevEditor({
               </button>
             </div>
           ) : (
-            <button className="button button-small" onClick={save}>保存内容</button>
+            <button className="button button-small" onClick={save}>{isOnline ? "发布内容" : "保存内容"}</button>
           )}
         </div>
       </aside>

@@ -127,29 +127,33 @@ function migrateLegacyTypography(value: LegacyTypographySettings): TypographySet
   };
 }
 
+export function normalizeTypography(value: unknown): TypographySettings {
+  if (!value || typeof value !== "object") return defaultTypography;
+  const parsed = value as Partial<TypographySettings> & LegacyTypographySettings;
+  if (parsed.desktop || parsed.mobile) {
+    const mobile = normalizeMode(parsed.mobile, defaultMobileTypography);
+    if (numberOr(parsed.version, 1) < TYPOGRAPHY_VERSION) {
+      mobile.navSize = defaultMobileTypography.navSize;
+      mobile.bodySize = defaultMobileTypography.bodySize;
+      mobile.headingScale = defaultMobileTypography.headingScale;
+      mobile.lineHeight = defaultMobileTypography.lineHeight;
+      mobile.sectionSpacing = defaultMobileTypography.sectionSpacing;
+      mobile.blockSpacing = defaultMobileTypography.blockSpacing;
+      mobile.gallerySpacing = defaultMobileTypography.gallerySpacing;
+    }
+    return {
+      version: TYPOGRAPHY_VERSION,
+      desktop: normalizeMode(parsed.desktop, defaultDesktopTypography),
+      mobile,
+    };
+  }
+  return migrateLegacyTypography(parsed);
+}
+
 export function loadTypography(): TypographySettings {
   try {
     const saved = window.localStorage.getItem("site-typography");
-    if (!saved) return defaultTypography;
-    const parsed = JSON.parse(saved) as Partial<TypographySettings> & LegacyTypographySettings;
-    if (parsed.desktop || parsed.mobile) {
-      const mobile = normalizeMode(parsed.mobile, defaultMobileTypography);
-      if (numberOr(parsed.version, 1) < TYPOGRAPHY_VERSION) {
-        mobile.navSize = defaultMobileTypography.navSize;
-        mobile.bodySize = defaultMobileTypography.bodySize;
-        mobile.headingScale = defaultMobileTypography.headingScale;
-        mobile.lineHeight = defaultMobileTypography.lineHeight;
-        mobile.sectionSpacing = defaultMobileTypography.sectionSpacing;
-        mobile.blockSpacing = defaultMobileTypography.blockSpacing;
-        mobile.gallerySpacing = defaultMobileTypography.gallerySpacing;
-      }
-      return {
-        version: TYPOGRAPHY_VERSION,
-        desktop: normalizeMode(parsed.desktop, defaultDesktopTypography),
-        mobile,
-      };
-    }
-    return migrateLegacyTypography(parsed);
+    return saved ? normalizeTypography(JSON.parse(saved)) : defaultTypography;
   } catch {
     return defaultTypography;
   }

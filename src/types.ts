@@ -1,4 +1,5 @@
 import type { Appearance } from "./appearance";
+import type { TypographySettings } from "./typography";
 
 export interface Profile {
   name: string;
@@ -158,6 +159,7 @@ export interface TravelRouteStyle {
 
 export interface SiteContent {
   appearance?: Appearance;
+  typography?: TypographySettings;
   pageText: PageText;
   travelRouteStyle: TravelRouteStyle;
   profile: Profile;

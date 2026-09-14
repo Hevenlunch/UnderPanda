@@ -1804,6 +1804,50 @@ a {
   line-height: 1;
 }
 
+.dev-auth-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 14px 22px 0;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.dev-auth-panel strong,
+.dev-auth-panel small {
+  display: block;
+}
+
+.dev-auth-panel strong {
+  font-size: 0.72rem;
+  font-weight: 650;
+}
+
+.dev-auth-panel small {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 0.63rem;
+  line-height: 1.5;
+}
+
+.dev-auth-panel button {
+  flex: 0 0 auto;
+  padding: 7px 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.72);
+  font-size: 0.66rem;
+}
+
+.dev-auth-panel button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
 .dev-editor-tabs {
   display: flex;
   flex-wrap: wrap;
