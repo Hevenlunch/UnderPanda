@@ -215,7 +215,7 @@
       "id": "daily-detail",
       "title": "日常细节",
       "category": "日常",
-      "image": "/images/photo-detail.svg",
+      "image": "/images/uploads/1789389752043-IMG_20250718_184150.webp",
       "caption": "生活大多不是大场面，而是一些很小的瞬间。",
       "note": "留给平常日子的照片。"
     }
@@ -680,6 +680,10 @@
     "/images/uploads/1789388395437-IMG_20250821_181302.webp": {
       "width": 2200,
       "height": 1650
+    },
+    "/images/uploads/1789389752043-IMG_20250718_184150.webp": {
+      "width": 1650,
+      "height": 2200
     }
   }
 }
