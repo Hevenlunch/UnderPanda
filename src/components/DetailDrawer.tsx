@@ -10,6 +10,7 @@ interface DetailDrawerProps {
   photos?: string[];
   imageMeta?: Record<string, { width: number; height: number }>;
   adaptivePhotos?: boolean;
+  heroVariant?: "default" | "city";
   onPhotoClick?: (index: number) => void;
   onClose: () => void;
 }
@@ -23,6 +24,7 @@ export function DetailDrawer({
   photos = [],
   imageMeta = {},
   adaptivePhotos = false,
+  heroVariant = "default",
   onPhotoClick,
   onClose,
 }: DetailDrawerProps) {
@@ -39,7 +41,7 @@ export function DetailDrawer({
     <div className={`drawer-layer ${open ? "is-open" : ""}`} aria-hidden={!open}>
       <button className="drawer-backdrop" onClick={onClose} aria-label="关闭详情" />
       <aside
-        className={`detail-drawer${adaptivePhotos ? " detail-drawer-wide" : ""}`}
+        className={`detail-drawer${adaptivePhotos ? " detail-drawer-wide" : ""}${heroVariant === "city" ? " detail-drawer-city" : ""}`}
         role="dialog"
         aria-modal="true"
         aria-label={title}
@@ -73,6 +75,7 @@ export function DetailDrawer({
                   title: `${title} 照片 ${index + 1}`,
                 }))}
                 imageMeta={imageMeta}
+                drawerColumns={heroVariant === "city" ? 3 : 2}
                 onOpen={onPhotoClick ?? (() => undefined)}
                 showOverlay={false}
                 variant="drawer"

@@ -20,6 +20,7 @@ export interface PhotoGalleryItem {
 interface PhotoGalleryProps {
   items: PhotoGalleryItem[];
   imageMeta?: Record<string, { width: number; height: number }>;
+  drawerColumns?: 2 | 3;
   onOpen: (index: number) => void;
   showOverlay?: boolean;
   variant?: "page" | "drawer";
@@ -59,6 +60,7 @@ function layoutPhotos(
   imageMeta: Record<string, { width: number; height: number }>,
   containerWidth: number,
   variant: "page" | "drawer",
+  drawerColumns: 2 | 3,
 ): GalleryRow[] {
   if (containerWidth <= 0) return [];
 
@@ -114,10 +116,10 @@ function layoutPhotos(
     return compactRows;
   }
 
-  const targetHeight = drawer ? 280 : containerWidth < 900 ? 250 : 320;
+  const targetHeight = drawer ? (drawerColumns === 3 ? 240 : 280) : containerWidth < 900 ? 250 : 320;
   const targetAspect = containerWidth / targetHeight;
-  const maxItemsPerRow = drawer ? 2 : containerWidth < 900 ? 4 : 5;
-  const maxRowHeight = drawer ? 340 : 420;
+  const maxItemsPerRow = drawer ? drawerColumns : containerWidth < 900 ? 4 : 5;
+  const maxRowHeight = drawer ? (drawerColumns === 3 ? 300 : 340) : 420;
   const rows: GalleryRow[] = [];
   let row: LayoutPhoto[] = [];
   let ratioSum = 0;
@@ -156,6 +158,7 @@ function layoutPhotos(
     if (isLast || (reachedTarget && row.length > 1) || singleIsWide || reachedLimit) {
       commitRow(isLast);
     }
+
   });
 
   return rows;
@@ -164,6 +167,7 @@ function layoutPhotos(
 export function PhotoGallery({
   items,
   imageMeta = {},
+  drawerColumns = 2,
   onOpen,
   showOverlay = true,
   variant = "page",
@@ -188,8 +192,8 @@ export function PhotoGallery({
   }, []);
 
   const rows = useMemo(
-    () => layoutPhotos(items, imageMeta, containerWidth, variant),
-    [containerWidth, imageMeta, items, variant],
+    () => layoutPhotos(items, imageMeta, containerWidth, variant, drawerColumns),
+    [containerWidth, drawerColumns, imageMeta, items, variant],
   );
 
   useLayoutEffect(() => {

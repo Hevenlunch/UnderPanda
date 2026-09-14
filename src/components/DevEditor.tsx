@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import type { CityItem, HobbyItem, PhotographyItem, SiteContent } from "../types";
 import { normalizeAppearance } from "../appearance";
 import {
@@ -226,8 +226,24 @@ export function DevEditor({
   const [typographyMode, setTypographyMode] = useState<TypographyMode>("desktop");
   const [auth, setAuth] = useState<DevAuth | null>(() => loadDevAuth());
   const [authBusy, setAuthBusy] = useState(false);
+  const [dragPosition, setDragPosition] = useState<{ left: number; top: number } | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const panelRef = useRef<HTMLElement>(null);
+  const dragRef = useRef<{
+    pointerId: number;
+    startX: number;
+    startY: number;
+    left: number;
+    top: number;
+    width: number;
+    height: number;
+  } | null>(null);
   const isOnline = !import.meta.env.DEV;
   const jsonTextareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (!open) setDragPosition(null);
+  }, [open]);
 
   useEffect(() => {
     if (!open || view === "json") return;
@@ -267,6 +283,49 @@ export function DevEditor({
     setStatus("已退出线上编辑");
   };
 
+  const startPanelDrag = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (!window.matchMedia("(min-width: 769px) and (pointer: fine)").matches) return;
+    if ((event.target as HTMLElement).closest("button, input, textarea, select, a")) return;
+    const panel = panelRef.current;
+    if (!panel) return;
+
+    const rect = panel.getBoundingClientRect();
+    dragRef.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      left: rect.left,
+      top: rect.top,
+      width: rect.width,
+      height: rect.height,
+    };
+    setIsDragging(true);
+    event.preventDefault();
+
+    const onMove = (moveEvent: PointerEvent) => {
+      const drag = dragRef.current;
+      if (!drag || moveEvent.pointerId !== drag.pointerId) return;
+      const maxLeft = Math.max(8, window.innerWidth - drag.width - 8);
+      const maxTop = Math.max(8, window.innerHeight - drag.height - 8);
+      const left = Math.min(Math.max(8, drag.left + moveEvent.clientX - drag.startX), maxLeft);
+      const top = Math.min(Math.max(8, drag.top + moveEvent.clientY - drag.startY), maxTop);
+      setDragPosition({ left, top });
+    };
+
+    const onEnd = (endEvent: PointerEvent) => {
+      const drag = dragRef.current;
+      if (!drag || endEvent.pointerId !== drag.pointerId) return;
+      dragRef.current = null;
+      setIsDragging(false);
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onEnd);
+      window.removeEventListener("pointercancel", onEnd);
+    };
+
+    window.addEventListener("pointermove", onMove);
+    window.addEventListener("pointerup", onEnd);
+    window.addEventListener("pointercancel", onEnd);
+  };
   const updateProfile = (key: keyof SiteContent["profile"], value: string) => {
     onChange({ ...content, profile: { ...content.profile, [key]: value } });
   };
@@ -918,8 +977,17 @@ export function DevEditor({
       <button className="dev-trigger" onClick={() => setOpen((value) => !value)}>
         DEV
       </button>
-      <aside className={`dev-editor ${open ? "is-open" : ""}`} aria-hidden={!open}>
-        <div className="dev-editor-head">
+      <aside
+        ref={panelRef}
+        className={`dev-editor ${open ? "is-open" : ""}${isDragging ? " is-dragging" : ""}`}
+        style={
+          dragPosition
+            ? { left: `${dragPosition.left}px`, top: `${dragPosition.top}px`, right: "auto", bottom: "auto" }
+            : undefined
+        }
+        aria-hidden={!open}
+      >
+        <div className="dev-editor-head" onPointerDown={startPanelDrag} title="按住标题栏可拖动面板">
           <div>
             <span>{isOnline ? "ONLINE CONTENT STUDIO" : "LOCAL CONTENT STUDIO"}</span>
             <h2>内容与字体设置</h2>

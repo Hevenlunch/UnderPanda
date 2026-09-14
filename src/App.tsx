@@ -33,6 +33,7 @@ interface DrawerContent {
   image: string;
   photos?: string[];
   adaptivePhotos?: boolean;
+  heroVariant?: "default" | "city";
 }
 
 interface OverlaySnapshot {
@@ -105,6 +106,7 @@ function App() {
   );
   const editorEnabled = Boolean(
     import.meta.env.DEV ||
+      window.location.hostname === "preview.underpanda.cn" ||
       window.location.pathname.startsWith("/admin") ||
       new URLSearchParams(window.location.search).get("dev") === "1",
   );
@@ -133,6 +135,10 @@ function App() {
     [content.pageText.photography.all, content.photoCategories],
   );
 
+  const visiblePhotographyCount = useMemo(
+    () => content.photography.filter((photo) => photo.visible !== false).length,
+    [content.photography],
+  );
   const visiblePhotos = useMemo(
     () =>
       content.photography.filter(
@@ -197,6 +203,7 @@ function App() {
       image: city.image,
       photos: city.photos,
       adaptivePhotos: true,
+      heroVariant: "city",
       },
       lightboxIndex: null,
       hobbyLightbox: null,
@@ -320,12 +327,6 @@ function App() {
             />
 
             <div className="about-grid">
-              <div className="about-story">
-                <p className="about-lead">{content.about.lead}</p>
-                {content.about.paragraphs.map((paragraph, index) => (
-                  <p key={`${paragraph.slice(0, 12)}-${index}`}>{paragraph}</p>
-                ))}
-              </div>
               <aside className="current-card">
                 <span>{content.about.current.label}</span>
                 <h3>{content.about.current.title}</h3>
@@ -333,6 +334,12 @@ function App() {
                 <div className="current-card-line" />
                 <small>LIFE IS HAPPENING NOW</small>
               </aside>
+              <div className="about-story">
+                <p className="about-lead">{content.about.lead}</p>
+                {content.about.paragraphs.map((paragraph, index) => (
+                  <p key={`${paragraph.slice(0, 12)}-${index}`}>{paragraph}</p>
+                ))}
+              </div>
             </div>
 
             <div className="trait-grid">
@@ -356,7 +363,7 @@ function App() {
                 note={content.pageText.photography.note}
               />
               <div className="photo-count">
-                <strong>{String(content.photography.length).padStart(2, "0")}</strong>
+                <strong>{String(visiblePhotographyCount).padStart(2, "0")}</strong>
                 <span>SELECTED<br />MOMENTS</span>
               </div>
             </div>
@@ -515,6 +522,7 @@ function App() {
         image={drawer?.image ?? ""}
         photos={drawer?.photos}
         adaptivePhotos={drawer?.adaptivePhotos}
+        heroVariant={drawer?.heroVariant}
         imageMeta={content.imageMeta}
         onPhotoClick={(index) => {
           const photos = drawer?.photos ?? [];
