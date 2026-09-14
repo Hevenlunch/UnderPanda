@@ -116,3 +116,10 @@ GitHub Pages 适合预览，但不适合作为本项目唯一的生产环境：
 - `配置模板/.env.example`：部署环境变量清单，不放入真实密钥。
 - `上线前改造清单.md`：正式接 CMS 前必须完成的工程改造。
 - `上线操作步骤.md`：从 GitHub 到 Cloudflare Pages、OAuth、阿里云的生产上线步骤。
+## workers.dev 中国大陆访问结论
+
+- `underpanda.2044927177.workers.dev` 在当前大陆 DNS 下被污染。
+- 系统 DNS 和阿里 DNS 返回了 Facebook 的 IPv4/IPv6 地址，而不是 Cloudflare。
+- 桌面自动化环境通过代理可以打开，不能代表中国大陆手机网络可访问。
+- 因此 Cloudflare 测试地址只作为海外测试和后台候选，不作为中国大陆正式公开站。
+- 正式公开站继续按计划部署到阿里云 OSS + CDN。
