@@ -20,3 +20,6 @@ backups/
 # OS/editor files
 .DS_Store
 Thumbs.db
+
+# Temporary automation browser profile
+部署＋维护/chrome-cdp-profile/
