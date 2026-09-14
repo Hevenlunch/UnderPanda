@@ -3386,3 +3386,41 @@ a {
 
 
 
+
+/* Mobile detail navigation and image performance */
+.detail-drawer {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.drawer-mobile-hint {
+  display: none;
+}
+
+.photo-card img,
+.drawer-hero img,
+.drawer-gallery img,
+.lightbox-frame img {
+  backface-visibility: hidden;
+}
+
+@media (max-width: 768px), (pointer: coarse) {
+  .drawer-close {
+    display: none !important;
+  }
+
+  .drawer-mobile-hint {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    display: block;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--line);
+    color: var(--muted);
+    background: rgba(255, 255, 255, 0.94);
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    text-align: center;
+    backdrop-filter: blur(12px);
+  }
+}

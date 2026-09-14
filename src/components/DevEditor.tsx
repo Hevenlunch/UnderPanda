@@ -8,6 +8,7 @@ import {
   saveSiteContent,
   uploadPreparedImage,
   type DevAuth,
+  type UploadedImage,
 } from "../devBackend";
 import {
   defaultTypography,
@@ -30,8 +31,8 @@ interface DevEditorProps {
 type EditorView = "content" | "photos" | "hobbies" | "travel" | "json" | "type";
 
 const UNCATEGORIZED = "未分类";
-const MAX_IMAGE_EDGE = 3200;
-const OPTIMIZE_AT_BYTES = 2_500_000;
+const MAX_IMAGE_EDGE = 2200;
+const OPTIMIZE_AT_BYTES = 600_000;
 const MAX_CLIENT_FILE_SIZE = 45_000_000;
 
 function contentForJson(content: SiteContent): SiteContent {
@@ -129,7 +130,7 @@ async function preparePhotoForUpload(file: File) {
   }
 
   if (file.type === "image/gif" || file.type === "image/svg+xml") {
-    return { fileName: file.name, dataUrl: await readFileAsDataUrl(file) };
+    return { fileName: file.name, dataUrl: await readFileAsDataUrl(file), width: 0, height: 0 };
   }
 
   const source = await decodeImageFile(file);
@@ -143,7 +144,12 @@ async function preparePhotoForUpload(file: File) {
 
   if (!shouldOptimize) {
     if ("close" in source) source.close();
-    return { fileName: file.name, dataUrl: await readFileAsDataUrl(file) };
+    return {
+      fileName: file.name,
+      dataUrl: await readFileAsDataUrl(file),
+      width: sourceWidth,
+      height: sourceHeight,
+    };
   }
 
   const canvas = document.createElement("canvas");
@@ -159,14 +165,19 @@ async function preparePhotoForUpload(file: File) {
     canvas.toBlob(
       (result) => (result ? resolve(result) : reject(new Error("图片压缩失败。"))),
       "image/webp",
-      0.9,
+      0.82,
     );
   });
 
   const optimizedFile = new File([blob], `${imageBaseName(file.name)}.webp`, {
     type: "image/webp",
   });
-  return { fileName: optimizedFile.name, dataUrl: await readFileAsDataUrl(optimizedFile) };
+  return {
+    fileName: optimizedFile.name,
+    dataUrl: await readFileAsDataUrl(optimizedFile),
+    width: canvas.width,
+    height: canvas.height,
+  };
 }
 
 async function uploadImageFile(
@@ -192,7 +203,7 @@ async function uploadImageFile(
     result.message = "上传接口没有返回有效结果，请确认使用 pnpm dev 启动项目。";
   }
   if (!response.ok || !result.path) throw new Error(result.message || "上传失败");
-  return result.path;
+  return { path: result.path, width: prepared.width, height: prepared.height };
 }
 
 export function DevEditor({
@@ -519,16 +530,26 @@ export function DevEditor({
     }
   };
 
+  const mergeImageMeta = (base: SiteContent, uploads: UploadedImage[]) => {
+    const imageMeta = { ...(base.imageMeta ?? {}) };
+    uploads.forEach((upload) => {
+      if (upload.width > 0 && upload.height > 0) {
+        imageMeta[upload.path] = { width: upload.width, height: upload.height };
+      }
+    });
+    return { ...base, imageMeta };
+  };
+
   const uploadPhoto = async (id: string, file: File) => {
     setStatus("正在优化并上传图片…");
     try {
-      const uploadedPath = await uploadImageFile(file, { online: isOnline, token: auth?.token });
-      const nextContent = {
+      const uploaded = await uploadImageFile(file, { online: isOnline, token: auth?.token });
+      const nextContent = mergeImageMeta({
         ...content,
         photography: content.photography.map((photo) =>
-          photo.id === id ? { ...photo, image: uploadedPath } : photo,
+          photo.id === id ? { ...photo, image: uploaded.path } : photo,
         ),
-      };
+      }, [uploaded]);
       await finishUpload(nextContent, "图片已上传并保存");
     } catch (error) {
       reportUploadError(error);
@@ -639,8 +660,8 @@ export function DevEditor({
   const uploadHobbyCover = async (id: string, file: File) => {
     setStatus("正在优化并上传爱好封面…");
     try {
-      const uploadedPath = await uploadImageFile(file, { online: isOnline, token: auth?.token });
-      const nextContent = updateHobbyItem(id, (hobby) => ({ ...hobby, image: uploadedPath }));
+      const uploaded = await uploadImageFile(file, { online: isOnline, token: auth?.token });
+      const nextContent = mergeImageMeta(updateHobbyItem(id, (hobby) => ({ ...hobby, image: uploaded.path })), [uploaded]);
       await finishUpload(nextContent, "爱好封面已上传并保存");
     } catch (error) {
       reportUploadError(error);
@@ -650,16 +671,16 @@ export function DevEditor({
   const uploadHobbyPhotos = async (id: string, files: File[]) => {
     if (files.length === 0) return;
     try {
-      const uploadedPaths: string[] = [];
+      const uploadedImages: UploadedImage[] = [];
       for (const [index, file] of files.entries()) {
         setStatus(`正在优化并上传详情照片 ${index + 1}/${files.length}…`);
-        uploadedPaths.push(await uploadImageFile(file, { online: isOnline, token: auth?.token }));
+        uploadedImages.push(await uploadImageFile(file, { online: isOnline, token: auth?.token }));
       }
-      const nextContent = updateHobbyItem(id, (hobby) => ({
+      const nextContent = mergeImageMeta(updateHobbyItem(id, (hobby) => ({
         ...hobby,
-        photos: [...(hobby.photos ?? []), ...uploadedPaths],
-      }));
-      await finishUpload(nextContent, `已上传并保存 ${uploadedPaths.length} 张详情照片`);
+        photos: [...(hobby.photos ?? []), ...uploadedImages.map((upload) => upload.path)],
+      })), uploadedImages);
+      await finishUpload(nextContent, `已上传并保存 ${uploadedImages.length} 张详情照片`);
     } catch (error) {
       reportUploadError(error);
     }
@@ -769,8 +790,8 @@ export function DevEditor({
   const uploadCityCover = async (id: string, file: File) => {
     setStatus("正在优化并上传城市封面…");
     try {
-      const uploadedPath = await uploadImageFile(file, { online: isOnline, token: auth?.token });
-      const nextContent = updateCityItem(id, (city) => ({ ...city, image: uploadedPath }));
+      const uploaded = await uploadImageFile(file, { online: isOnline, token: auth?.token });
+      const nextContent = mergeImageMeta(updateCityItem(id, (city) => ({ ...city, image: uploaded.path })), [uploaded]);
       await finishUpload(nextContent, "城市封面已上传并保存");
     } catch (error) {
       reportUploadError(error);
@@ -780,16 +801,16 @@ export function DevEditor({
   const uploadCityPhotos = async (id: string, files: File[]) => {
     if (files.length === 0) return;
     try {
-      const uploadedPaths: string[] = [];
+      const uploadedImages: UploadedImage[] = [];
       for (const [index, file] of files.entries()) {
         setStatus(`正在优化并上传城市照片 ${index + 1}/${files.length}…`);
-        uploadedPaths.push(await uploadImageFile(file, { online: isOnline, token: auth?.token }));
+        uploadedImages.push(await uploadImageFile(file, { online: isOnline, token: auth?.token }));
       }
-      const nextContent = updateCityItem(id, (city) => ({
+      const nextContent = mergeImageMeta(updateCityItem(id, (city) => ({
         ...city,
-        photos: [...city.photos, ...uploadedPaths],
-      }));
-      await finishUpload(nextContent, `已上传并保存 ${uploadedPaths.length} 张城市照片`);
+        photos: [...city.photos, ...uploadedImages.map((upload) => upload.path)],
+      })), uploadedImages);
+      await finishUpload(nextContent, `已上传并保存 ${uploadedImages.length} 张城市照片`);
     } catch (error) {
       reportUploadError(error);
     }

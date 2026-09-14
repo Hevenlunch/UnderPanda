@@ -19,15 +19,11 @@ export interface PhotoGalleryItem {
 
 interface PhotoGalleryProps {
   items: PhotoGalleryItem[];
+  imageMeta?: Record<string, { width: number; height: number }>;
   onOpen: (index: number) => void;
   showOverlay?: boolean;
   variant?: "page" | "drawer";
   actionLabel?: string;
-}
-
-interface PhotoSize {
-  width: number;
-  height: number;
 }
 
 interface LayoutPhoto {
@@ -49,15 +45,18 @@ function fallbackAspect(photo: PhotoGalleryItem) {
   return 4 / 3;
 }
 
-function aspectFor(photo: PhotoGalleryItem, sizes: Record<string, PhotoSize>) {
-  const size = sizes[photo.id];
+function aspectFor(
+  photo: PhotoGalleryItem,
+  imageMeta: Record<string, { width: number; height: number }>,
+) {
+  const size = imageMeta[photo.image];
   if (!size || size.width <= 0 || size.height <= 0) return fallbackAspect(photo);
   return size.width / size.height;
 }
 
 function layoutPhotos(
   items: PhotoGalleryItem[],
-  sizes: Record<string, PhotoSize>,
+  imageMeta: Record<string, { width: number; height: number }>,
   containerWidth: number,
   variant: "page" | "drawer",
 ): GalleryRow[] {
@@ -66,7 +65,7 @@ function layoutPhotos(
   const photos = items.map<LayoutPhoto>((photo, index) => ({
     photo,
     index,
-    aspect: aspectFor(photo, sizes),
+    aspect: aspectFor(photo, imageMeta),
   }));
 
   const drawer = variant === "drawer";
@@ -164,6 +163,7 @@ function layoutPhotos(
 
 export function PhotoGallery({
   items,
+  imageMeta = {},
   onOpen,
   showOverlay = true,
   variant = "page",
@@ -171,7 +171,6 @@ export function PhotoGallery({
 }: PhotoGalleryProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(0);
-  const [sizes, setSizes] = useState<Record<string, PhotoSize>>({});
 
   useEffect(() => {
     const element = containerRef.current;
@@ -189,113 +188,47 @@ export function PhotoGallery({
   }, []);
 
   const rows = useMemo(
-    () => layoutPhotos(items, sizes, containerWidth, variant),
-    [containerWidth, items, sizes, variant],
+    () => layoutPhotos(items, imageMeta, containerWidth, variant),
+    [containerWidth, imageMeta, items, variant],
   );
 
   useLayoutEffect(() => {
     const container = containerRef.current;
-    if (!container || containerWidth <= 0) return;
+    if (!container || containerWidth <= 0 || variant === "drawer") return;
 
     const cards = Array.from(container.querySelectorAll<HTMLElement>(".photo-card"));
     if (cards.length === 0) return;
 
-    if (variant === "drawer") {
-      const images = cards
-        .map((card) => card.querySelector<HTMLElement>("img"))
-        .filter((image): image is HTMLElement => image !== null);
-      gsap.set(cards, { clearProps: "transform,scale,clipPath,opacity" });
-      images.forEach((image) => {
-        image.style.setProperty("--motion-scale", "1");
-        image.style.setProperty("--motion-shift", "0%");
-      });
-      return;
-    }
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      gsap.set(cards, { clearProps: "transform,scale,clipPath,opacity" });
+    if (
+      window.matchMedia(
+        "(prefers-reduced-motion: reduce), (max-width: 768px), (pointer: coarse)",
+      ).matches
+    ) {
+      gsap.set(cards, { clearProps: "transform,opacity,visibility" });
       return;
     }
 
     const context = gsap.context(() => {
-      const images = cards
-        .map((card) => card.querySelector<HTMLElement>("img"))
-        .filter((image): image is HTMLElement => image !== null);
-
       gsap.fromTo(
         cards,
+        { autoAlpha: 0, y: 22 },
         {
-          scale: 0.985,
-          scaleY: 0.88,
-          y: 58,
-          transformOrigin: "50% 100%",
-        },
-        {
-          scale: 1,
-          scaleY: 1,
+          autoAlpha: 1,
           y: 0,
-          duration: 1.05,
-          ease: "power3.out",
-          stagger: 0.085,
+          duration: 0.45,
+          ease: "power2.out",
+          stagger: 0.045,
           scrollTrigger: {
             trigger: container,
-            start: "top 82%",
+            start: "top 88%",
             once: true,
           },
         },
       );
-
-      if (images.length > 0) {
-        gsap.fromTo(
-          images,
-          { "--motion-scale": 1.065 },
-          {
-            "--motion-scale": 1,
-            duration: 1.3,
-            ease: "power3.out",
-            stagger: 0.085,
-          },
-        );
-      }
-
-      if (window.innerWidth >= 769) {
-        cards.forEach((card) => {
-          const image = card.querySelector<HTMLElement>("img");
-          if (!image) return;
-
-          gsap.fromTo(
-            image,
-            { "--motion-shift": "-2.8%" },
-            {
-              "--motion-shift": "2.8%",
-              ease: "none",
-              scrollTrigger: {
-                trigger: card,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: 1,
-                invalidateOnRefresh: true,
-              },
-            },
-          );
-        });
-      }
     }, container);
 
     return () => context.revert();
   }, [containerWidth, items, variant]);
-
-  const rememberSize = (photo: PhotoGalleryItem, image: HTMLImageElement) => {
-    const nextSize = { width: image.naturalWidth, height: image.naturalHeight };
-    if (nextSize.width <= 0 || nextSize.height <= 0) return;
-    setSizes((current) => {
-      const previous = current[photo.id];
-      if (previous?.width === nextSize.width && previous.height === nextSize.height) {
-        return current;
-      }
-      return { ...current, [photo.id]: nextSize };
-    });
-  };
 
   return (
     <div className={`photo-grid${variant === "drawer" ? " photo-grid-drawer" : ""}`} ref={containerRef}>
@@ -316,7 +249,10 @@ export function PhotoGallery({
                 src={photo.image}
                 alt={photo.title ?? "照片"}
                 loading="lazy"
-                onLoad={(event) => rememberSize(photo, event.currentTarget)}
+                decoding="async"
+                draggable={false}
+                width={imageMeta[photo.image]?.width}
+                height={imageMeta[photo.image]?.height}
               />
               {showOverlay && (
                 <span className="photo-overlay">

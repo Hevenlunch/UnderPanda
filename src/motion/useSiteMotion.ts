@@ -18,7 +18,7 @@ function revealHeading(heading: HTMLElement) {
   const timeline = gsap.timeline({
     scrollTrigger: {
       trigger: heading,
-      start: "top 82%",
+      start: "top 86%",
       once: true,
     },
   });
@@ -26,36 +26,25 @@ function revealHeading(heading: HTMLElement) {
   if (kicker) {
     timeline.fromTo(
       kicker,
-      { clipPath: "inset(0% 100% 0% 0%)", x: -22 },
-      { clipPath: "inset(0% 0% 0% 0%)", x: 0, duration: 0.72, ease: EASE_OUT },
+      { autoAlpha: 0, x: -14 },
+      { autoAlpha: 1, x: 0, duration: 0.42, ease: EASE_OUT },
       0,
     );
   }
 
   timeline.fromTo(
     title,
-    {
-      clipPath: "inset(100% 0% 0% 0%)",
-      scaleY: 0.86,
-      yPercent: 108,
-      transformOrigin: "50% 100%",
-    },
-    {
-      clipPath: "inset(0% 0% 0% 0%)",
-      scaleY: 1,
-      yPercent: 0,
-      duration: 1.18,
-      ease: "power4.out",
-    },
-    kicker ? 0.14 : 0,
+    { autoAlpha: 0, y: 24 },
+    { autoAlpha: 1, y: 0, duration: 0.62, ease: EASE_OUT },
+    kicker ? 0.08 : 0,
   );
 
   if (note) {
     timeline.fromTo(
       note,
-      { clipPath: "inset(100% 0% 0% 0%)", y: 32 },
-      { clipPath: "inset(0% 0% 0% 0%)", y: 0, duration: 0.92, ease: EASE_OUT },
-      0.48,
+      { autoAlpha: 0, y: 18 },
+      { autoAlpha: 1, y: 0, duration: 0.5, ease: EASE_OUT },
+      0.18,
     );
   }
 }
@@ -74,85 +63,24 @@ function revealItems(
 ) {
   if (items.length === 0) return;
 
-  const {
-    stagger = 0.1,
-    y = 58,
-    x = 0,
-    scale = 1,
-    start = "top 80%",
-    imageScale = true,
-  } = options;
+  const { stagger = 0.06, y = 24, start = "top 86%" } = options;
 
-  const timeline = gsap.timeline({
-    scrollTrigger: {
-      trigger,
-      start,
-      once: true,
-    },
-  });
-
-  timeline.fromTo(
+  gsap.fromTo(
     items,
+    { autoAlpha: 0, y },
     {
-      scale,
-      scaleY: 0.9,
-      x,
-      y,
-      transformOrigin: "50% 100%",
-    },
-    {
-      scale: 1,
-      scaleY: 1,
-      x: 0,
+      autoAlpha: 1,
       y: 0,
-      duration: 1.02,
+      duration: 0.48,
       ease: EASE_OUT,
-      stagger,
+      stagger: Math.min(stagger, 0.08),
+      scrollTrigger: {
+        trigger,
+        start,
+        once: true,
+      },
     },
   );
-
-  if (!imageScale) return;
-
-  const images = items
-    .map((item) => item.querySelector<HTMLElement>("img"))
-    .filter((image): image is HTMLElement => image !== null);
-
-  if (images.length > 0) {
-    timeline.fromTo(
-      images,
-      { "--motion-scale": 1.07 },
-      { "--motion-scale": 1, duration: 1.25, ease: "power3.out", stagger },
-      0,
-    );
-  }
-}
-
-function addParallax(items: HTMLElement[], selector = "img", distance = 3) {
-  if (window.innerWidth < 769) return;
-
-  items.forEach((item) => {
-    const image = item.matches(selector)
-      ? item
-      : item.querySelector<HTMLElement>(selector);
-
-    if (!image) return;
-
-    gsap.fromTo(
-      image,
-      { "--motion-shift": `${-distance}%` },
-      {
-        "--motion-shift": `${distance}%`,
-        ease: "none",
-        scrollTrigger: {
-          trigger: item,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1,
-          invalidateOnRefresh: true,
-        },
-      },
-    );
-  });
 }
 
 function createOpeningTimeline(root: HTMLElement) {
@@ -364,12 +292,10 @@ function createScrollMotion(root: HTMLElement) {
 
   if (hobbyGrid) {
     revealItems(hobbyGrid, hobbyCards, { stagger: 0.14, y: 72 });
-    addParallax(hobbyCards, "img", 3.2);
   }
 
   if (cityGrid) {
     revealItems(cityGrid, cityCards, { stagger: 0.12, y: 68, start: "top 82%" });
-    addParallax(cityCards, "img", 2.6);
   }
 
   if (workGrid && workColumns.length > 0) {
@@ -438,7 +364,7 @@ export function useSiteMotion(rootRef: RefObject<HTMLElement | null>) {
     const root = rootRef.current;
     if (!root) return;
 
-    const reduced = prefersReducedMotion();
+    const reduced = prefersReducedMotion() || window.matchMedia("(max-width: 768px), (pointer: coarse)").matches;
     const openingTimeline: { current: gsap.core.Timeline | null } = { current: null };
     let scrollContext: ReturnType<typeof gsap.context> | null = null;
     let scrollDelay = 0;

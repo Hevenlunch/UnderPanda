@@ -27,6 +27,17 @@ export function Lightbox({
 }: LightboxProps) {
   useEffect(() => {
     if (index === null) return;
+    const neighborIndexes = [
+      (index - 1 + items.length) % items.length,
+      (index + 1) % items.length,
+    ];
+    neighborIndexes.forEach((neighborIndex) => {
+      const neighbor = items[neighborIndex];
+      if (!neighbor || neighborIndex === index) return;
+      const image = new Image();
+      image.decoding = "async";
+      image.src = neighbor.image;
+    });
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") onClose();
       if (event.key === "ArrowLeft") onChange((index - 1 + items.length) % items.length);
@@ -63,7 +74,7 @@ export function Lightbox({
         ←
       </button>
       <div className="lightbox-frame">
-        <img src={item.image} alt={item.title} />
+        <img src={item.image} alt={item.title} loading="eager" decoding="async" draggable={false} />
         {showDetails && (
           <div className="lightbox-caption">
             <div>

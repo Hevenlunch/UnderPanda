@@ -157,8 +157,14 @@ export interface TravelRouteStyle {
   mobile: TravelRouteModeStyle;
 }
 
+export interface ImageMeta {
+  width: number;
+  height: number;
+}
+
 export interface SiteContent {
   appearance?: Appearance;
+  imageMeta?: Record<string, ImageMeta>;
   typography?: TypographySettings;
   pageText: PageText;
   travelRouteStyle: TravelRouteStyle;

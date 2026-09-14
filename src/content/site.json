@@ -624,5 +624,47 @@
         }
       }
     }
+  },
+  "imageMeta": {
+    "/images/hero-harbor-small.webp": {
+      "width": 1200,
+      "height": 675
+    },
+    "/images/hero-harbor.webp": {
+      "width": 2200,
+      "height": 1238
+    },
+    "/images/uploads/1789218357516-IMG_20250805_191603.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1789218556684-IMG_20250605_182217_1.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1789219213499-IMG_20250101_000125.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1789220033282-photo.webp": {
+      "width": 2200,
+      "height": 1238
+    },
+    "/images/uploads/1789220104717-IMG_20250101_000125.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1789291047133-IMG_20250101_000125.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1789291070385-IMG_20250805_191603.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1789385638366-mmexport1734341292126.jpg": {
+      "width": 1120,
+      "height": 1494
+    }
   }
 }

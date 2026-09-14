@@ -201,9 +201,17 @@ export async function saveSiteContent(content: unknown, token: string) {
 export interface PreparedImage {
   fileName: string;
   dataUrl: string;
+  width: number;
+  height: number;
 }
 
-export async function uploadPreparedImage(prepared: PreparedImage, token: string) {
+export interface UploadedImage {
+  path: string;
+  width: number;
+  height: number;
+}
+
+export async function uploadPreparedImage(prepared: PreparedImage, token: string): Promise<UploadedImage> {
   const match = prepared.dataUrl.match(/^data:image\/(png|jpe?g|webp|avif|gif|svg\+xml);base64,(.+)$/i);
   if (!match) throw new Error("图片格式暂不支持，请使用 JPG、PNG 或 WebP。");
 
@@ -220,5 +228,5 @@ export async function uploadPreparedImage(prepared: PreparedImage, token: string
   const path = `public/images/uploads/${fileName}`;
 
   await putFile(path, match[2], `Upload ${fileName} from online DEV`, token);
-  return `/images/uploads/${fileName}`;
+  return { path: `/images/uploads/${fileName}`, width: prepared.width, height: prepared.height };
 }

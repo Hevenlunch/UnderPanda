@@ -195,7 +195,7 @@ function App() {
               <div className="hero-image-wrap">
                 <picture>
                   <source media="(max-width: 900px)" srcSet={content.profile.heroImageSmall} />
-                  <img src={content.profile.heroImage} alt={`${content.profile.name} 的首页照片`} />
+                  <img src={content.profile.heroImage} alt={`${content.profile.name} 的首页照片`} loading="eager" decoding="async" fetchPriority="high" draggable={false} />
                 </picture>
                 <span className="image-index">01</span>
                 <div className="hero-image-label">
@@ -306,6 +306,7 @@ function App() {
             {visiblePhotos.length > 0 ? (
               <PhotoGallery
                 items={visiblePhotos}
+                imageMeta={content.imageMeta}
                 onOpen={setLightboxIndex}
                 actionLabel={content.pageText.actions.photoAction}
               />
@@ -328,7 +329,7 @@ function App() {
             <div className="hobby-grid">
               {content.hobbies.map((hobby, index) => (
                 <button className="hobby-card" key={hobby.id} onClick={() => openHobby(hobby)}>
-                  <img src={hobby.image} alt={hobby.title} loading="lazy" />
+                  <img src={hobby.image} alt={hobby.title} loading="lazy" decoding="async" draggable={false} />
                   <span className="hobby-number">{String(index + 1).padStart(2, "0")}</span>
                   <span className="hobby-copy">
                     <strong>{hobby.title}</strong>
@@ -356,7 +357,7 @@ function App() {
             <div className="city-grid">
               {content.cities.map((city: CityItem, index) => (
                 <button className="city-card" key={city.id} onClick={() => openCity(city)}>
-                  <img src={city.image} alt={city.name} loading="lazy" />
+                  <img src={city.image} alt={city.name} loading="lazy" decoding="async" draggable={false} />
                   <span className="city-index">{String(index + 1).padStart(2, "0")}</span>
                   <span className="city-copy">
                     <small>{city.date}</small>
@@ -442,6 +443,7 @@ function App() {
         image={drawer?.image ?? ""}
         photos={drawer?.photos}
         adaptivePhotos={drawer?.adaptivePhotos}
+        imageMeta={content.imageMeta}
         onPhotoClick={(index) => {
           const photos = drawer?.photos ?? [];
           setHobbyLightbox({
