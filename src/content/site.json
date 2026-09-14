@@ -281,7 +281,6 @@
       "note": "海风、坡路、红瓦和傍晚的光，构成了我很多照片的背景。",
       "image": "/images/uploads/1789389973559-IMG_20241001_154217.webp",
       "photos": [
-        "/images/photo-sea.svg",
         "/images/uploads/1789390227255-3bdd09e26952b872.jpg",
         "/images/uploads/1789390232037-IMG_20241215_152821.webp",
         "/images/uploads/1789390236211-IMG_20250501_173227.webp",
@@ -300,9 +299,16 @@
       "note": "高楼之间也有细小的生活缝隙，适合慢慢走、慢慢看。",
       "image": "/images/uploads/1789291070385-IMG_20250805_191603.webp",
       "photos": [
-        "/images/photo-night.svg",
-        "/images/photo-city.svg",
-        "/images/photo-detail.svg"
+        "/images/uploads/1789390506867-IMG_20250804_184223.webp",
+        "/images/uploads/1789390510784-IMG_20250805_101611.webp",
+        "/images/uploads/1789390515936-IMG_20250805_104450.webp",
+        "/images/uploads/1789390520231-IMG_20250805_145812.webp",
+        "/images/uploads/1789390524547-IMG_20250805_150254.webp",
+        "/images/uploads/1789390528443-IMG_20250805_164544.webp",
+        "/images/uploads/1789390532037-IMG_20250805_173526.webp",
+        "/images/uploads/1789390535744-IMG_20250805_191603.webp",
+        "/images/uploads/1789390539806-IMG_20250805_195024.webp",
+        "/images/uploads/1789390543229-retouch_2025080422571468.webp"
       ]
     },
     {
@@ -722,6 +728,46 @@
     "/images/uploads/1789390253013-retouch_2025040919251775.webp": {
       "width": 2200,
       "height": 1650
+    },
+    "/images/uploads/1789390506867-IMG_20250804_184223.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1789390510784-IMG_20250805_101611.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1789390515936-IMG_20250805_104450.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1789390520231-IMG_20250805_145812.webp": {
+      "width": 1617,
+      "height": 2200
+    },
+    "/images/uploads/1789390524547-IMG_20250805_150254.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1789390528443-IMG_20250805_164544.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1789390532037-IMG_20250805_173526.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1789390535744-IMG_20250805_191603.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1789390539806-IMG_20250805_195024.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1789390543229-retouch_2025080422571468.webp": {
+      "width": 1650,
+      "height": 2200
     }
   }
 }
