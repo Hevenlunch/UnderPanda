@@ -181,13 +181,15 @@
       "category": "城市",
       "image": "/images/uploads/1789388364286-IMG_20250805_164544.webp",
       "caption": "普通街角也有自己的秩序和节奏。",
-      "note": "喜欢观察城市里不经意的小细节。"
+      "note": "喜欢观察城市里不经意的小细节。",
+      "wide": false,
+      "tall": true
     },
     {
       "id": "cloud-layer",
       "title": "云层",
       "category": "自然",
-      "image": "/images/photo-cloud.svg",
+      "image": "/images/uploads/1789388395437-IMG_20250821_181302.webp",
       "caption": "抬头的时候，天空刚好在换一种颜色。",
       "note": "拍摄于一次傍晚出行。",
       "wide": true
@@ -674,6 +676,10 @@
     "/images/uploads/1789388364286-IMG_20250805_164544.webp": {
       "width": 1650,
       "height": 2200
+    },
+    "/images/uploads/1789388395437-IMG_20250821_181302.webp": {
+      "width": 2200,
+      "height": 1650
     }
   }
 }
