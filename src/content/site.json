@@ -198,7 +198,7 @@
       "id": "night-walk",
       "title": "夜行",
       "category": "城市",
-      "image": "/images/photo-night.svg",
+      "image": "/images/uploads/1789389841274-mmexport1731684638689.webp",
       "caption": "夜色把熟悉的地方变得陌生了一点。",
       "note": "夜晚适合散步，也适合重新认识一座城市。"
     },
@@ -684,6 +684,10 @@
     "/images/uploads/1789389752043-IMG_20250718_184150.webp": {
       "width": 1650,
       "height": 2200
+    },
+    "/images/uploads/1789389841274-mmexport1731684638689.webp": {
+      "width": 2200,
+      "height": 1467
     }
   }
 }
