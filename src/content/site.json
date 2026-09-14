@@ -169,10 +169,11 @@
       "id": "mountain-road",
       "title": "山路之上",
       "category": "自然",
-      "image": "/images/photo-mountain.svg",
+      "image": "/images/uploads/1789388222055-mmexport1744516305282.webp",
       "caption": "路延伸进云里，答案可以晚一点再找。",
       "note": "旅行途中遇到的风景。",
-      "tall": true
+      "tall": false,
+      "wide": true
     },
     {
       "id": "street-corner",
@@ -665,6 +666,10 @@
     "/images/uploads/1789385638366-mmexport1734341292126.jpg": {
       "width": 1120,
       "height": 1494
+    },
+    "/images/uploads/1789388222055-mmexport1744516305282.webp": {
+      "width": 2200,
+      "height": 1467
     }
   }
 }
