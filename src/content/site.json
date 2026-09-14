@@ -27,8 +27,8 @@
     },
     "photography": {
       "kicker": "PHOTOGRAPHY / 摄影",
-      "title": "我拍下的，不只是风景。",
-      "note": "光线、城市、海风，还有那些不想忘记的普通瞬间。",
+      "title": "我拍下的，不只是风景......",
+      "note": "光线、城市、海风，农田，还有那些不想忘记的普通瞬间。",
       "all": "全部",
       "emptyTitle": "这个分类暂时还没有照片",
       "emptyNote": "在 DEV 的“摄影管理”里添加一张吧。",
@@ -151,7 +151,7 @@
       "title": "跨年之夜",
       "category": "城市",
       "image": "/images/uploads/1789219213499-IMG_20250101_000125.webp",
-      "caption": "气球如星星闪闪，甚是好看啊。",
+      "caption": "气球如星星闪闪，甚是美丽啊。",
       "note": "拍摄于五四广场的跨年夜。",
       "visible": true,
       "wide": false,
@@ -161,7 +161,7 @@
       "id": "sea-dusk",
       "title": "海边黄昏",
       "category": "自然",
-      "image": "/images/photo-sea.svg",
+      "image": "/images/uploads/1789385638366-mmexport1734341292126.jpg",
       "caption": "风很大，海面却慢慢安静下来。",
       "note": "青岛的海边，是经常想再去的地方。"
     },
