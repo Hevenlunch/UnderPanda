@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "underpanda-oauth",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-14",
+  "observability": {
+    "enabled": true
+  },
+  "routes": [
+    {
+      "pattern": "auth.underpanda.cn",
+      "custom_domain": true
+    }
+  ]
+}
