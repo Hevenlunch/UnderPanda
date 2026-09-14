@@ -364,7 +364,7 @@ export function useSiteMotion(rootRef: RefObject<HTMLElement | null>) {
     const root = rootRef.current;
     if (!root) return;
 
-    const reduced = prefersReducedMotion() || window.matchMedia("(max-width: 768px), (pointer: coarse)").matches;
+    const reduced = prefersReducedMotion();
     const openingTimeline: { current: gsap.core.Timeline | null } = { current: null };
     let scrollContext: ReturnType<typeof gsap.context> | null = null;
     let scrollDelay = 0;

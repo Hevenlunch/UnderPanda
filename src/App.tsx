@@ -35,6 +35,12 @@ interface DrawerContent {
   adaptivePhotos?: boolean;
 }
 
+interface OverlaySnapshot {
+  drawer?: DrawerContent | null;
+  lightboxIndex?: number | null;
+  hobbyLightbox?: { items: LightboxItem[]; index: number } | null;
+}
+
 function SectionHeading({
   kicker,
   title,
@@ -62,6 +68,38 @@ function App() {
     items: LightboxItem[];
     index: number;
   } | null>(null);
+  const overlayStateRef = useRef<OverlaySnapshot>({
+    drawer,
+    lightboxIndex,
+    hobbyLightbox,
+  });
+  overlayStateRef.current = { drawer, lightboxIndex, hobbyLightbox };
+
+  const overlayOpen = Boolean(drawer || lightboxIndex !== null || hobbyLightbox);
+
+  useEffect(() => {
+    document.body.classList.toggle("overlay-open", overlayOpen);
+    return () => document.body.classList.remove("overlay-open");
+  }, [overlayOpen]);
+
+  useEffect(() => {
+    window.history.replaceState(
+      { ...window.history.state, underpandaOverlay: {} },
+      "",
+    );
+
+    const onPopState = (event: PopStateEvent) => {
+      const state = event.state as { underpandaOverlay?: OverlaySnapshot } | null;
+      const snapshot = state?.underpandaOverlay ?? {};
+      overlayStateRef.current = snapshot;
+      setDrawer(snapshot.drawer ?? null);
+      setLightboxIndex(snapshot.lightboxIndex ?? null);
+      setHobbyLightbox(snapshot.hobbyLightbox ?? null);
+    };
+
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
   const [typography, setTypography] = useState<TypographySettings>(() =>
     initialContent.typography ? normalizeTypography(initialContent.typography) : loadTypography(),
   );
@@ -109,27 +147,59 @@ function App() {
     if (!categories.includes(category)) setCategory(content.pageText.photography.all);
   }, [categories, category, content.pageText.photography.all]);
 
+  const pushOverlay = (next: Partial<OverlaySnapshot>) => {
+    const snapshot = { ...overlayStateRef.current, ...next };
+    window.history.pushState(
+      { ...window.history.state, underpandaOverlay: snapshot },
+      "",
+    );
+    overlayStateRef.current = snapshot;
+    setDrawer(snapshot.drawer ?? null);
+    setLightboxIndex(snapshot.lightboxIndex ?? null);
+    setHobbyLightbox(snapshot.hobbyLightbox ?? null);
+  };
+
+  const closeTopOverlay = () => {
+    const state = window.history.state as { underpandaOverlay?: OverlaySnapshot } | null;
+    const hasOverlayHistory = Boolean(state?.underpandaOverlay);
+    if (hasOverlayHistory) {
+      window.history.back();
+      return;
+    }
+    overlayStateRef.current = {};
+    setDrawer(null);
+    setLightboxIndex(null);
+    setHobbyLightbox(null);
+  };
   const openHobby = (hobby: HobbyItem) => {
     const paragraphs = hobby.paragraphs?.filter((paragraph) => paragraph.trim()) ?? [];
-    setDrawer({
+    pushOverlay({
+      drawer: {
       kicker: content.pageText.hobbies.drawerKicker,
       title: hobby.title,
       description: [hobby.summary, hobby.detail, ...paragraphs].filter(Boolean).join("\n\n"),
       image: hobby.image,
       photos: hobby.photos,
       adaptivePhotos: true,
+      },
+      lightboxIndex: null,
+      hobbyLightbox: null,
     });
   };
 
   const openCity = (city: CityItem) => {
     const paragraphs = city.paragraphs?.filter((paragraph) => paragraph.trim()) ?? [];
-    setDrawer({
+    pushOverlay({
+      drawer: {
       kicker: content.pageText.travel.drawerKicker,
       title: city.name,
       description: [city.date, city.note, ...paragraphs].filter(Boolean).join("\n\n"),
       image: city.image,
       photos: city.photos,
       adaptivePhotos: true,
+      },
+      lightboxIndex: null,
+      hobbyLightbox: null,
     });
   };
 
@@ -307,7 +377,9 @@ function App() {
               <PhotoGallery
                 items={visiblePhotos}
                 imageMeta={content.imageMeta}
-                onOpen={setLightboxIndex}
+                onOpen={(index) =>
+                  pushOverlay({ lightboxIndex: index, drawer: null, hobbyLightbox: null })
+                }
                 actionLabel={content.pageText.actions.photoAction}
               />
             ) : (
@@ -422,14 +494,14 @@ function App() {
       <Lightbox
         items={visiblePhotos}
         index={lightboxIndex}
-        onClose={() => setLightboxIndex(null)}
+        onClose={closeTopOverlay}
         onChange={setLightboxIndex}
         photoLabel={content.pageText.photography.lightboxLabel}
       />
       <Lightbox
         items={hobbyLightbox?.items ?? []}
         index={hobbyLightbox?.index ?? null}
-        onClose={() => setHobbyLightbox(null)}
+        onClose={closeTopOverlay}
         onChange={(index) =>
           setHobbyLightbox((current) => (current ? { ...current, index } : null))
         }
@@ -446,17 +518,19 @@ function App() {
         imageMeta={content.imageMeta}
         onPhotoClick={(index) => {
           const photos = drawer?.photos ?? [];
-          setHobbyLightbox({
-            items: photos.map((photo, photoIndex) => ({
-              id: `hobby-lightbox-${photoIndex}-${photo}`,
-              title: `照片 ${photoIndex + 1}`,
-              image: photo,
-              caption: "",
-            })),
-            index,
+          pushOverlay({
+            hobbyLightbox: {
+              items: photos.map((photo, photoIndex) => ({
+                id: `hobby-lightbox-${photoIndex}-${photo}`,
+                title: `照片 ${photoIndex + 1}`,
+                image: photo,
+                caption: "",
+              })),
+              index,
+            },
           });
         }}
-        onClose={() => setDrawer(null)}
+        onClose={closeTopOverlay}
       />
       {editorEnabled && (
         <Suspense fallback={null}>

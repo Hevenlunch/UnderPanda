@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { PhotoGallery } from "./PhotoGallery";
 
 interface DetailDrawerProps {
@@ -26,53 +26,14 @@ export function DetailDrawer({
   onPhotoClick,
   onClose,
 }: DetailDrawerProps) {
-  const closeRef = useRef(onClose);
-  const backEntryRef = useRef(false);
-
-  useEffect(() => {
-    closeRef.current = onClose;
-  }, [onClose]);
-
   useEffect(() => {
     if (!open) return;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") onClose();
     };
-    document.body.classList.add("overlay-open");
     window.addEventListener("keydown", onKeyDown);
-    return () => {
-      if (!document.querySelector(".drawer-layer.is-open, .lightbox")) {
-        document.body.classList.remove("overlay-open");
-      }
-      window.removeEventListener("keydown", onKeyDown);
-    };
+    return () => window.removeEventListener("keydown", onKeyDown);
   }, [open, onClose]);
-
-  useEffect(() => {
-    if (!open) return;
-    const mobile = window.matchMedia("(max-width: 768px), (pointer: coarse)").matches;
-    if (!mobile) return;
-
-    window.history.pushState(
-      { ...window.history.state, underpandaDetailDrawer: true },
-      "",
-    );
-    backEntryRef.current = true;
-
-    const onPopState = () => {
-      backEntryRef.current = false;
-      closeRef.current();
-    };
-
-    window.addEventListener("popstate", onPopState);
-    return () => {
-      window.removeEventListener("popstate", onPopState);
-      if (backEntryRef.current) {
-        backEntryRef.current = false;
-        window.history.back();
-      }
-    };
-  }, [open]);
 
   return (
     <div className={`drawer-layer ${open ? "is-open" : ""}`} aria-hidden={!open}>
@@ -86,7 +47,6 @@ export function DetailDrawer({
         <button className="overlay-close drawer-close" onClick={onClose} aria-label="关闭详情">
           ×
         </button>
-        <div className="drawer-mobile-hint">向右滑动或使用系统返回关闭</div>
         <div className="drawer-hero">
           {image && (
             <img

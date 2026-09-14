@@ -43,12 +43,8 @@ export function Lightbox({
       if (event.key === "ArrowLeft") onChange((index - 1 + items.length) % items.length);
       if (event.key === "ArrowRight") onChange((index + 1) % items.length);
     };
-    document.body.classList.add("overlay-open");
     window.addEventListener("keydown", onKeyDown);
     return () => {
-      if (!document.querySelector(".drawer-layer.is-open, .lightbox")) {
-        document.body.classList.remove("overlay-open");
-      }
       window.removeEventListener("keydown", onKeyDown);
     };
   }, [index, items.length, onChange, onClose]);
