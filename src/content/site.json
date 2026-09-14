@@ -228,7 +228,7 @@
       "title": "摄影",
       "summary": "用照片保存光线、城市和情绪。",
       "detail": "喜欢风景、城市和日常记录。比起追求器材参数，更在意照片有没有留下当时的感觉。",
-      "image": "/images/photo-city.svg",
+      "image": "/images/uploads/1789390872929-retouch_2025080422571468.webp",
       "paragraphs": [
         "真的成功了嘛"
       ],
@@ -295,20 +295,23 @@
     {
       "id": "shanghai",
       "name": "上海",
-      "date": "城市散步",
+      "date": "在上海，看见一座城市的两面",
       "note": "高楼之间也有细小的生活缝隙，适合慢慢走、慢慢看。",
       "image": "/images/uploads/1789291070385-IMG_20250805_191603.webp",
       "photos": [
         "/images/uploads/1789390506867-IMG_20250804_184223.webp",
-        "/images/uploads/1789390510784-IMG_20250805_101611.webp",
         "/images/uploads/1789390515936-IMG_20250805_104450.webp",
+        "/images/uploads/1789390510784-IMG_20250805_101611.webp",
         "/images/uploads/1789390520231-IMG_20250805_145812.webp",
         "/images/uploads/1789390524547-IMG_20250805_150254.webp",
         "/images/uploads/1789390528443-IMG_20250805_164544.webp",
+        "/images/uploads/1789390543229-retouch_2025080422571468.webp",
         "/images/uploads/1789390532037-IMG_20250805_173526.webp",
         "/images/uploads/1789390535744-IMG_20250805_191603.webp",
-        "/images/uploads/1789390539806-IMG_20250805_195024.webp",
-        "/images/uploads/1789390543229-retouch_2025080422571468.webp"
+        "/images/uploads/1789390539806-IMG_20250805_195024.webp"
+      ],
+      "paragraphs": [
+        "上海是一座很容易让人抬起头的城市。\n\n第一次来到这里，我被那些不断向上延伸的高楼吸引，也在走进一条条老街之后，发现了另一种完全不同的上海。陆家嘴的灯光、外滩的夜色很耀眼，而弄堂里的电线、老房子的窗户和街角的人们，又让这座城市显得格外真实。\n\n我喜欢这种新与旧并存的感觉。上一秒还站在摩天大楼之间，下一秒转进一条不起眼的小巷，城市的节奏突然就慢了下来。那些看起来毫不起眼的街道，反而让我觉得自己真正走进了上海。\n\n这次旅行拍下了很多照片，有城市的夜景，也有白天偶然遇见的建筑和街头。后来再回头看，记住的似乎并不是去了多少地方，而是那些走在陌生城市里，突然觉得“原来这里就是上海”的瞬间。\n\n一边是灯火通明的未来，一边是还没有走远的过去。或许，这就是我眼里的上海。"
       ]
     },
     {
@@ -325,39 +328,27 @@
     },
     {
       "id": "xian",
-      "name": "西安",
+      "name": "开封",
       "date": "城墙与夜色",
       "note": "古老和日常叠在一起，走几步就像换了一个时间。",
       "image": "/images/photo-night.svg",
-      "photos": [
-        "/images/photo-night.svg",
-        "/images/photo-detail.svg",
-        "/images/photo-travel.svg"
-      ]
+      "photos": []
     },
     {
       "id": "chengdu",
-      "name": "成都",
+      "name": "南京",
       "date": "慢一点",
       "note": "这里的节奏提醒我，生活不一定总要赶着去下一站。",
       "image": "/images/photo-detail.svg",
-      "photos": [
-        "/images/photo-street.svg",
-        "/images/photo-mountain.svg",
-        "/images/photo-detail.svg"
-      ]
+      "photos": []
     },
     {
       "id": "hangzhou",
-      "name": "杭州",
+      "name": "临沂",
       "date": "山水之间",
-      "note": "水面、树影和远处的山，适合在没有安排的日子里消磨时间。",
+      "note": "一座历史文化与现代文明交融的城市，适合在没有安排的日子里消磨时间。",
       "image": "/images/photo-cloud.svg",
-      "photos": [
-        "/images/photo-mountain.svg",
-        "/images/photo-cloud.svg",
-        "/images/photo-sea.svg"
-      ]
+      "photos": []
     }
   ],
   "work": {
@@ -766,6 +757,10 @@
       "height": 1650
     },
     "/images/uploads/1789390543229-retouch_2025080422571468.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1789390872929-retouch_2025080422571468.webp": {
       "width": 1650,
       "height": 2200
     }
