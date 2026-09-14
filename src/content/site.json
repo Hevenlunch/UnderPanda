@@ -115,7 +115,7 @@
     "current": {
       "label": "最近的我在做什么",
       "title": "继续研究，也继续拍照。",
-      "text": "把专业上的问题做扎实，也慢慢整理走过的城市、遇见的人和那些值得记住的日常。"
+      "text": "把专业上的问题做扎实，也慢慢整理走过的城市、遇见的人和那些值得记住的日常。人生在世，及时享乐"
     }
   },
   "photoCategories": [
@@ -230,7 +230,7 @@
       "detail": "喜欢风景、城市和日常记录。比起追求器材参数，更在意照片有没有留下当时的感觉。",
       "image": "/images/uploads/1789390872929-retouch_2025080422571468.webp",
       "paragraphs": [
-        "真的成功了嘛"
+        ""
       ],
       "photos": [
         "/images/uploads/1789220033282-photo.webp",
@@ -382,8 +382,8 @@
   "appearance": {
     "desktop": {
       "cardRadius": 4,
-      "moduleLabelScale": 1.27,
-      "moduleIntroScale": 1.14,
+      "moduleLabelScale": 1.24,
+      "moduleIntroScale": 1.13,
       "hero": {
         "radiusTopLeft": 32,
         "radiusTopRight": 32,
