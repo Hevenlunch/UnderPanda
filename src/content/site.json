@@ -179,7 +179,7 @@
       "id": "street-corner",
       "title": "街角",
       "category": "城市",
-      "image": "/images/photo-street.svg",
+      "image": "/images/uploads/1789388364286-IMG_20250805_164544.webp",
       "caption": "普通街角也有自己的秩序和节奏。",
       "note": "喜欢观察城市里不经意的小细节。"
     },
@@ -670,6 +670,10 @@
     "/images/uploads/1789388222055-mmexport1744516305282.webp": {
       "width": 2200,
       "height": 1467
+    },
+    "/images/uploads/1789388364286-IMG_20250805_164544.webp": {
+      "width": 1650,
+      "height": 2200
     }
   }
 }
