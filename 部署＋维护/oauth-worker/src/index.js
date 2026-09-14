@@ -23,15 +23,26 @@ function callbackScript(status, token) {
 <body>
   <p>Authorizing Decap...</p>
   <script>
-    const receiveMessage = (message) => {
-      window.opener.postMessage(
-        "authorization:github:${status}:${payload}",
-        "*"
-      );
+    const authorizationMessage = "authorization:github:${status}:${payload}";
+    let handshakeTimer;
+    const sendAuthorization = () => {
+      if (window.opener) window.opener.postMessage(authorizationMessage, "*");
+    };
+    const receiveMessage = () => {
+      if (handshakeTimer) window.clearInterval(handshakeTimer);
+      sendAuthorization();
       window.removeEventListener("message", receiveMessage, false);
     };
     window.addEventListener("message", receiveMessage, false);
-    window.opener.postMessage("authorizing:github", "*");
+    if (window.opener) {
+      window.opener.postMessage("authorizing:github", "*");
+      let attempts = 0;
+      handshakeTimer = window.setInterval(() => {
+        attempts += 1;
+        window.opener.postMessage("authorizing:github", "*");
+        if (attempts >= 20) window.clearInterval(handshakeTimer);
+      }, 500);
+    }
   </script>
 </body>
 </html>`;
@@ -42,15 +53,12 @@ async function handleAuth(request, env) {
   if (url.searchParams.get("provider") !== "github") {
     return new Response("Invalid provider", { status: 400 });
   }
-  const redirectUri = `${url.origin}/callback?provider=github`;
+  const redirectUri = `${url.origin}/callback`;
   return Response.redirect(oauthAuthorizeUrl(env, redirectUri), 302);
 }
 
 async function handleCallback(request, env) {
   const url = new URL(request.url);
-  if (url.searchParams.get("provider") !== "github") {
-    return new Response("Invalid provider", { status: 400 });
-  }
   const code = url.searchParams.get("code");
   if (!code) return new Response("Missing code", { status: 400 });
 
@@ -64,7 +72,7 @@ async function handleCallback(request, env) {
       client_id: env.GITHUB_CLIENT_ID,
       client_secret: env.GITHUB_CLIENT_SECRET,
       code,
-      redirect_uri: `${url.origin}/callback?provider=github`,
+      redirect_uri: `${url.origin}/callback`,
       grant_type: "authorization_code",
     }),
   });

@@ -1,6 +1,14 @@
 # 个人生活网站
 
-这是第一版个人网站原型，使用 React + Vite + TypeScript。
+这是个人生活网站，使用 React + Vite + TypeScript，并通过 Cloudflare Workers 部署。
+
+## 在线地址
+
+- 正式网站：https://underpanda.cn/
+- 备用入口：https://www.underpanda.cn/
+- 内容管理后台：https://underpanda.cn/admin/
+
+后台使用 GitHub 登录，发布后会自动提交到 main 分支，并由 Cloudflare 自动构建和部署。
 
 ## 一键打开
 

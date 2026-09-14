@@ -1,0 +1,1162 @@
+backend:
+  name: github
+  repo: Hevenlunch/UnderPanda
+  branch: main
+  base_url: https://auth.underpanda.cn
+  auth_endpoint: auth
+publish_mode: simple
+site_url: https://underpanda.cn
+display_url: https://underpanda.cn
+media_folder: public/images/uploads
+public_folder: /images/uploads
+collections:
+- name: site
+  label: 网站内容
+  files:
+  - name: site-content
+    label: 全站内容
+    file: src/content/site.json
+    fields:
+    - label: 页面文字
+      name: pageText
+      widget: object
+      fields:
+      - label: 浏览器标题
+        name: browserTitle
+        widget: string
+      - label: 导航
+        name: navigation
+        widget: object
+        fields:
+        - label: 首页
+          name: home
+          widget: string
+        - label: 关于
+          name: about
+          widget: string
+        - label: 摄影照片
+          name: photography
+          widget: string
+        - label: 生活
+          name: hobbies
+          widget: string
+        - label: 旅行
+          name: travel
+          widget: string
+        - label: 联系
+          name: contact
+          widget: string
+      - label: 按钮文字
+        name: actions
+        widget: object
+        fields:
+        - label: 查看照片按钮
+          name: viewPhotos
+          widget: string
+        - label: 认识我按钮
+          name: meetMe
+          widget: string
+        - label: 照片操作文字
+          name: photoAction
+          widget: string
+        - label: 爱好操作文字
+          name: hobbyAction
+          widget: string
+        - label: 城市操作文字
+          name: cityAction
+          widget: string
+        - label: 返回顶部
+          name: backToTop
+          widget: string
+      - label: 首页首屏
+        name: hero
+        widget: object
+        fields:
+        - label: 顶部小字
+          name: meta
+          widget: string
+        - label: 图片标签
+          name: imageLabel
+          widget: string
+        - label: 滚动提示
+          name: scroll
+          widget: string
+      - label: 关于
+        name: about
+        widget: object
+        fields:
+        - label: 说明
+          name: note
+          widget: text
+      - label: 摄影照片
+        name: photography
+        widget: object
+        fields:
+        - label: 小标签
+          name: kicker
+          widget: string
+        - label: 标题
+          name: title
+          widget: string
+        - label: 说明
+          name: note
+          widget: text
+        - label: 全部分类
+          name: all
+          widget: string
+        - label: 空状态标题
+          name: emptyTitle
+          widget: string
+        - label: 空状态说明
+          name: emptyNote
+          widget: text
+        - label: 大图标签
+          name: lightboxLabel
+          widget: string
+      - label: 生活
+        name: hobbies
+        widget: object
+        fields:
+        - label: 小标签
+          name: kicker
+          widget: string
+        - label: 标题
+          name: title
+          widget: string
+        - label: 说明
+          name: note
+          widget: text
+        - label: 详情页小标签
+          name: drawerKicker
+          widget: string
+      - label: 旅行
+        name: travel
+        widget: object
+        fields:
+        - label: 小标签
+          name: kicker
+          widget: string
+        - label: 标题
+          name: title
+          widget: string
+        - label: 说明
+          name: note
+          widget: text
+        - label: 详情页小标签
+          name: drawerKicker
+          widget: string
+      - label: 页脚
+        name: footer
+        widget: object
+        fields:
+        - label: 页脚标语
+          name: tagline
+          widget: string
+      - label: 手机菜单
+        name: mobileMenu
+        widget: object
+        fields:
+        - label: 小标签
+          name: kicker
+          widget: string
+    - label: 旅行路线样式
+      name: travelRouteStyle
+      widget: object
+      fields:
+      - label: 电脑端
+        name: desktop
+        widget: object
+        fields:
+        - label: 每行高度
+          name: rowHeight
+          widget: number
+          value_type: int
+        - label: 城市字号
+          name: cityFontSize
+          widget: number
+          value_type: int
+        - label: 城市横向留白
+          name: cityPaddingX
+          widget: number
+          value_type: int
+        - label: 城市纵向留白
+          name: cityPaddingY
+          widget: number
+          value_type: int
+        - label: 圆点大小
+          name: dotSize
+          widget: number
+          value_type: int
+        - label: 内圆点大小
+          name: innerDotSize
+          widget: number
+          value_type: int
+        - label: 线条粗细
+          name: lineWidth
+          widget: number
+          value_type: int
+        - label: 虚线长度
+          name: dashLength
+          widget: number
+          value_type: int
+        - label: 虚线间距
+          name: dashGap
+          widget: number
+          value_type: int
+      - label: 手机端
+        name: mobile
+        widget: object
+        fields:
+        - label: 每行高度
+          name: rowHeight
+          widget: number
+          value_type: int
+        - label: 城市字号
+          name: cityFontSize
+          widget: number
+          value_type: int
+        - label: 城市横向留白
+          name: cityPaddingX
+          widget: number
+          value_type: int
+        - label: 城市纵向留白
+          name: cityPaddingY
+          widget: number
+          value_type: int
+        - label: 圆点大小
+          name: dotSize
+          widget: number
+          value_type: int
+        - label: 内圆点大小
+          name: innerDotSize
+          widget: number
+          value_type: int
+        - label: 线条粗细
+          name: lineWidth
+          widget: number
+          value_type: int
+        - label: 虚线长度
+          name: dashLength
+          widget: number
+          value_type: int
+        - label: 虚线间距
+          name: dashGap
+          widget: number
+          value_type: int
+    - label: 个人信息
+      name: profile
+      widget: object
+      fields:
+      - label: 显示名称
+        name: name
+        widget: string
+      - label: 英文名称
+        name: englishName
+        widget: string
+      - label: 顶部短句
+        name: eyebrow
+        widget: string
+      - label: 标题
+        name: title
+        widget: string
+      - label: 个人简介
+        name: intro
+        widget: text
+      - label: 所在城市
+        name: location
+        widget: string
+      - label: 头像
+        name: avatar
+        widget: image
+      - label: 首页大图
+        name: heroImage
+        widget: image
+      - label: 首页小图
+        name: heroImageSmall
+        widget: image
+      - label: 电脑端图片位置
+        name: heroImagePosition
+        widget: string
+      - label: 手机端图片位置
+        name: heroImageMobilePosition
+        widget: string
+    - label: 关于
+      name: about
+      widget: object
+      fields:
+      - label: 小标签
+        name: kicker
+        widget: string
+      - label: 主标题
+        name: heading
+        widget: string
+      - label: 引导语
+        name: lead
+        widget: text
+      - label: 段落
+        name: paragraphs
+        widget: list
+        field:
+          label: 段落
+          name: paragraph
+          widget: text
+      - label: 个人特点
+        name: traits
+        widget: list
+        fields:
+        - label: 标题
+          name: title
+          widget: string
+        - label: 正文
+          name: text
+          widget: text
+      - label: 最近在做
+        name: current
+        widget: object
+        fields:
+        - label: 标签
+          name: label
+          widget: string
+        - label: 标题
+          name: title
+          widget: string
+        - label: 正文
+          name: text
+          widget: text
+    - label: 摄影分类
+      name: photoCategories
+      widget: list
+      field:
+        label: 条目
+        name: item
+        widget: string
+    - label: 摄影照片
+      name: photography
+      widget: list
+      fields:
+      - label: 内部标识
+        name: id
+        widget: string
+        hint: 内部标识，除非有明确原因，否则不要修改。
+      - label: 标题
+        name: title
+        widget: string
+      - label: 分类
+        name: category
+        widget: string
+      - label: 图片
+        name: image
+        widget: image
+      - label: 图片说明
+        name: caption
+        widget: text
+      - label: 说明
+        name: note
+        widget: text
+      - label: 横向宽图
+        name: wide
+        widget: boolean
+      - label: 是否显示
+        name: visible
+        widget: boolean
+      - label: 纵向长图
+        name: tall
+        widget: boolean
+    - label: 生活
+      name: hobbies
+      widget: list
+      fields:
+      - label: 内部标识
+        name: id
+        widget: string
+        hint: 内部标识，除非有明确原因，否则不要修改。
+      - label: 标题
+        name: title
+        widget: string
+      - label: 摘要
+        name: summary
+        widget: text
+      - label: 详情
+        name: detail
+        widget: text
+      - label: 图片
+        name: image
+        widget: image
+      - label: 段落
+        name: paragraphs
+        widget: list
+        field:
+          label: 段落
+          name: paragraph
+          widget: text
+      - label: 照片列表
+        name: photos
+        widget: list
+        field:
+          label: 图片
+          name: image
+          widget: image
+    - label: 旅行城市
+      name: cities
+      widget: list
+      fields:
+      - label: 内部标识
+        name: id
+        widget: string
+        hint: 内部标识，除非有明确原因，否则不要修改。
+      - label: 显示名称
+        name: name
+        widget: string
+      - label: 日期
+        name: date
+        widget: string
+      - label: 说明
+        name: note
+        widget: text
+      - label: 图片
+        name: image
+        widget: image
+      - label: 照片列表
+        name: photos
+        widget: list
+        field:
+          label: 图片
+          name: image
+          widget: image
+      - label: 段落
+        name: paragraphs
+        widget: list
+        field:
+          label: 段落
+          name: paragraph
+          widget: text
+    - label: 工作与研究方向
+      name: work
+      widget: object
+      fields:
+      - label: 小标签
+        name: kicker
+        widget: string
+      - label: 主标题
+        name: heading
+        widget: string
+      - label: 正文
+        name: text
+        widget: text
+      - label: 说明
+        name: note
+        widget: text
+    - label: 联系
+      name: contact
+      widget: object
+      fields:
+      - label: 小标签
+        name: kicker
+        widget: string
+      - label: 主标题
+        name: heading
+        widget: string
+      - label: 正文
+        name: text
+        widget: text
+      - label: 联系链接
+        name: links
+        widget: list
+        fields:
+        - label: 标签
+          name: label
+          widget: string
+        - label: 显示文字
+          name: value
+          widget: string
+        - label: 跳转链接
+          name: href
+          widget: string
+    - label: 外观设置
+      name: appearance
+      widget: object
+      fields:
+      - label: 电脑端
+        name: desktop
+        widget: object
+        fields:
+        - label: 卡片圆角
+          name: cardRadius
+          widget: number
+          value_type: int
+        - label: 模块标签缩放
+          name: moduleLabelScale
+          widget: number
+          value_type: float
+        - label: 模块介绍缩放
+          name: moduleIntroScale
+          widget: number
+          value_type: float
+        - label: 首页首屏
+          name: hero
+          widget: object
+          fields:
+          - label: 左上圆角
+            name: radiusTopLeft
+            widget: number
+            value_type: int
+          - label: 右上圆角
+            name: radiusTopRight
+            widget: number
+            value_type: int
+          - label: 右下圆角
+            name: radiusBottomRight
+            widget: number
+            value_type: int
+          - label: 左下圆角
+            name: radiusBottomLeft
+            widget: number
+            value_type: int
+          - label: 边框粗细
+            name: borderWidth
+            widget: number
+            value_type: int
+          - label: 边框颜色
+            name: borderColor
+            widget: string
+          - label: 内边距
+            name: innerInset
+            widget: number
+            value_type: int
+          - label: 阴影
+            name: shadow
+            widget: string
+        - label: 正文
+          name: text
+          widget: object
+          fields:
+          - label: 导航
+            name: nav
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 顶部短句
+            name: eyebrow
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 首页标题
+            name: heroTitle
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 首页简介
+            name: heroIntro
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 模块标题
+            name: sectionTitle
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 模块说明
+            name: sectionNote
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 正文
+            name: body
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 按钮
+            name: button
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 关于我引导语
+            name: aboutLead
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 最近在做标题
+            name: currentCardTitle
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 爱好标题
+            name: hobbyTitle
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 城市标题
+            name: cityTitle
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 照片标题
+            name: photoTitle
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 联系链接
+            name: contactLink
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 页脚
+            name: footer
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 返回顶部
+            name: backToTop
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 手机菜单标题
+            name: mobileMenuTitle
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 详情标题
+            name: drawerTitle
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+      - label: 手机端
+        name: mobile
+        widget: object
+        fields:
+        - label: 卡片圆角
+          name: cardRadius
+          widget: number
+          value_type: int
+        - label: 模块标签缩放
+          name: moduleLabelScale
+          widget: number
+          value_type: float
+        - label: 模块介绍缩放
+          name: moduleIntroScale
+          widget: number
+          value_type: float
+        - label: 首页首屏
+          name: hero
+          widget: object
+          fields:
+          - label: 左上圆角
+            name: radiusTopLeft
+            widget: number
+            value_type: int
+          - label: 右上圆角
+            name: radiusTopRight
+            widget: number
+            value_type: int
+          - label: 右下圆角
+            name: radiusBottomRight
+            widget: number
+            value_type: int
+          - label: 左下圆角
+            name: radiusBottomLeft
+            widget: number
+            value_type: int
+          - label: 边框粗细
+            name: borderWidth
+            widget: number
+            value_type: int
+          - label: 边框颜色
+            name: borderColor
+            widget: string
+          - label: 内边距
+            name: innerInset
+            widget: number
+            value_type: int
+          - label: 阴影
+            name: shadow
+            widget: string
+        - label: 正文
+          name: text
+          widget: object
+          fields:
+          - label: 导航
+            name: nav
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 顶部短句
+            name: eyebrow
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 首页标题
+            name: heroTitle
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 首页简介
+            name: heroIntro
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 模块标题
+            name: sectionTitle
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 模块说明
+            name: sectionNote
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 正文
+            name: body
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 按钮
+            name: button
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 关于我引导语
+            name: aboutLead
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 最近在做标题
+            name: currentCardTitle
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 爱好标题
+            name: hobbyTitle
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 城市标题
+            name: cityTitle
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 照片标题
+            name: photoTitle
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 联系链接
+            name: contactLink
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 页脚
+            name: footer
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 返回顶部
+            name: backToTop
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 手机菜单标题
+            name: mobileMenuTitle
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
+          - label: 详情标题
+            name: drawerTitle
+            widget: object
+            fields:
+            - label: 字号
+              name: fontSize
+              widget: string
+            - label: 行高
+              name: lineHeight
+              widget: string
+            - label: 字间距
+              name: letterSpacing
+              widget: string
+            - label: 字重
+              name: fontWeight
+              widget: string
