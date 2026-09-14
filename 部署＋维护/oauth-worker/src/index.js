@@ -82,7 +82,7 @@ async function handleCallback(request, env) {
     return new Response(`OAuth failed: ${data.error_description || data.error || "unknown error"}`, { status: 401 });
   }
   return new Response(callbackScript("success", data.access_token), {
-    headers: { "Content-Type": "text/html; charset=utf-8" },
+    headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" },
   });
 }
 
