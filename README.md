@@ -5,8 +5,11 @@
 ## 在线地址
 
 - 正式网站：https://underpanda.cn/
+- 预览网站：https://preview.underpanda.cn/
 - 备用入口：https://www.underpanda.cn/
 - 在线编辑：https://underpanda.cn/admin/
+
+预览站只读，用于上线前查看效果；确认后再更新正式站。`preview.underpanda.cn` 地址固定，以后不需要重新配置。
 
 打开 `/admin/` 后会自动进入正常网页，并启用左下角的 `DEV` 面板。登录 GitHub 后，可以直接在页面上修改文字、图片、旅行、爱好和字体；修改会实时预览，点击“发布内容”后自动提交到 GitHub，并由 Cloudflare 重新部署。
 
@@ -47,3 +50,5 @@ npx wrangler deploy
 ```
 
 通常约 1 分钟后正式网站会更新。
+
+GitHub 仓库同时保存完整源码和内容历史，因此日常更新不需要再手动制作 ZIP 备份。需要离线归档时，Git 提交记录和 release 标签已经足够。

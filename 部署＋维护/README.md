@@ -10,6 +10,12 @@
 - 登录方式：GitHub OAuth
 - 发布方式：DEV 提交到 GitHub，Cloudflare 自动构建和部署
 
+## 固定预览站
+
+- 预览地址：https://preview.underpanda.cn/
+- 预览站只读，不能发布或上传。
+- 预览地址固定，每次只需部署到同一个 Worker，不需要重新配置域名。
+- 正式站确认流程：先部署预览，用户确认后，再推送到 `main` 自动更新正式站。
 `/admin/` 不再使用 Decap CMS，也不再显示另一套后台界面。它会自动跳转到 `https://underpanda.cn/?dev=1`，呈现与正式网站完全一致的真实页面，并保留原来的 DEV 编辑体验。
 
 ## 在线编辑流程

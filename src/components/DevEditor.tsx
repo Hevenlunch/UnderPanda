@@ -3,6 +3,7 @@ import type { CityItem, HobbyItem, PhotographyItem, SiteContent } from "../types
 import { normalizeAppearance } from "../appearance";
 import {
   clearDevAuth,
+  isPreviewEnvironment,
   loadDevAuth,
   loginWithGitHub,
   saveSiteContent,
@@ -928,7 +929,14 @@ export function DevEditor({
           </button>
         </div>
 
-        {isOnline && (
+        {isPreviewEnvironment ? (
+          <div className="dev-auth-panel">
+            <div>
+              <strong>预览站只读</strong>
+              <small>这里只用于查看效果，不能发布或上传。正式修改请回到 https://underpanda.cn/admin/。</small>
+            </div>
+          </div>
+        ) : isOnline && (
           <div className="dev-auth-panel">
             <div>
               <strong>{auth ? `已登录 @${auth.login}` : "登录 GitHub 后即可发布"}</strong>

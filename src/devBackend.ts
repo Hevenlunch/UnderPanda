@@ -19,6 +19,14 @@ const REPO_NAME = "UnderPanda";
 const BRANCH = "main";
 const SITE_CONTENT_PATH = "src/content/site.json";
 
+export const isPreviewEnvironment = window.location.hostname === "preview.underpanda.cn";
+
+function assertWritable() {
+  if (isPreviewEnvironment) {
+    throw new Error("这是预览站，只能查看效果，不能发布或上传。请回到正式站 /admin/ 修改。");
+  }
+}
+
 function apiHeaders(token: string) {
   return {
     Authorization: `Bearer ${token}`,
@@ -189,6 +197,7 @@ async function putFile(path: string, content: string, message: string, token: st
 }
 
 export async function saveSiteContent(content: unknown, token: string) {
+  assertWritable();
   const serialized = `${JSON.stringify(content, null, 2)}\n`;
   await putFile(
     SITE_CONTENT_PATH,
@@ -212,6 +221,7 @@ export interface UploadedImage {
 }
 
 export async function uploadPreparedImage(prepared: PreparedImage, token: string): Promise<UploadedImage> {
+  assertWritable();
   const match = prepared.dataUrl.match(/^data:image\/(png|jpe?g|webp|avif|gif|svg\+xml);base64,(.+)$/i);
   if (!match) throw new Error("图片格式暂不支持，请使用 JPG、PNG 或 WebP。");
 
