@@ -17,13 +17,14 @@ function oauthAuthorizeUrl(env, redirectUri) {
 
 function callbackScript(status, token) {
   const payload = JSON.stringify({ token });
+  const authorizationMessage = JSON.stringify(`authorization:github:${status}:${payload}`);
   return `<!doctype html>
 <html>
 <head><meta charset="utf-8"><title>Authorizing Decap...</title></head>
 <body>
   <p>Authorizing Decap...</p>
   <script>
-    const authorizationMessage = "authorization:github:${status}:${payload}";
+    const authorizationMessage = ${authorizationMessage};
     let handshakeTimer;
     const sendAuthorization = () => {
       if (window.opener) window.opener.postMessage(authorizationMessage, "*");
