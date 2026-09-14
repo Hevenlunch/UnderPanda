@@ -197,10 +197,12 @@
     {
       "id": "night-walk",
       "title": "夜行",
-      "category": "城市",
+      "category": "日常",
       "image": "/images/uploads/1789389841274-mmexport1731684638689.webp",
-      "caption": "夜色把熟悉的地方变得陌生了一点。",
-      "note": "夜晚适合散步，也适合重新认识一座城市。"
+      "caption": "傍晚把熟悉的地方变得陌生了一点。",
+      "note": "傍晚适合散步，也适合重新认识一座城市。",
+      "wide": false,
+      "tall": false
     },
     {
       "id": "travel-window",
@@ -277,7 +279,7 @@
       "name": "青岛",
       "date": "反复拍摄的城市",
       "note": "海风、坡路、红瓦和傍晚的光，构成了我很多照片的背景。",
-      "image": "/images/uploads/1789291047133-IMG_20250101_000125.webp",
+      "image": "/images/uploads/1789389973559-IMG_20241001_154217.webp",
       "photos": [
         "/images/photo-sea.svg",
         "/images/photo-city.svg",
@@ -688,6 +690,10 @@
     "/images/uploads/1789389841274-mmexport1731684638689.webp": {
       "width": 2200,
       "height": 1467
+    },
+    "/images/uploads/1789389973559-IMG_20241001_154217.webp": {
+      "width": 2200,
+      "height": 1650
     }
   }
 }
