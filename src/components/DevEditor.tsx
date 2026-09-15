@@ -1688,6 +1688,28 @@ export function DevEditor({
           ) : (
             <>
               <p className="dev-note">常用内容按页面顺序排列。文本修改会即时更新，图片上传入口放在对应内容项中。</p>
+              <section className="dev-section dev-site-status">
+                <div className="dev-section-head"><h3><i>00</i>网站开放状态</h3></div>
+                <label className="dev-toggle-row">
+                  <input
+                    type="checkbox"
+                    checked={content.siteEnabled !== false}
+                    onChange={(event) => {
+                      onChange({ ...content, siteEnabled: event.target.checked });
+                      setStatus(event.target.checked ? "已切换为开放，点击“发布内容”后正式生效" : "已切换为关闭，点击“发布内容”后前台将隐藏");
+                    }}
+                  />
+                  <span>
+                    <strong>{content.siteEnabled !== false ? "网站开放中" : "网站已关闭"}</strong>
+                    <small>
+                      {content.siteEnabled !== false
+                        ? "访客可以正常浏览全部内容。"
+                        : "访客只会看到“抱歉，什么都没有哦”，后台不受影响。"}
+                    </small>
+                  </span>
+                </label>
+              </section>
+
 
               <section className="dev-section">
                 <div className="dev-section-head"><h3><i>01</i>基本信息</h3></div>

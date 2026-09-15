@@ -4,6 +4,7 @@ import { DetailDrawer } from "./components/DetailDrawer";
 import { Header } from "./components/Header";
 import { Lightbox, type LightboxItem } from "./components/Lightbox";
 import { PhotoGallery } from "./components/PhotoGallery";
+import { SiteClosed } from "./components/SiteClosed";
 import { SiteOpening } from "./components/SiteOpening";
 import { TravelRoute } from "./components/TravelRoute";
 import {
@@ -110,6 +111,7 @@ function App() {
       window.location.pathname.startsWith("/admin") ||
       new URLSearchParams(window.location.search).get("dev") === "1",
   );
+  const siteEnabled = content.siteEnabled !== false;
   const siteRef = useRef<HTMLDivElement>(null);
   const appearanceStyle = useMemo(
     () => appearanceCssVariables(content.appearance),
@@ -119,8 +121,8 @@ function App() {
   useSiteMotion(siteRef);
 
   useEffect(() => {
-    document.title = content.pageText.browserTitle;
-  }, [content.pageText.browserTitle]);
+    document.title = siteEnabled ? content.pageText.browserTitle : "抱歉，什么都没有哦";
+  }, [content.pageText.browserTitle, siteEnabled]);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -209,6 +211,31 @@ function App() {
       hobbyLightbox: null,
     });
   };
+
+  const devEditor = editorEnabled ? (
+    <Suspense fallback={null}>
+      <DevEditor
+        enabled={editorEnabled}
+        content={content}
+        onChange={setContent}
+        typography={typography}
+        onApplyTypography={setTypography}
+        onSaveTypography={(next) => {
+          setTypography(next);
+          saveTypography(next);
+        }}
+      />
+    </Suspense>
+  ) : null;
+
+  if (!siteEnabled) {
+    return (
+      <>
+        <SiteClosed />
+        {devEditor}
+      </>
+    );
+  }
 
   return (
     <div
@@ -540,21 +567,7 @@ function App() {
         }}
         onClose={closeTopOverlay}
       />
-      {editorEnabled && (
-        <Suspense fallback={null}>
-          <DevEditor
-            enabled={editorEnabled}
-            content={content}
-            onChange={setContent}
-            typography={typography}
-            onApplyTypography={setTypography}
-            onSaveTypography={(next) => {
-              setTypography(next);
-              saveTypography(next);
-            }}
-          />
-        </Suspense>
-      )}
+      {devEditor}
     </div>
   );
 }
