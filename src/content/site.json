@@ -261,7 +261,7 @@
       "title": "无人机",
       "summary": "换一个高度，看熟悉世界的新样子。",
       "detail": "喜欢用航拍观察城市、山川和海岸的线条。它让我意识到，同一片风景换个高度看会完全不同。",
-      "image": "/images/photo-cloud.svg"
+      "image": "/images/uploads/1789451601154-8.webp"
     },
     {
       "id": "editing",
@@ -994,6 +994,10 @@
     "/images/uploads/1789451168823-IMG_20240721_090129.webp": {
       "width": 2200,
       "height": 1650
+    },
+    "/images/uploads/1789451601154-8.webp": {
+      "width": 2200,
+      "height": 1238
     }
   }
 }
