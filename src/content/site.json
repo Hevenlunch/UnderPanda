@@ -1047,5 +1047,30 @@
       "width": 2200,
       "height": 1650
     }
+  },
+  "typography": {
+    "version": 2,
+    "desktop": {
+      "headingFont": "serif",
+      "bodyFont": "sans",
+      "navSize": 19,
+      "bodySize": 17,
+      "headingScale": 1,
+      "lineHeight": 1.65,
+      "sectionSpacing": 0.8,
+      "blockSpacing": 0.76,
+      "gallerySpacing": 0.96
+    },
+    "mobile": {
+      "headingFont": "serif",
+      "bodyFont": "sans",
+      "navSize": 22,
+      "bodySize": 15,
+      "headingScale": 0.78,
+      "lineHeight": 1.58,
+      "sectionSpacing": 0.72,
+      "blockSpacing": 0.72,
+      "gallerySpacing": 0.7
+    }
   }
 }
