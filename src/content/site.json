@@ -232,6 +232,15 @@
       "visible": true,
       "wide": true,
       "tall": false
+    },
+    {
+      "id": "photo-1789451828864",
+      "title": "新照片",
+      "category": "城市",
+      "image": "/images/uploads/1789451848788-photo.webp",
+      "caption": "点击这里修改照片介绍。",
+      "note": "",
+      "visible": true
     }
   ],
   "hobbies": [
@@ -1024,6 +1033,10 @@
     "/images/uploads/1789451786672-5.webp": {
       "width": 2200,
       "height": 1238
+    },
+    "/images/uploads/1789451848788-photo.webp": {
+      "width": 2200,
+      "height": 1650
     }
   }
 }
