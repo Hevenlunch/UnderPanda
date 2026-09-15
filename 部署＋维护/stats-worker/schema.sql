@@ -10,4 +10,11 @@ CREATE TABLE IF NOT EXISTS ratings (
   created_at TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS rate_limits (
+  request_hash TEXT NOT NULL,
+  window_start TEXT NOT NULL,
+  count INTEGER NOT NULL,
+  PRIMARY KEY (request_hash, window_start)
+);
+
 CREATE INDEX IF NOT EXISTS idx_ratings_score ON ratings(score);

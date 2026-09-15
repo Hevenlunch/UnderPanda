@@ -913,7 +913,7 @@ export function DevEditor({
   const save = async () => {
     setStatus(isOnline ? "正在发布…" : "正在保存…");
     try {
-      await saveContent(contentForJson(content));
+      await saveContent({ ...contentForJson(content), typography: draftTypography });
       setStatus(
         isOnline
           ? "已发布，Cloudflare 正在自动部署，约 1 分钟后刷新网页"

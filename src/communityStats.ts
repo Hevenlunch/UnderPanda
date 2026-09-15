@@ -62,6 +62,7 @@ async function request(path: string, body?: unknown, method = "GET") {
       body: body === undefined ? undefined : JSON.stringify(body),
       signal: controller.signal,
       cache: "no-store",
+      credentials: "include",
     });
     if (!response.ok) throw new Error(`Stats request failed (${response.status})`);
     return (await response.json()) as CommunityStatsData & { recorded?: boolean };
