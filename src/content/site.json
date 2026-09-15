@@ -364,7 +364,7 @@
       "name": "南京",
       "date": "慢一点",
       "note": "这里的节奏提醒我，生活不一定总要赶着去下一站。",
-      "image": "/images/photo-detail.svg",
+      "image": "/images/uploads/1789450854817-IMG_20240721_090129.webp",
       "photos": []
     },
     {
@@ -840,6 +840,10 @@
     "/images/uploads/1789450483469-IMG_20260212_115032_edit_332002128824339_521049213026221.webp": {
       "width": 1649,
       "height": 2200
+    },
+    "/images/uploads/1789450854817-IMG_20240721_090129.webp": {
+      "width": 2200,
+      "height": 1650
     }
   }
 }
