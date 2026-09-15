@@ -221,6 +221,15 @@
       "image": "/images/uploads/1789389752043-IMG_20250718_184150.webp",
       "caption": "生活大多不是大场面，而是一些很小的瞬间。",
       "note": "留给平常日子的照片。"
+    },
+    {
+      "id": "photo-1789450134440",
+      "title": "新照片",
+      "category": "城市",
+      "image": "/images/uploads/1789450164392-IMG_20260912_180507.webp",
+      "caption": "点击这里修改照片介绍。",
+      "note": "",
+      "visible": true
     }
   ],
   "hobbies": [
@@ -758,6 +767,10 @@
       "height": 2200
     },
     "/images/uploads/1789390872929-retouch_2025080422571468.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1789450164392-IMG_20260912_180507.webp": {
       "width": 1650,
       "height": 2200
     }
