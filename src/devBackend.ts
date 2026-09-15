@@ -102,7 +102,43 @@ export async function refreshDevAuth(auth: DevAuth): Promise<DevAuth> {
   return next;
 }
 
+export async function consumeOAuthRedirect(): Promise<DevAuth | null> {
+  const hash = window.location.hash.startsWith("#")
+    ? window.location.hash.slice(1)
+    : window.location.hash;
+  const token = new URLSearchParams(hash).get("oauth_token");
+  if (!token) return null;
+
+  window.history.replaceState(
+    { ...window.history.state, underpandaOAuthCleanup: true },
+    "",
+    `${window.location.pathname}${window.location.search}`,
+  );
+
+  const user = await fetchGitHubUser(token);
+  const auth = {
+    token,
+    login: user.login,
+    name: user.name || undefined,
+    avatarUrl: user.avatar_url,
+  };
+  storeDevAuth(auth);
+  return auth;
+}
 export async function loginWithGitHub(): Promise<DevAuth> {
+  const mobile = window.matchMedia("(max-width: 768px), (pointer: coarse)").matches;
+  if (mobile) {
+    const returnTo = `${window.location.origin}${window.location.pathname}${window.location.search}`;
+    const params = new URLSearchParams({
+      provider: "github",
+      site_id: window.location.hostname,
+      scope: "repo",
+      mode: "redirect",
+      return_to: returnTo,
+    });
+    window.location.assign(`${AUTH_ORIGIN}/auth?${params.toString()}`);
+    return new Promise<DevAuth>(() => undefined);
+  }
   const authUrl = `${AUTH_ORIGIN}/auth?provider=github&site_id=${encodeURIComponent(window.location.hostname)}&scope=repo`;
   const popup = window.open(
     authUrl,

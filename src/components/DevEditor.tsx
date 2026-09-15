@@ -3,6 +3,7 @@ import type { CityItem, HobbyItem, PhotographyItem, SiteContent } from "../types
 import { normalizeAppearance } from "../appearance";
 import {
   clearDevAuth,
+  consumeOAuthRedirect,
   isPreviewEnvironment,
   loadDevAuth,
   loginWithGitHub,
@@ -241,6 +242,24 @@ export function DevEditor({
   const isOnline = !import.meta.env.DEV;
   const jsonTextareaRef = useRef<HTMLTextAreaElement>(null);
 
+  useEffect(() => {
+    let cancelled = false;
+    consumeOAuthRedirect()
+      .then((nextAuth) => {
+        if (cancelled || !nextAuth) return;
+        setAuth(nextAuth);
+        setOpen(true);
+        setStatus(`已登录 @${nextAuth.login}，可以发布内容了`);
+      })
+      .catch((error) => {
+        if (!cancelled) {
+          setStatus(error instanceof Error ? error.message : "GitHub 登录回调失败");
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
   useEffect(() => {
     if (!open) setDragPosition(null);
   }, [open]);
@@ -1000,9 +1019,20 @@ export function DevEditor({
         {isPreviewEnvironment ? (
           <div className="dev-auth-panel">
             <div>
-              <strong>预览站只读</strong>
-              <small>这里只用于查看效果，不能发布或上传。正式修改请回到 https://underpanda.cn/admin/。</small>
+              <strong>{auth ? `预览站已登录 @${auth.login}` : "预览站可测试登录"}</strong>
+              <small>
+                {auth
+                  ? "可以测试 DEV 操作，但不能发布或上传。正式修改请回到 https://underpanda.cn/admin/。"
+                  : "登录 GitHub 可测试手机和电脑登录流程，但不能发布或上传。"}
+              </small>
             </div>
+            {auth ? (
+              <button onClick={handleLogout}>退出</button>
+            ) : (
+              <button onClick={handleLogin} disabled={authBusy}>
+                {authBusy ? "登录中…" : "登录 GitHub"}
+              </button>
+            )}
           </div>
         ) : isOnline && (
           <div className="dev-auth-panel">
