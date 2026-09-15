@@ -387,7 +387,7 @@
       "name": "临沂",
       "date": "山水之间",
       "note": "一座历史文化与现代文明交融的城市，适合在没有安排的日子里消磨时间。",
-      "image": "/images/photo-cloud.svg",
+      "image": "/images/uploads/1789450913916-IMG_20260822_083145.webp",
       "photos": []
     }
   ],
@@ -911,6 +911,10 @@
     "/images/uploads/1789450862555-IMG_20240721_191447.webp": {
       "width": 1500,
       "height": 2000
+    },
+    "/images/uploads/1789450913916-IMG_20260822_083145.webp": {
+      "width": 2038,
+      "height": 2200
     }
   }
 }
