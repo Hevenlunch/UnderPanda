@@ -7,7 +7,6 @@ export interface CommunityStatsData {
 const STATS_API = "https://stats.underpanda.cn";
 const STORAGE_KEY = "underpanda-community-stats";
 const VISITOR_KEY = "underpanda-visitor-id";
-const RATING_SUBMITTED_KEY = "underpanda-rating-submitted";
 
 function readJson<T>(key: string): T | null {
   try {
@@ -79,31 +78,31 @@ function cacheStats(stats: CommunityStatsData) {
   writeJson(STORAGE_KEY, stats);
 }
 
+async function requestWithRetry(path: string, body?: unknown, method = "GET") {
+  let lastError: unknown;
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    try {
+      return await request(path, body, method);
+    } catch (error) {
+      lastError = error;
+      if (attempt === 0) await new Promise((resolve) => window.setTimeout(resolve, 700));
+    }
+  }
+  throw lastError instanceof Error ? lastError : new Error("Stats request failed");
+}
+
 export async function loadCommunityStats() {
-  const stats = await request("/api/visit", { fingerprint: fingerprint() }, "POST");
+  const stats = await requestWithRetry("/api/visit", { fingerprint: fingerprint() }, "POST");
   const next = { views: stats.views, ratingCount: stats.ratingCount, average: stats.average };
   cacheStats(next);
   return next;
 }
 
 export async function submitCommunityRating(score: number) {
-  const stats = await request("/api/rating", { score, fingerprint: fingerprint() }, "POST");
+  const stats = await requestWithRetry("/api/rating", { score, fingerprint: fingerprint() }, "POST");
   const next = { views: stats.views, ratingCount: stats.ratingCount, average: stats.average };
   cacheStats(next);
-  try {
-    window.localStorage.setItem(RATING_SUBMITTED_KEY, "1");
-  } catch {
-    // Ignore storage errors.
-  }
   return next;
-}
-
-export function hasSubmittedRating() {
-  try {
-    return window.localStorage.getItem(RATING_SUBMITTED_KEY) === "1";
-  } catch {
-    return false;
-  }
 }
 
 export function formatViews(value: number) {

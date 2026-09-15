@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import {
   cachedStats,
   formatViews,
-  hasSubmittedRating,
   loadCommunityStats,
   submitCommunityRating,
   type CommunityStatsData,
@@ -20,9 +19,8 @@ const emptyStats: CommunityStatsData = {
 
 export function CommunityStats({ visible }: CommunityStatsProps) {
   const [stats, setStats] = useState<CommunityStatsData>(() => cachedStats() ?? emptyStats);
-  const [statsLoaded, setStatsLoaded] = useState(() => cachedStats() !== null);
   const [selected, setSelected] = useState<number | null>(null);
-  const [confirmed, setConfirmed] = useState(() => hasSubmittedRating());
+  const [confirmed, setConfirmed] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
 
@@ -32,11 +30,9 @@ export function CommunityStats({ visible }: CommunityStatsProps) {
       .then((next) => {
         if (!active) return;
         setStats(next);
-        setStatsLoaded(true);
       })
       .catch(() => {
         if (!active) return;
-        setStatsLoaded(cachedStats() !== null);
       });
     return () => {
       active = false;
@@ -64,7 +60,7 @@ export function CommunityStats({ visible }: CommunityStatsProps) {
     <div className={`community-stats section-shell${confirmed ? " is-confirmed" : ""}`}>
       <div className="community-views">
         <small>VISITS</small>
-        <strong>{statsLoaded ? formatViews(stats.views) : "--"}</strong>
+        <strong>{formatViews(stats.views)}</strong>
         <span>浏览量</span>
       </div>
 
