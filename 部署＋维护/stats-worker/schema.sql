@@ -1,20 +1,12 @@
-CREATE TABLE IF NOT EXISTS visitors (
-  visitor_hash TEXT PRIMARY KEY,
-  first_seen TEXT NOT NULL,
-  last_seen TEXT NOT NULL
+CREATE TABLE IF NOT EXISTS page_counter (
+  name TEXT PRIMARY KEY,
+  value INTEGER NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS ratings (
-  visitor_hash TEXT PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS rating_events (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
   score INTEGER NOT NULL CHECK (score BETWEEN 1 AND 5),
   created_at TEXT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS rate_limits (
-  request_hash TEXT NOT NULL,
-  window_start TEXT NOT NULL,
-  count INTEGER NOT NULL,
-  PRIMARY KEY (request_hash, window_start)
-);
-
-CREATE INDEX IF NOT EXISTS idx_ratings_score ON ratings(score);
+CREATE INDEX IF NOT EXISTS idx_rating_events_score ON rating_events(score);

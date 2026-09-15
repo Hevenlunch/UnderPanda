@@ -7,7 +7,6 @@ export interface CommunityStatsData {
 const STATS_API = "https://stats.underpanda.cn";
 const STORAGE_KEY = "underpanda-community-stats";
 const VISITOR_KEY = "underpanda-visitor-id";
-const LAST_VISIT_KEY = "underpanda-last-visit";
 const RATING_SUBMITTED_KEY = "underpanda-rating-submitted";
 
 function readJson<T>(key: string): T | null {
@@ -82,18 +81,7 @@ function cacheStats(stats: CommunityStatsData) {
 }
 
 export async function loadCommunityStats() {
-  const lastVisit = Number(window.localStorage.getItem(LAST_VISIT_KEY) || 0);
-  const shouldTrack = Date.now() - lastVisit > 6 * 60 * 60 * 1000;
-  const stats = shouldTrack
-    ? await request("/api/visit", { fingerprint: fingerprint() }, "POST")
-    : await request("/api/stats");
-  if (shouldTrack) {
-    try {
-      window.localStorage.setItem(LAST_VISIT_KEY, String(Date.now()));
-    } catch {
-      // Ignore storage errors.
-    }
-  }
+  const stats = await request("/api/visit", { fingerprint: fingerprint() }, "POST");
   const next = { views: stats.views, ratingCount: stats.ratingCount, average: stats.average };
   cacheStats(next);
   return next;
