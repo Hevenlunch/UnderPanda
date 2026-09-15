@@ -388,7 +388,23 @@
       "date": "山水之间",
       "note": "一座历史文化与现代文明交融的城市，适合在没有安排的日子里消磨时间。",
       "image": "/images/uploads/1789450913916-IMG_20260822_083145.webp",
-      "photos": []
+      "photos": [
+        "/images/uploads/1789450987790-IMG_20260822_140714.webp",
+        "/images/uploads/1789450994486-IMG_20260822_140938.webp",
+        "/images/uploads/1789451002320-IMG_20260822_150203.webp",
+        "/images/uploads/1789451008959-IMG_20260822_190843.webp",
+        "/images/uploads/1789451015743-IMG_20260822_132217.webp",
+        "/images/uploads/1789451021924-IMG_20260822_084149-1.webp",
+        "/images/uploads/1789451029735-IMG_20260822_093720.webp",
+        "/images/uploads/1789451040719-IMG_20260822_094847.webp",
+        "/images/uploads/1789451052932-IMG_20260822_075903.webp",
+        "/images/uploads/1789451059073-IMG_20260822_093451.webp",
+        "/images/uploads/1789451065047-IMG_20260822_093128.webp",
+        "/images/uploads/1789451071231-IMG_20260822_083425.webp",
+        "/images/uploads/1789451078102-IMG_20260822_075311.webp",
+        "/images/uploads/1789451084053-IMG_20260822_072400.webp",
+        "/images/uploads/1789451090508-IMG_20260821_222047.webp"
+      ]
     }
   ],
   "work": {
@@ -915,6 +931,66 @@
     "/images/uploads/1789450913916-IMG_20260822_083145.webp": {
       "width": 2038,
       "height": 2200
+    },
+    "/images/uploads/1789450987790-IMG_20260822_140714.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1789450994486-IMG_20260822_140938.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1789451002320-IMG_20260822_150203.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1789451008959-IMG_20260822_190843.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1789451015743-IMG_20260822_132217.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1789451021924-IMG_20260822_084149-1.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1789451029735-IMG_20260822_093720.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1789451040719-IMG_20260822_094847.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1789451052932-IMG_20260822_075903.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1789451059073-IMG_20260822_093451.webp": {
+      "width": 2200,
+      "height": 975
+    },
+    "/images/uploads/1789451065047-IMG_20260822_093128.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1789451071231-IMG_20260822_083425.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1789451078102-IMG_20260822_075311.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1789451084053-IMG_20260822_072400.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1789451090508-IMG_20260821_222047.webp": {
+      "width": 2200,
+      "height": 1650
     }
   }
 }
