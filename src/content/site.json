@@ -364,8 +364,23 @@
       "name": "南京",
       "date": "慢一点",
       "note": "这里的节奏提醒我，生活不一定总要赶着去下一站。",
-      "image": "/images/uploads/1789450854817-IMG_20240721_090129.webp",
-      "photos": []
+      "image": "/images/photo-detail.svg",
+      "photos": [
+        "/images/uploads/1789450742443-IMG_20240719_074348.webp",
+        "/images/uploads/1789450748087-IMG_20240719_083619.webp",
+        "/images/uploads/1789450752867-IMG_20240719_091949.webp",
+        "/images/uploads/1789450757177-IMG_20240719_110252.webp",
+        "/images/uploads/1789450762142-IMG_20240719_111457.webp",
+        "/images/uploads/1789450766732-IMG_20240719_113029.webp",
+        "/images/uploads/1789450771102-IMG_20240719_120614.webp",
+        "/images/uploads/1789450782479-IMG_20240720_204217.webp",
+        "/images/uploads/1789450788988-IMG_20240721_090116.webp",
+        "/images/uploads/1789450797775-IMG_20240721_090912.webp",
+        "/images/uploads/1789450804471-IMG_20240721_123027.webp",
+        "/images/uploads/1789450810264-Image_1721547728149.jpg",
+        "/images/uploads/1789450853529-Image_1721547747587.webp",
+        "/images/uploads/1789450862555-IMG_20240721_191447.webp"
+      ]
     },
     {
       "id": "hangzhou",
@@ -841,9 +856,61 @@
       "width": 1649,
       "height": 2200
     },
-    "/images/uploads/1789450854817-IMG_20240721_090129.webp": {
+    "/images/uploads/1789450742443-IMG_20240719_074348.webp": {
       "width": 2200,
       "height": 1650
+    },
+    "/images/uploads/1789450748087-IMG_20240719_083619.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1789450752867-IMG_20240719_091949.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1789450757177-IMG_20240719_110252.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1789450762142-IMG_20240719_111457.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1789450766732-IMG_20240719_113029.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1789450771102-IMG_20240719_120614.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1789450782479-IMG_20240720_204217.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1789450788988-IMG_20240721_090116.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1789450797775-IMG_20240721_090912.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1789450804471-IMG_20240721_123027.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1789450810264-Image_1721547728149.jpg": {
+      "width": 1600,
+      "height": 2133
+    },
+    "/images/uploads/1789450853529-Image_1721547747587.webp": {
+      "width": 2133,
+      "height": 1600
+    },
+    "/images/uploads/1789450862555-IMG_20240721_191447.webp": {
+      "width": 1500,
+      "height": 2000
     }
   }
 }
