@@ -235,9 +235,18 @@
     },
     {
       "id": "photo-1789451828864",
+      "title": "赶海人",
+      "category": "日常",
+      "image": "/images/uploads/1789451848788-photo.webp",
+      "caption": "天气正好，该去干点什么呢，不去去海边挖海货吧",
+      "note": "星光岛的大桥，有强烈的设计感",
+      "visible": true
+    },
+    {
+      "id": "photo-1789451987829",
       "title": "新照片",
       "category": "城市",
-      "image": "/images/uploads/1789451848788-photo.webp",
+      "image": "/images/uploads/1789452000908-photo.webp",
       "caption": "点击这里修改照片介绍。",
       "note": "",
       "visible": true
@@ -1035,6 +1044,10 @@
       "height": 1238
     },
     "/images/uploads/1789451848788-photo.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1789452000908-photo.webp": {
       "width": 2200,
       "height": 1650
     }
