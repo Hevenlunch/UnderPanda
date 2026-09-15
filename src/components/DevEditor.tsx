@@ -704,21 +704,6 @@ export function DevEditor({
     }));
   };
 
-  const updateHobbyPhoto = (id: string, index: number, value: string) => {
-    updateHobbyItem(id, (hobby) => {
-      const photos = [...(hobby.photos ?? [])];
-      photos[index] = value;
-      return { ...hobby, photos };
-    });
-  };
-
-  const addHobbyPhotoPath = (id: string) => {
-    updateHobbyItem(id, (hobby) => ({
-      ...hobby,
-      photos: [...(hobby.photos ?? []), "/images/photo-detail.svg"],
-    }));
-  };
-
   const removeHobbyPhoto = (id: string, index: number) => {
     updateHobbyItem(id, (hobby) => ({
       ...hobby,
@@ -831,21 +816,6 @@ export function DevEditor({
     updateCityItem(id, (city) => ({
       ...city,
       paragraphs: (city.paragraphs ?? []).filter((_, itemIndex) => itemIndex !== index),
-    }));
-  };
-
-  const updateCityPhoto = (id: string, index: number, value: string) => {
-    updateCityItem(id, (city) => {
-      const photos = [...city.photos];
-      photos[index] = value;
-      return { ...city, photos };
-    });
-  };
-
-  const addCityPhotoPath = (id: string) => {
-    updateCityItem(id, (city) => ({
-      ...city,
-      photos: [...city.photos, "/images/photo-detail.svg"],
     }));
   };
 
@@ -1390,13 +1360,6 @@ export function DevEditor({
                         onChange={(event) => updateCityText(city.id, "note", event.target.value)}
                       />
                     </label>
-                    <label className="dev-field">
-                      <span>封面图片路径</span>
-                      <input
-                        value={city.image}
-                        onChange={(event) => updateCityText(city.id, "image", event.target.value)}
-                      />
-                    </label>
                     <div className="dev-photo-actions">
                       <label className="dev-upload">
                         上传封面图片
@@ -1456,13 +1419,6 @@ export function DevEditor({
                       {city.photos.map((photo, photoIndex) => (
                         <div className="dev-hobby-photo-row" key={`${city.id}-photo-${photoIndex}`}>
                           <img src={photo} alt={`${city.name} ${photoIndex + 1}`} />
-                          <input
-                            aria-label={`城市照片 ${photoIndex + 1} 路径`}
-                            value={photo}
-                            onChange={(event) =>
-                              updateCityPhoto(city.id, photoIndex, event.target.value)
-                            }
-                          />
                           <div className="dev-row-actions">
                             <button onClick={() => moveCityPhoto(city.id, photoIndex, -1)}>↑</button>
                             <button onClick={() => moveCityPhoto(city.id, photoIndex, 1)}>↓</button>
@@ -1470,9 +1426,6 @@ export function DevEditor({
                           </div>
                         </div>
                       ))}
-                      <button className="dev-add-button" onClick={() => addCityPhotoPath(city.id)}>
-                        ＋ 手动添加图片路径
-                      </button>
                     </div>
                   </article>
                 ))}
@@ -1537,13 +1490,6 @@ export function DevEditor({
                         onChange={(event) => updateHobbyText(hobby.id, "detail", event.target.value)}
                       />
                     </label>
-                    <label className="dev-field">
-                      <span>封面图片路径</span>
-                      <input
-                        value={hobby.image}
-                        onChange={(event) => updateHobbyText(hobby.id, "image", event.target.value)}
-                      />
-                    </label>
                     <div className="dev-photo-actions">
                       <label className="dev-upload">
                         上传封面图片
@@ -1603,13 +1549,6 @@ export function DevEditor({
                       {(hobby.photos ?? []).map((photo, photoIndex) => (
                         <div className="dev-hobby-photo-row" key={`${hobby.id}-photo-${photoIndex}`}>
                           <img src={photo} alt={`${hobby.title} ${photoIndex + 1}`} />
-                          <input
-                            aria-label={`详情照片 ${photoIndex + 1} 路径`}
-                            value={photo}
-                            onChange={(event) =>
-                              updateHobbyPhoto(hobby.id, photoIndex, event.target.value)
-                            }
-                          />
                           <div className="dev-row-actions">
                             <button onClick={() => moveHobbyPhoto(hobby.id, photoIndex, -1)}>↑</button>
                             <button onClick={() => moveHobbyPhoto(hobby.id, photoIndex, 1)}>↓</button>
@@ -1617,9 +1556,6 @@ export function DevEditor({
                           </div>
                         </div>
                       ))}
-                      <button className="dev-add-button" onClick={() => addHobbyPhotoPath(hobby.id)}>
-                        ＋ 手动添加图片路径
-                      </button>
                     </div>
                   </article>
                 ))}
@@ -1707,10 +1643,6 @@ export function DevEditor({
                       <span>补充说明</span>
                       <input value={photo.note} onChange={(event) => updatePhoto(photo.id, "note", event.target.value)} />
                     </label>
-                    <label className="dev-field">
-                      <span>图片路径</span>
-                      <input value={photo.image} onChange={(event) => updatePhoto(photo.id, "image", event.target.value)} />
-                    </label>
                     <div className="dev-photo-row">
                       <label className="dev-field">
                         <span>版式</span>
@@ -1755,7 +1687,7 @@ export function DevEditor({
             </>
           ) : (
             <>
-              <p className="dev-note">常用内容按页面顺序排列。文本修改会即时更新，图片资源放在最底部的高级设置中。</p>
+              <p className="dev-note">常用内容按页面顺序排列。文本修改会即时更新，图片上传入口放在对应内容项中。</p>
 
               <section className="dev-section">
                 <div className="dev-section-head"><h3><i>01</i>基本信息</h3></div>
@@ -1838,12 +1770,10 @@ export function DevEditor({
 
               <details className="dev-advanced">
                 <summary>
-                  <span>高级图片设置</span>
-                  <small>一般不需要修改</small>
+                  <span>高级图片位置</span>
+                  <small>首页图片位置，一般不需要修改</small>
                 </summary>
                 <div className="dev-advanced-body">
-                  <label className="dev-field"><span>PC 首页图片路径</span><input value={content.profile.heroImage} onChange={(event) => updateProfile("heroImage", event.target.value)} /></label>
-                  <label className="dev-field"><span>移动端首页图片路径</span><input value={content.profile.heroImageSmall} onChange={(event) => updateProfile("heroImageSmall", event.target.value)} /></label>
                   <div className="dev-grid-two">
                     <label className="dev-field"><span>PC 图片位置</span><input value={content.profile.heroImagePosition} onChange={(event) => updateProfile("heroImagePosition", event.target.value)} /></label>
                     <label className="dev-field"><span>手机图片位置</span><input value={content.profile.heroImageMobilePosition} onChange={(event) => updateProfile("heroImageMobilePosition", event.target.value)} /></label>
