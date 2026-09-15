@@ -364,13 +364,13 @@
       "name": "南京",
       "date": "慢一点",
       "note": "这里的节奏提醒我，生活不一定总要赶着去下一站。",
-      "image": "/images/photo-detail.svg",
+      "image": "/images/uploads/1789451168823-IMG_20240721_090129.webp",
       "photos": [
-        "/images/uploads/1789450742443-IMG_20240719_074348.webp",
         "/images/uploads/1789450748087-IMG_20240719_083619.webp",
         "/images/uploads/1789450752867-IMG_20240719_091949.webp",
-        "/images/uploads/1789450757177-IMG_20240719_110252.webp",
         "/images/uploads/1789450762142-IMG_20240719_111457.webp",
+        "/images/uploads/1789450757177-IMG_20240719_110252.webp",
+        "/images/uploads/1789450742443-IMG_20240719_074348.webp",
         "/images/uploads/1789450766732-IMG_20240719_113029.webp",
         "/images/uploads/1789450771102-IMG_20240719_120614.webp",
         "/images/uploads/1789450782479-IMG_20240720_204217.webp",
@@ -989,6 +989,10 @@
       "height": 2200
     },
     "/images/uploads/1789451090508-IMG_20260821_222047.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1789451168823-IMG_20240721_090129.webp": {
       "width": 2200,
       "height": 1650
     }
