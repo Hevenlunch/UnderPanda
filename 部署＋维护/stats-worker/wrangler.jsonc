@@ -1,0 +1,27 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "underpanda-stats",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-15",
+  "observability": {
+    "enabled": true
+  },
+  "routes": [
+    {
+      "pattern": "stats.underpanda.cn",
+      "custom_domain": true
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "STATS_DB",
+      "database_name": "underpanda-stats",
+      "database_id": "0ea47921-7a98-4cab-95fa-013b1122f6e7"
+    },
+    {
+      "binding": "STATS_DB_PREVIEW",
+      "database_name": "underpanda-stats-preview",
+      "database_id": "3e9ba2f4-2815-48f7-85b0-6293b202c9d9"
+    }
+  ]
+}

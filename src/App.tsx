@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import contentSource from "./content/site.json";
 import { DetailDrawer } from "./components/DetailDrawer";
+import { CommunityStats } from "./components/CommunityStats";
 import { Header } from "./components/Header";
 import { Lightbox, type LightboxItem } from "./components/Lightbox";
 import { PhotoGallery } from "./components/PhotoGallery";
@@ -512,6 +513,8 @@ function App() {
               ))}
             </div>
           </div>
+          <CommunityStats visible={content.showStats !== false} />
+
           <div className="site-footer section-shell">
             <span>© {new Date().getFullYear()} {content.profile.name}</span>
             <span>{content.pageText.footer.tagline}</span>

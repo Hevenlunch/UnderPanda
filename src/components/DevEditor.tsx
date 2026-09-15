@@ -1307,6 +1307,7 @@ export function DevEditor({
                 城市顺序会同步影响顶部路线节点和下方城市卡片。详情照片使用自适应排列，点击后打开纯图片大图。
               </p>
 
+
               <section className="dev-section">
                 <div className="dev-section-head"><h3>旅行模块文案</h3></div>
                 <label className="dev-field"><span>小标签</span><input value={content.pageText.travel.kicker} onChange={(event) => updateTravelPageText("kicker", event.target.value)} /></label>
@@ -1705,6 +1706,28 @@ export function DevEditor({
                       {content.siteEnabled !== false
                         ? "访客可以正常浏览全部内容。"
                         : "访客只会看到“抱歉，什么都没有哦”，后台不受影响。"}
+                    </small>
+                  </span>
+                </label>
+              </section>
+
+              <section className="dev-section">
+                <div className="dev-section-head"><h3><i>00</i>浏览量与评分</h3></div>
+                <label className="dev-toggle-row">
+                  <input
+                    type="checkbox"
+                    checked={content.showStats !== false}
+                    onChange={(event) => {
+                      onChange({ ...content, showStats: event.target.checked });
+                      setStatus(event.target.checked ? "已切换为显示浏览量/评分，点击“发布内容”后生效" : "已切换为隐藏浏览量/评分，点击“发布内容”后生效");
+                    }}
+                  />
+                  <span>
+                    <strong>{content.showStats !== false ? "显示浏览量和评分" : "已隐藏浏览量和评分"}</strong>
+                    <small>
+                      {content.showStats !== false
+                        ? "联系模块下方会显示浏览量和五星评分。"
+                        : "前台不会显示统计栏，浏览量仍在后台累计。"}
                     </small>
                   </span>
                 </label>

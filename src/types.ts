@@ -164,6 +164,7 @@ export interface ImageMeta {
 
 export interface SiteContent {
   siteEnabled?: boolean;
+  showStats?: boolean;
   appearance?: Appearance;
   imageMeta?: Record<string, ImageMeta>;
   typography?: TypographySettings;
