@@ -122,8 +122,8 @@
   "photoCategories": [
     "城市",
     "自然",
-    "旅行",
     "日常",
+    "旅行",
     "未分类"
   ],
   "photography": [
@@ -244,11 +244,11 @@
     },
     {
       "id": "photo-1789451987829",
-      "title": "新照片",
-      "category": "城市",
+      "title": "蒸汽朋克船",
+      "category": "日常",
       "image": "/images/uploads/1789452000908-photo.webp",
-      "caption": "点击这里修改照片介绍。",
-      "note": "",
+      "caption": "看到这艘船，像是看见了文明技能点点入另一种可能",
+      "note": "科幻气息浓重",
       "visible": true
     }
   ],
