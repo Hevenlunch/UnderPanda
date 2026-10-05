@@ -436,6 +436,15 @@
         "/images/photo-street.svg",
         "/images/photo-travel.svg"
       ]
+    },
+    {
+      "id": "city-1791219324769",
+      "name": "日照",
+      "date": "阳光海滩",
+      "note": "点击这里修改城市简介。",
+      "image": "/images/uploads/1791219379222-IMG_20261004_173057.webp",
+      "paragraphs": [],
+      "photos": []
     }
   ],
   "work": {
@@ -1044,6 +1053,10 @@
       "height": 1650
     },
     "/images/uploads/1789452000908-photo.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1791219379222-IMG_20261004_173057.webp": {
       "width": 2200,
       "height": 1650
     }
