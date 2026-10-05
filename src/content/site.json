@@ -250,6 +250,15 @@
       "caption": "看到这艘船，像是看见了文明技能点点入另一种可能",
       "note": "科幻气息浓重",
       "visible": true
+    },
+    {
+      "id": "photo-1791219800234",
+      "title": "新照片",
+      "category": "旅行",
+      "image": "/images/uploads/1791219852716-IMG_20261002_155316_8929819503323.webp",
+      "caption": "点击这里修改照片介绍。",
+      "note": "",
+      "visible": true
     }
   ],
   "hobbies": [
@@ -426,18 +435,6 @@
       ]
     },
     {
-      "id": "beijing",
-      "name": "北京",
-      "date": "关于尺度",
-      "note": "城市很大，历史也很重，但真正留下来的往往还是某个普通的下午。",
-      "image": "/images/photo-street.svg",
-      "photos": [
-        "/images/photo-city.svg",
-        "/images/photo-street.svg",
-        "/images/photo-travel.svg"
-      ]
-    },
-    {
       "id": "city-1791219324769",
       "name": "日照",
       "date": "阳光海滩",
@@ -461,6 +458,18 @@
         "/images/uploads/1791219598173-IMG_20261002_183802.webp",
         "/images/uploads/1791219602255-IMG_20261002_165419.webp",
         "/images/uploads/1791219607745-IMG_20261002_151206.webp"
+      ]
+    },
+    {
+      "id": "beijing",
+      "name": "北京",
+      "date": "关于尺度",
+      "note": "城市很大，历史也很重，但真正留下来的往往还是某个普通的下午。",
+      "image": "/images/photo-street.svg",
+      "photos": [
+        "/images/photo-city.svg",
+        "/images/photo-street.svg",
+        "/images/photo-travel.svg"
       ]
     }
   ],
@@ -1138,6 +1147,10 @@
       "height": 2200
     },
     "/images/uploads/1791219607745-IMG_20261002_151206.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1791219852716-IMG_20261002_155316_8929819503323.webp": {
       "width": 2200,
       "height": 1650
     }
