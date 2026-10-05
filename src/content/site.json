@@ -444,7 +444,24 @@
       "note": "点击这里修改城市简介。",
       "image": "/images/uploads/1791219379222-IMG_20261004_173057.webp",
       "paragraphs": [],
-      "photos": []
+      "photos": [
+        "/images/uploads/1791219491350-retouch_2026100509023639.webp",
+        "/images/uploads/1791219539567-file_0000000092a48230ad87132487fef39c.webp",
+        "/images/uploads/1791219544045-IMG_20261002_155316_8929819503323.webp",
+        "/images/uploads/1791219549241-IMG_20261002_175325.webp",
+        "/images/uploads/1791219555124-IMG_20261002_172616_10559916729116.webp",
+        "/images/uploads/1791219560401-1791129864563.jpg",
+        "/images/uploads/1791219565650-IMG_20261002_160721_11708091513316.webp",
+        "/images/uploads/1791219570629-IMG_20261002_165826_11883192407560.webp",
+        "/images/uploads/1791219575036-Collage_20261005_002903.webp",
+        "/images/uploads/1791219579521-Collage_20261004_235354.webp",
+        "/images/uploads/1791219583771-file_00000000d1b081fd9da0d07f86888415.webp",
+        "/images/uploads/1791219589195-IMG_20261004_171414.webp",
+        "/images/uploads/1791219593514-IMG_20261004_123523.webp",
+        "/images/uploads/1791219598173-IMG_20261002_183802.webp",
+        "/images/uploads/1791219602255-IMG_20261002_165419.webp",
+        "/images/uploads/1791219607745-IMG_20261002_151206.webp"
+      ]
     }
   ],
   "work": {
@@ -1057,6 +1074,70 @@
       "height": 1650
     },
     "/images/uploads/1791219379222-IMG_20261004_173057.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1791219491350-retouch_2026100509023639.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1791219539567-file_0000000092a48230ad87132487fef39c.webp": {
+      "width": 1448,
+      "height": 1086
+    },
+    "/images/uploads/1791219544045-IMG_20261002_155316_8929819503323.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1791219549241-IMG_20261002_175325.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1791219555124-IMG_20261002_172616_10559916729116.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1791219560401-1791129864563.jpg": {
+      "width": 896,
+      "height": 1195
+    },
+    "/images/uploads/1791219565650-IMG_20261002_160721_11708091513316.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1791219570629-IMG_20261002_165826_11883192407560.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1791219575036-Collage_20261005_002903.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1791219579521-Collage_20261004_235354.webp": {
+      "width": 2160,
+      "height": 1619
+    },
+    "/images/uploads/1791219583771-file_00000000d1b081fd9da0d07f86888415.webp": {
+      "width": 1086,
+      "height": 1448
+    },
+    "/images/uploads/1791219589195-IMG_20261004_171414.webp": {
+      "width": 2200,
+      "height": 975
+    },
+    "/images/uploads/1791219593514-IMG_20261004_123523.webp": {
+      "width": 2200,
+      "height": 975
+    },
+    "/images/uploads/1791219598173-IMG_20261002_183802.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1791219602255-IMG_20261002_165419.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1791219607745-IMG_20261002_151206.webp": {
       "width": 2200,
       "height": 1650
     }
