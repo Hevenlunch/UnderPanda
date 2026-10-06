@@ -21,6 +21,7 @@ interface PhotoGalleryProps {
   items: PhotoGalleryItem[];
   imageMeta?: Record<string, { width: number; height: number }>;
   drawerColumns?: 2 | 3;
+  maxVisibleRows?: number;
   onOpen: (index: number) => void;
   showOverlay?: boolean;
   variant?: "page" | "drawer";
@@ -38,6 +39,13 @@ interface GalleryRow {
   height: number;
   gap: number;
   contain: boolean;
+}
+
+interface RowMetric {
+  row: GalleryRow;
+  index: number;
+  top: number;
+  bottom: number;
 }
 
 function fallbackAspect(photo: PhotoGalleryItem) {
@@ -168,6 +176,7 @@ export function PhotoGallery({
   items,
   imageMeta = {},
   drawerColumns = 2,
+  maxVisibleRows,
   onOpen,
   showOverlay = true,
   variant = "page",
@@ -175,6 +184,9 @@ export function PhotoGallery({
 }: PhotoGalleryProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(0);
+  const [scrollTop, setScrollTop] = useState(0);
+  const [scrollViewportHeight, setScrollViewportHeight] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const element = containerRef.current;
@@ -190,15 +202,69 @@ export function PhotoGallery({
     observer.observe(element);
     return () => observer.disconnect();
   }, []);
+  useEffect(() => {
+    if (scrollRef.current) scrollRef.current.scrollTop = 0;
+    setScrollTop(0);
+  }, [items, variant, maxVisibleRows]);
+
+  useLayoutEffect(() => {
+    const element = scrollRef.current;
+    if (!element) return;
+    const update = () => setScrollViewportHeight(element.clientHeight);
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [items.length, maxVisibleRows]);
+
 
   const rows = useMemo(
     () => layoutPhotos(items, imageMeta, containerWidth, variant, drawerColumns),
     [containerWidth, drawerColumns, imageMeta, items, variant],
   );
+  const rowMetrics = useMemo(() => {
+    let top = 0;
+    return rows.map<RowMetric>((row, index) => {
+      const metric = { row, index, top, bottom: top + row.height };
+      top += row.height + row.gap;
+      return metric;
+    });
+  }, [rows]);
+
+  const scrollable =
+    variant === "page" &&
+    typeof maxVisibleRows === "number" &&
+    rows.length > maxVisibleRows;
+
+  const totalHeight = rowMetrics.length
+    ? rowMetrics[rowMetrics.length - 1].bottom + rowMetrics[rowMetrics.length - 1].row.gap
+    : 0;
+
+  const maxScrollHeight = useMemo(() => {
+    if (!scrollable || typeof maxVisibleRows !== "number") return totalHeight;
+    return rowMetrics.slice(0, maxVisibleRows).reduce(
+      (sum, metric, index, visible) => sum + metric.row.height + (index < visible.length - 1 ? metric.row.gap : 0),
+      0,
+    );
+  }, [maxVisibleRows, rowMetrics, scrollable, totalHeight]);
+
+  const averageRowHeight = rowMetrics.length
+    ? rowMetrics.reduce((sum, metric) => sum + metric.row.height, 0) / rowMetrics.length
+    : 240;
+
+  const visibleRowMetrics = useMemo(() => {
+    if (!scrollable) return rowMetrics;
+    const viewportHeight = scrollViewportHeight || maxScrollHeight;
+    const buffer = Math.max(240, averageRowHeight * 1.25);
+    return rowMetrics.filter(
+      (metric) => metric.bottom >= scrollTop - buffer && metric.top <= scrollTop + viewportHeight + buffer,
+    );
+  }, [averageRowHeight, maxScrollHeight, rowMetrics, scrollable, scrollTop, scrollViewportHeight]);
+
 
   useLayoutEffect(() => {
     const container = containerRef.current;
-    if (!container || containerWidth <= 0 || variant === "drawer") return;
+    if (!container || containerWidth <= 0 || variant === "drawer" || scrollable) return;
 
     const cards = Array.from(container.querySelectorAll<HTMLElement>(".photo-card"));
     if (cards.length === 0) return;
@@ -232,43 +298,68 @@ export function PhotoGallery({
     }, container);
 
     return () => context.revert();
-  }, [containerWidth, items, variant]);
+  }, [containerWidth, items, scrollable, variant]);
+
+  const renderRow = ({ row, index: rowIndex, top }: RowMetric) => (
+    <div
+      className={`photo-row${scrollable ? " photo-row-virtual" : ""}`}
+      key={`${row.items.map((item) => item.photo.id).join("-")}-${rowIndex}`}
+      style={
+        {
+          ...(scrollable ? { top: `${top}px` } : {}),
+          "--photo-gap": `${row.gap}px`,
+        } as CSSProperties
+      }
+    >
+      {row.items.map(({ photo, index, width }) => (
+        <button
+          className={`photo-card${row.contain ? " photo-contain" : ""}`}
+          key={photo.id}
+          style={{ width: `${width}px`, height: `${row.height}px` }}
+          onClick={() => onOpen(index)}
+        >
+          <img
+            src={photo.image}
+            alt={photo.title ?? "照片"}
+            loading="lazy"
+            decoding="async"
+            draggable={false}
+            width={imageMeta[photo.image]?.width}
+            height={imageMeta[photo.image]?.height}
+          />
+          {showOverlay && (
+            <span className="photo-overlay">
+              <small>{photo.category}</small>
+              <strong>{photo.title}</strong>
+              <em>{actionLabel}</em>
+            </span>
+          )}
+        </button>
+      ))}
+    </div>
+  );
 
   return (
-    <div className={`photo-grid${variant === "drawer" ? " photo-grid-drawer" : ""}`} ref={containerRef}>
-      {rows.map((row, rowIndex) => (
+    <div
+      className={`photo-grid${variant === "drawer" ? " photo-grid-drawer" : ""}${scrollable ? " photo-grid-scroll" : ""}`}
+      ref={containerRef}
+    >
+      {scrollable ? (
         <div
-          className="photo-row"
-          key={`${row.items.map((item) => item.photo.id).join("-")}-${rowIndex}`}
-          style={{ "--photo-gap": `${row.gap}px` } as CSSProperties}
+          className="photo-scroll"
+          ref={scrollRef}
+          style={{ maxHeight: `${maxScrollHeight}px` }}
+          onScroll={(event) => setScrollTop(event.currentTarget.scrollTop)}
+          tabIndex={0}
+          aria-label="照片区域，可滚动查看更多"
         >
-          {row.items.map(({ photo, index, width }) => (
-            <button
-              className={`photo-card${row.contain ? " photo-contain" : ""}`}
-              key={photo.id}
-              style={{ width: `${width}px`, height: `${row.height}px` }}
-              onClick={() => onOpen(index)}
-            >
-              <img
-                src={photo.image}
-                alt={photo.title ?? "照片"}
-                loading="lazy"
-                decoding="async"
-                draggable={false}
-                width={imageMeta[photo.image]?.width}
-                height={imageMeta[photo.image]?.height}
-              />
-              {showOverlay && (
-                <span className="photo-overlay">
-                  <small>{photo.category}</small>
-                  <strong>{photo.title}</strong>
-                  <em>{actionLabel}</em>
-                </span>
-              )}
-            </button>
-          ))}
+          <div className="photo-scroll-inner" style={{ height: `${totalHeight}px` }}>
+            {visibleRowMetrics.map(renderRow)}
+          </div>
         </div>
-      ))}
+      ) : (
+        rowMetrics.map(renderRow)
+      )}
     </div>
   );
 }

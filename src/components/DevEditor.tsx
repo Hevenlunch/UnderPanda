@@ -549,21 +549,25 @@ export function DevEditor({
         },
       ],
     });
-  };
-
-  const removePhoto = (index: number) => {
-    onChange({
-      ...content,
-      photography: content.photography.filter((_, itemIndex) => itemIndex !== index),
+    window.requestAnimationFrame(() => {
+      document.querySelector(".dev-photo-editor")?.scrollIntoView({ block: "start", behavior: "smooth" });
     });
   };
 
-  const movePhoto = (index: number, direction: -1 | 1) => {
+  const removePhoto = (id: string) => {
+    onChange({
+      ...content,
+      photography: content.photography.filter((photo) => photo.id !== id),
+    });
+  };
+
+  const movePhoto = (id: string, direction: -1 | 1) => {
+    const editorPhotos = [...content.photography].reverse();
+    const index = editorPhotos.findIndex((photo) => photo.id === id);
     const target = index + direction;
-    if (target < 0 || target >= content.photography.length) return;
-    const photography = [...content.photography];
-    [photography[index], photography[target]] = [photography[target], photography[index]];
-    onChange({ ...content, photography });
+    if (index < 0 || target < 0 || target >= editorPhotos.length) return;
+    [editorPhotos[index], editorPhotos[target]] = [editorPhotos[target], editorPhotos[index]];
+    onChange({ ...content, photography: editorPhotos.reverse() });
   };
 
   const setPhotoLayout = (id: string, layout: "normal" | "wide" | "tall") => {
@@ -1618,7 +1622,8 @@ export function DevEditor({
                   <h3>照片列表</h3>
                   <button onClick={addPhoto}>添加照片</button>
                 </div>
-                {content.photography.map((photo, index) => (
+                <p className="dev-inline-note">编辑列表最新照片在最上方；网站展示顺序保持最新照片在最下方。</p>
+                {[...content.photography].reverse().map((photo, index) => (
                   <article className="dev-photo-editor" key={photo.id}>
                     <div className="dev-photo-preview">
                       <img src={photo.image} alt={photo.title} />
@@ -1678,9 +1683,9 @@ export function DevEditor({
                           }}
                         />
                       </label>
-                      <button onClick={() => movePhoto(index, -1)}>上移</button>
-                      <button onClick={() => movePhoto(index, 1)}>下移</button>
-                      <button onClick={() => removePhoto(index)}>删除</button>
+                      <button onClick={() => movePhoto(photo.id, -1)}>上移</button>
+                      <button onClick={() => movePhoto(photo.id, 1)}>下移</button>
+                      <button onClick={() => removePhoto(photo.id)}>删除</button>
                     </div>
                   </article>
                 ))}

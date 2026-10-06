@@ -412,6 +412,7 @@ function App() {
               <PhotoGallery
                 items={visiblePhotos}
                 imageMeta={content.imageMeta}
+                maxVisibleRows={4}
                 onOpen={(index) =>
                   pushOverlay({ lightboxIndex: index, drawer: null, hobbyLightbox: null })
                 }

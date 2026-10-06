@@ -3418,7 +3418,7 @@ a {
 
 /* Mobile detail navigation and image performance */
 .detail-drawer {
-  overscroll-behavior: contain;
+  overscroll-behavior-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -4111,4 +4111,54 @@ a {
     line-height: 1.2;
     white-space: nowrap;
   }
+}
+
+/* Photography internal scroll and virtualization */
+.photo-grid-scroll {
+  overflow: hidden;
+}
+
+.photo-scroll {
+  position: relative;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: auto;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(63, 130, 144, 0.5) rgba(63, 130, 144, 0.08);
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
+
+.photo-scroll:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.photo-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.photo-scroll::-webkit-scrollbar-track {
+  background: rgba(63, 130, 144, 0.08);
+}
+
+.photo-scroll::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: rgba(63, 130, 144, 0.46);
+  background-clip: padding-box;
+}
+
+.photo-scroll-inner {
+  position: relative;
+  width: 100%;
+}
+
+.photo-row-virtual {
+  position: absolute;
+  right: 0;
+  left: 0;
+  margin-bottom: 0;
 }
