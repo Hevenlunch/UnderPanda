@@ -302,7 +302,10 @@
       "detail": "喜欢自拍，可以看到各种各样的我",
       "image": "/images/uploads/1792148105080-IMG_20240922_174041.webp",
       "passwordLockEnabled": true,
-      "password": "wang"
+      "password": "wang",
+      "photos": [
+        "/images/uploads/1792148570804-mmexport1754496296558.webp"
+      ]
     },
     {
       "id": "editing",
@@ -1159,6 +1162,10 @@
     "/images/uploads/1792148105080-IMG_20240922_174041.webp": {
       "width": 1650,
       "height": 2200
+    },
+    "/images/uploads/1792148570804-mmexport1754496296558.webp": {
+      "width": 2200,
+      "height": 1650
     }
   },
   "typography": {
