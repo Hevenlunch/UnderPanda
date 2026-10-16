@@ -43,7 +43,7 @@
     "travel": {
       "kicker": "TRAVEL / 旅行",
       "title": "走过的城市，慢慢变成自己的地图。",
-      "note": "点击城市卡片，看照片和当时留下的几句话。",
+      "note": "去没有去过的地方，也重新看看熟悉的地方。\n旅行对我最大的吸引力，不只是目的地，而是路上发生的意外、遇见的人和回来之后仍然记得的细节。",
       "drawerKicker": "TRAVEL / 旅行"
     },
     "footer": {
@@ -296,6 +296,15 @@
       ]
     },
     {
+      "id": "dance",
+      "title": "关于我",
+      "summary": "可以看到各种各样的我",
+      "detail": "喜欢自拍，可以看到各种各样的我",
+      "image": "/images/uploads/1792148105080-IMG_20240922_174041.webp",
+      "passwordLockEnabled": true,
+      "password": "wang"
+    },
+    {
       "id": "editing",
       "title": "图片后期",
       "summary": "把拍摄当下的感受重新还回来。",
@@ -308,13 +317,6 @@
       "summary": "给通勤、夜晚和整理照片加一点背景。",
       "detail": "喜欢的风格比较杂，开心时听节奏，安静时听旋律。很多照片的记忆里都有一首对应的歌。",
       "image": "/images/photo-night.svg"
-    },
-    {
-      "id": "dance",
-      "title": "街舞",
-      "summary": "身体动起来的时候，生活也会轻一点。",
-      "detail": "曾经参与过校园街舞社团和演出。它让我在表达、节奏和团队配合里找到另一种快乐。",
-      "image": "/images/photo-street.svg"
     }
   ],
   "cities": [
@@ -1153,6 +1155,10 @@
     "/images/uploads/1791219852716-IMG_20261002_155316_8929819503323.webp": {
       "width": 2200,
       "height": 1650
+    },
+    "/images/uploads/1792148105080-IMG_20240922_174041.webp": {
+      "width": 1650,
+      "height": 2200
     }
   },
   "typography": {
