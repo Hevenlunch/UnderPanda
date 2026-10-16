@@ -1,5 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { PhotoGallery } from "./PhotoGallery";
+
+interface PasswordLock {
+  password: string;
+  hobbyId: string;
+}
 
 interface DetailDrawerProps {
   open: boolean;
@@ -11,6 +16,7 @@ interface DetailDrawerProps {
   imageMeta?: Record<string, { width: number; height: number }>;
   adaptivePhotos?: boolean;
   heroVariant?: "default" | "city";
+  passwordLock?: PasswordLock;
   onPhotoClick?: (index: number) => void;
   onClose: () => void;
 }
@@ -25,9 +31,15 @@ export function DetailDrawer({
   imageMeta = {},
   adaptivePhotos = false,
   heroVariant = "default",
+  passwordLock,
   onPhotoClick,
   onClose,
 }: DetailDrawerProps) {
+  const [passwordInput, setPasswordInput] = useState("");
+  const [unlockedHobbyId, setUnlockedHobbyId] = useState<string | null>(null);
+  const [passwordError, setPasswordError] = useState(false);
+  const isLocked = Boolean(passwordLock && unlockedHobbyId !== passwordLock.hobbyId);
+
   useEffect(() => {
     if (!open) return;
     const onKeyDown = (event: KeyboardEvent) => {
@@ -36,6 +48,22 @@ export function DetailDrawer({
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open, onClose]);
+
+  useEffect(() => {
+    setPasswordInput("");
+    setPasswordError(false);
+  }, [passwordLock?.hobbyId, open]);
+
+  const unlockHobby = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!passwordLock || passwordInput !== passwordLock.password) {
+      setPasswordError(true);
+      return;
+    }
+    setUnlockedHobbyId(passwordLock.hobbyId);
+    setPasswordError(false);
+    setPasswordInput("");
+  };
 
   return (
     <div className={`drawer-layer ${open ? "is-open" : ""}`} aria-hidden={!open}>
@@ -62,7 +90,43 @@ export function DetailDrawer({
             />
           )}
         </div>
-        <div className="drawer-content">
+        <div className={`drawer-content${isLocked ? " drawer-content-locked" : ""}`}>
+          {isLocked && (
+            <div className="drawer-lock-gate">
+              <div className="drawer-lock-card">
+                <span className="drawer-lock-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none">
+                    <rect x="5" y="10" width="14" height="11" rx="2" stroke="currentColor" strokeWidth="1.6" />
+                    <path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                    <circle cx="12" cy="15" r="1" fill="currentColor" />
+                    <path d="M12 16v2" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                  </svg>
+                </span>
+                <p className="eyebrow">PRIVATE / 私人内容</p>
+                <h3>输入密码后继续浏览</h3>
+                <p>这部分内容仅向知道密码的访客开放。</p>
+                <form onSubmit={unlockHobby}>
+                  <label className="sr-only" htmlFor={`hobby-password-${passwordLock?.hobbyId}`}>访问密码</label>
+                  <input
+                    id={`hobby-password-${passwordLock?.hobbyId}`}
+                    type="password"
+                    autoComplete="current-password"
+                    placeholder="请输入访问密码"
+                    value={passwordInput}
+                    onChange={(event) => {
+                      setPasswordInput(event.target.value);
+                      setPasswordError(false);
+                    }}
+                    aria-invalid={passwordError}
+                    aria-describedby={passwordError ? "hobby-password-error" : undefined}
+                    required
+                  />
+                  <button type="submit">解锁查看</button>
+                </form>
+                {passwordError && <span id="hobby-password-error" className="drawer-lock-error" role="alert">密码不正确，请再试一次。</span>}
+              </div>
+            </div>
+          )}
           <p className="eyebrow">{kicker}</p>
           <h2>{title}</h2>
           <p className="drawer-description">{description}</p>

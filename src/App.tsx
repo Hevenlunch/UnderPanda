@@ -36,6 +36,7 @@ interface DrawerContent {
   photos?: string[];
   adaptivePhotos?: boolean;
   heroVariant?: "default" | "city";
+  passwordLock?: { password: string; hobbyId: string };
 }
 
 interface OverlaySnapshot {
@@ -190,6 +191,9 @@ function App() {
       image: hobby.image,
       photos: hobby.photos,
       adaptivePhotos: true,
+      passwordLock: hobby.passwordLockEnabled && hobby.password
+        ? { password: hobby.password, hobbyId: hobby.id }
+        : undefined,
       },
       lightboxIndex: null,
       hobbyLightbox: null,
@@ -554,6 +558,7 @@ function App() {
         photos={drawer?.photos}
         adaptivePhotos={drawer?.adaptivePhotos}
         heroVariant={drawer?.heroVariant}
+        passwordLock={drawer?.passwordLock}
         imageMeta={content.imageMeta}
         onPhotoClick={(index) => {
           const photos = drawer?.photos ?? [];

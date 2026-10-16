@@ -53,6 +53,8 @@ export interface HobbyItem {
   image: string;
   paragraphs?: string[];
   photos?: string[];
+  passwordLockEnabled?: boolean;
+  password?: string;
 }
 
 export interface CityItem {

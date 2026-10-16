@@ -650,10 +650,18 @@ export function DevEditor({
 
   const updateHobbyText = (
     id: string,
-    key: "title" | "summary" | "detail" | "image",
+    key: "title" | "summary" | "detail" | "image" | "password",
     value: string,
   ) => {
     updateHobbyItem(id, (hobby) => ({ ...hobby, [key]: value }));
+  };
+
+  const updateHobbyLock = (id: string, enabled: boolean, password?: string) => {
+    updateHobbyItem(id, (hobby) => ({
+      ...hobby,
+      passwordLockEnabled: enabled,
+      ...(password !== undefined ? { password } : {}),
+    }));
   };
 
   const addHobby = () => {
@@ -669,6 +677,8 @@ export function DevEditor({
           image: "/images/photo-detail.svg",
           paragraphs: [],
           photos: [],
+          passwordLockEnabled: false,
+          password: "",
         },
       ],
     });
@@ -1495,6 +1505,31 @@ export function DevEditor({
                         onChange={(event) => updateHobbyText(hobby.id, "detail", event.target.value)}
                       />
                     </label>
+                    <div className="dev-hobby-lock-settings">
+                      <label className="dev-hobby-lock-toggle">
+                        <input
+                          type="checkbox"
+                          checked={hobby.passwordLockEnabled === true}
+                          onChange={(event) => updateHobbyLock(hobby.id, event.target.checked)}
+                        />
+                        <span>为这个爱好启用密码锁</span>
+                      </label>
+                      {hobby.passwordLockEnabled && (
+                        <label className="dev-field">
+                          <span>访问密码</span>
+                          <input
+                            type="password"
+                            autoComplete="new-password"
+                            value={hobby.password ?? ""}
+                            onChange={(event) => updateHobbyText(hobby.id, "password", event.target.value)}
+                            placeholder="设置访客查看详情所需的密码"
+                          />
+                        </label>
+                      )}
+                      {hobby.passwordLockEnabled && !hobby.password?.trim() && (
+                        <p className="dev-empty-note">请先设置密码；密码为空时，访客仍可正常查看。</p>
+                      )}
+                    </div>
                     <div className="dev-photo-actions">
                       <label className="dev-upload">
                         上传封面图片
