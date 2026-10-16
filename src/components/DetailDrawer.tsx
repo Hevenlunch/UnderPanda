@@ -139,7 +139,7 @@ export function DetailDrawer({
                   title: `${title} 照片 ${index + 1}`,
                 }))}
                 imageMeta={imageMeta}
-                drawerColumns={heroVariant === "city" ? 3 : 2}
+                drawerColumns={3}
                 onOpen={onPhotoClick ?? (() => undefined)}
                 showOverlay={false}
                 variant="drawer"
