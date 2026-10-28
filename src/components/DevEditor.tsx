@@ -1,6 +1,12 @@
+import "../editor-ui.css";
+import "../content-workspace.css";
+import { ContentWorkspace } from "./ContentWorkspace";
+import { reorderWorkspaceItems } from "../workspaceItems";
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import type { CityItem, HobbyItem, PhotographyItem, SiteContent } from "../types";
 import { normalizeAppearance } from "../appearance";
+import { CityRatingEditor } from "./CityRatingEditor";
+import { VisualSettings } from "./VisualSettings";
 import {
   clearDevAuth,
   consumeOAuthRedirect,
@@ -218,6 +224,9 @@ export function DevEditor({
 }: DevEditorProps) {
   const [open, setOpen] = useState(false);
   const [view, setView] = useState<EditorView>("content");
+  const [workspaceWide,setWorkspaceWide]=useState(true);
+  const workspaceMode=view==="photos" || view==="hobbies" || view==="travel";
+  useEffect(()=>{setDragPosition(null);},[view]);
   const [draft, setDraft] = useState(() => JSON.stringify(contentForJson(content), null, 2));
   const [status, setStatus] = useState("");
   const [jsonSearch, setJsonSearch] = useState("");
@@ -548,9 +557,6 @@ export function DevEditor({
           visible: true,
         },
       ],
-    });
-    window.requestAnimationFrame(() => {
-      document.querySelector(".dev-photo-editor")?.scrollIntoView({ block: "start", behavior: "smooth" });
     });
   };
 
@@ -897,6 +903,53 @@ export function DevEditor({
     };
   }, [content.cities]);
 
+  const reorderHobbyPhoto = (id: string, from: number, to: number) => {
+    updateHobbyItem(id, (hobby) => {
+      if (from === to || from < 0 || to < 0 || from >= (hobby.photos ?? []).length || to >= (hobby.photos ?? []).length) return hobby;
+      const photos = [...(hobby.photos ?? [])];
+      const [photo] = photos.splice(from, 1);
+      photos.splice(to, 0, photo);
+      return { ...hobby, photos };
+    });
+  };
+
+  const hobbyPhotoDrag = useRef<{ hobbyId: string; index: number } | null>(null);
+  const hobbyPhotoLongPressTimer = useRef<number | null>(null);
+  const hobbyPhotoTouchStart = useRef<{ x: number; y: number } | null>(null);
+  const [draggingHobbyPhoto, setDraggingHobbyPhoto] = useState<{ hobbyId: string; index: number } | null>(null);
+
+  useEffect(() => {
+    const onPointerMove = (event: PointerEvent) => {
+      if (!hobbyPhotoDrag.current) return;
+      const target = document.elementFromPoint(event.clientX, event.clientY)?.closest<HTMLElement>("[data-hobby-photo-index]");
+      if (!target) return;
+      const to = Number(target.dataset.hobbyPhotoIndex);
+      const { hobbyId, index: from } = hobbyPhotoDrag.current;
+      if (target.dataset.hobbyId === hobbyId && Number.isInteger(to) && to !== from) {
+        reorderHobbyPhoto(hobbyId, from, to);
+        hobbyPhotoDrag.current.index = to;
+        setDraggingHobbyPhoto({ hobbyId, index: to });
+      }
+    };
+    const onPointerUp = () => {
+      if (hobbyPhotoLongPressTimer.current !== null) {
+        window.clearTimeout(hobbyPhotoLongPressTimer.current);
+        hobbyPhotoLongPressTimer.current = null;
+      }
+      hobbyPhotoTouchStart.current = null;
+      hobbyPhotoDrag.current = null;
+      setDraggingHobbyPhoto(null);
+    };
+    window.addEventListener("pointermove", onPointerMove);
+    window.addEventListener("pointerup", onPointerUp);
+    window.addEventListener("pointercancel", onPointerUp);
+    return () => {
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerup", onPointerUp);
+      window.removeEventListener("pointercancel", onPointerUp);
+    };
+  }, [content.cities]);
+
   const uploadCityCover = async (id: string, file: File) => {
     setStatus("正在优化并上传城市封面…");
     try {
@@ -1029,7 +1082,7 @@ export function DevEditor({
       </button>
       <aside
         ref={panelRef}
-        className={`dev-editor ${open ? "is-open" : ""}${isDragging ? " is-dragging" : ""}`}
+        className={`dev-editor ${open ? "is-open" : ""}${isDragging ? " is-dragging" : ""}${workspaceMode ? " has-content-workspace" : ""}${workspaceMode && workspaceWide ? " is-workspace-wide" : ""}`}
         style={
           dragPosition
             ? { left: `${dragPosition.left}px`, top: `${dragPosition.top}px`, right: "auto", bottom: "auto" }
@@ -1040,11 +1093,12 @@ export function DevEditor({
         <div className="dev-editor-head" onPointerDown={startPanelDrag} title="按住标题栏可拖动面板">
           <div>
             <span>{isOnline ? "ONLINE CONTENT STUDIO" : "LOCAL CONTENT STUDIO"}</span>
-            <h2>内容与字体设置</h2>
+            <h2>网站工作台</h2>
           </div>
-          <button onClick={() => setOpen(false)} aria-label="关闭编辑器">
-            ×
-          </button>
+          <div className="workspace-head-actions">
+            {workspaceMode && <button type="button" className="workspace-size-toggle" onClick={()=>{setWorkspaceWide(value=>!value);setDragPosition(null);}}>{workspaceWide?"收起工作区":"展开工作区"}</button>}
+            <button onClick={() => setOpen(false)} aria-label="关闭编辑器">×</button>
+          </div>
         </div>
 
         {isPreviewEnvironment ? (
@@ -1098,13 +1152,19 @@ export function DevEditor({
             字体设置
           </button>
           <button className={view === "json" ? "active" : ""} onClick={() => setView("json")}>
-            JSON
+            可视化设置
           </button>
         </div>
 
         <div className="dev-editor-body">
           {view === "json" ? (
             <>
+              <VisualSettings content={content} onChange={(next) => {
+                onChange(next);
+                setDraft(JSON.stringify(contentForJson(next), null, 2));
+              }} />
+              <details className="visual-settings-raw">
+                <summary>高级：原始 JSON（通常不需要修改）</summary>
               <p className="dev-note">
                 文字内容在 pageText，字号、页脚、BACK TO TOP 和 PC 封面样式在 appearance。修改后会实时同步；点击“保存内容”可写回 site.json。
               </p>
@@ -1150,6 +1210,7 @@ export function DevEditor({
                   </section>
                 ))}
                 <p>字号可填写 px、rem 或 clamp；圆角、边框宽度和偏移填写数字即可。</p>
+              </details>
               </details>
             </>
           ) : view === "type" ? (
@@ -1369,21 +1430,20 @@ export function DevEditor({
               </p>
 
 
-              <section className="dev-section">
-                <div className="dev-section-head"><h3>旅行模块文案</h3></div>
+              <div className="workspace-global-row">
+              <details className="dev-section workspace-global-settings">
+                <summary>旅行模块文案 · 点击展开</summary>
                 <label className="dev-field"><span>小标签</span><input value={content.pageText.travel.kicker} onChange={(event) => updateTravelPageText("kicker", event.target.value)} /></label>
                 <label className="dev-field"><span>主标题</span><input value={content.pageText.travel.title} onChange={(event) => updateTravelPageText("title", event.target.value)} /></label>
                 <label className="dev-field"><span>导语</span><textarea value={content.pageText.travel.note} onChange={(event) => updateTravelPageText("note", event.target.value)} /></label>
                 <label className="dev-field"><span>详情小标签</span><input value={content.pageText.travel.drawerKicker} onChange={(event) => updateTravelPageText("drawerKicker", event.target.value)} /></label>
-              </section>
+              </details>
 
-              <section className="dev-section">
-                <div className="dev-section-head">
-                  <h3>城市列表</h3>
-                  <button onClick={addCity}>添加城市</button>
-                </div>
-
-                {content.cities.map((city, index) => (
+              </div>
+              <ContentWorkspace key="travel" label="城市" addLabel="添加城市" onAdd={addCity}
+                items={content.cities.map(city=>({id:city.id,title:city.name,image:city.image,subtitle:`${city.photos.length} 张详情照片`,search:`${city.date} ${city.note}`}))}
+                onReorder={(from,to)=>onChange({...content,cities:reorderWorkspaceItems(content.cities,from,to)})}
+                renderEditor={selectedId => content.cities.map((city,index) => city.id===selectedId ? (
                   <article className="dev-hobby-editor" key={city.id}>
                     <div className="dev-hobby-header">
                       <div className="dev-photo-preview dev-hobby-cover">
@@ -1422,6 +1482,11 @@ export function DevEditor({
                         onChange={(event) => updateCityText(city.id, "note", event.target.value)}
                       />
                     </label>
+                    <CityRatingEditor
+                      cityName={city.name}
+                      rating={city.rating}
+                      onChange={(rating) => updateCityItem(city.id, (current) => ({ ...current, rating }))}
+                    />
                     <div className="dev-photo-actions">
                       <label className="dev-upload">
                         上传封面图片
@@ -1478,6 +1543,7 @@ export function DevEditor({
                           />
                         </label>
                       </div>
+                      <div className="workspace-detail-grid">
                       {city.photos.map((photo, photoIndex) => (
                         <div
                           className={`dev-hobby-photo-row dev-city-photo-sortable${draggingCityPhoto?.cityId === city.id && draggingCityPhoto.index === photoIndex ? " is-dragging" : ""}`}
@@ -1516,32 +1582,32 @@ export function DevEditor({
                           </div>
                         </div>
                       ))}
+                      </div>
                     </div>
                   </article>
-                ))}
-              </section>
+                ) : null)}
+              />
             </>
           ) : view === "hobbies" ? (
             <>
               <p className="dev-note">
-                外层爱好卡片保持现有样式。在这里编辑的正文、封面和详情照片，会显示在点击后的详情面板中。
+                在这里编辑爱好的正文、封面和详情照片。拖动照片缩略图调整顺序，手机长按缩略图后拖动，也可使用上下箭头。
               </p>
 
-              <section className="dev-section">
-                <div className="dev-section-head"><h3>爱好模块文案</h3></div>
+              <div className="workspace-global-row">
+              <details className="dev-section workspace-global-settings">
+                <summary>爱好模块文案 · 点击展开</summary>
                 <label className="dev-field"><span>小标签</span><input value={content.pageText.hobbies.kicker} onChange={(event) => updateHobbiesPageText("kicker", event.target.value)} /></label>
                 <label className="dev-field"><span>主标题</span><input value={content.pageText.hobbies.title} onChange={(event) => updateHobbiesPageText("title", event.target.value)} /></label>
                 <label className="dev-field"><span>导语</span><textarea value={content.pageText.hobbies.note} onChange={(event) => updateHobbiesPageText("note", event.target.value)} /></label>
                 <label className="dev-field"><span>详情小标签</span><input value={content.pageText.hobbies.drawerKicker} onChange={(event) => updateHobbiesPageText("drawerKicker", event.target.value)} /></label>
-              </section>
+              </details>
 
-              <section className="dev-section">
-                <div className="dev-section-head">
-                  <h3>爱好列表</h3>
-                  <button onClick={addHobby}>添加爱好</button>
-                </div>
-
-                {content.hobbies.map((hobby, index) => (
+              </div>
+              <ContentWorkspace key="hobbies" label="爱好" addLabel="添加爱好" onAdd={addHobby}
+                items={content.hobbies.map(hobby=>({id:hobby.id,title:hobby.title,image:hobby.image,subtitle:`${hobby.photos?.length ?? 0} 张详情照片`,search:hobby.summary}))}
+                onReorder={(from,to)=>onChange({...content,hobbies:reorderWorkspaceItems(content.hobbies,from,to)})}
+                renderEditor={selectedId => content.hobbies.map((hobby,index) => hobby.id===selectedId ? (
                   <article className="dev-hobby-editor" key={hobby.id}>
                     <div className="dev-hobby-header">
                       <div className="dev-photo-preview dev-hobby-cover">
@@ -1661,9 +1727,38 @@ export function DevEditor({
                           />
                         </label>
                       </div>
+                      <div className="workspace-detail-grid">
                       {(hobby.photos ?? []).map((photo, photoIndex) => (
-                        <div className="dev-hobby-photo-row" key={`${hobby.id}-photo-${photoIndex}`}>
-                          <img src={photo} alt={`${hobby.title} ${photoIndex + 1}`} />
+                        <div
+                          className={`dev-hobby-photo-row dev-hobby-photo-sortable${draggingHobbyPhoto?.hobbyId === hobby.id && draggingHobbyPhoto.index === photoIndex ? " is-dragging" : ""}`}
+                          key={`${hobby.id}-photo-${photoIndex}`}
+                          data-hobby-id={hobby.id}
+                          data-hobby-photo-index={photoIndex}
+                          draggable={false}
+                          onPointerDown={(event) => {
+                            if (!(event.target instanceof HTMLImageElement)) return;
+                            if (event.pointerType === "mouse") {
+                              hobbyPhotoDrag.current = { hobbyId: hobby.id, index: photoIndex };
+                              setDraggingHobbyPhoto({ hobbyId: hobby.id, index: photoIndex });
+                              return;
+                            }
+                            hobbyPhotoTouchStart.current = { x: event.clientX, y: event.clientY };
+                            hobbyPhotoLongPressTimer.current = window.setTimeout(() => {
+                              hobbyPhotoDrag.current = { hobbyId: hobby.id, index: photoIndex };
+                              setDraggingHobbyPhoto({ hobbyId: hobby.id, index: photoIndex });
+                              hobbyPhotoLongPressTimer.current = null;
+                            }, 350);
+                          }}
+                          onPointerMove={(event) => {
+                            if (!hobbyPhotoTouchStart.current || hobbyPhotoDrag.current) return;
+                            if (Math.hypot(event.clientX - hobbyPhotoTouchStart.current.x, event.clientY - hobbyPhotoTouchStart.current.y) > 10) {
+                              if (hobbyPhotoLongPressTimer.current !== null) window.clearTimeout(hobbyPhotoLongPressTimer.current);
+                              hobbyPhotoLongPressTimer.current = null;
+                              hobbyPhotoTouchStart.current = null;
+                            }
+                          }}
+                        >
+                          <img src={photo} alt={`${hobby.title} ${photoIndex + 1}`} draggable={false} />
                           <div className="dev-row-actions">
                             <button onClick={() => moveHobbyPhoto(hobby.id, photoIndex, -1)}>↑</button>
                             <button onClick={() => moveHobbyPhoto(hobby.id, photoIndex, 1)}>↓</button>
@@ -1671,10 +1766,11 @@ export function DevEditor({
                           </div>
                         </div>
                       ))}
+                      </div>
                     </div>
                   </article>
-                ))}
-              </section>
+                ) : null)}
+              />
             </>
           ) : view === "photos" ? (
             <>
@@ -1682,19 +1778,17 @@ export function DevEditor({
                 分类和照片会同步影响 PC 与移动端。上传时大图会自动压缩；浏览器无法读取 HEIC 时，请先导出为 JPG。
               </p>
 
-              <section className="dev-section">
-                <div className="dev-section-head"><h3>摄影模块文案</h3></div>
+              <div className="workspace-global-row">
+              <details className="dev-section workspace-global-settings">
+                <summary>摄影模块文案 · 点击展开</summary>
                 <label className="dev-field"><span>小标签</span><input value={content.pageText.photography.kicker} onChange={(event) => updatePhotographyPageText("kicker", event.target.value)} /></label>
                 <label className="dev-field"><span>主标题</span><input value={content.pageText.photography.title} onChange={(event) => updatePhotographyPageText("title", event.target.value)} /></label>
                 <label className="dev-field"><span>导语</span><textarea value={content.pageText.photography.note} onChange={(event) => updatePhotographyPageText("note", event.target.value)} /></label>
                 <label className="dev-field"><span>分类总标签</span><input value={content.pageText.photography.all} onChange={(event) => updatePhotographyPageText("all", event.target.value)} /></label>
-              </section>
+              </details>
 
-              <section className="dev-section">
-                <div className="dev-section-head">
-                  <h3>照片分类</h3>
-                  <span>{content.photoCategories.length} 个</span>
-                </div>
+              <details className="dev-section workspace-global-settings">
+                <summary>照片分类 · {content.photoCategories.length} 个 · 点击展开</summary>
                 <div className="dev-category-list">
                   {content.photoCategories.map((category, index) => (
                     <div className="dev-category-row" key={index}>
@@ -1725,15 +1819,13 @@ export function DevEditor({
                   />
                   <button onClick={addCategory}>添加分类</button>
                 </div>
-              </section>
+              </details>
 
-              <section className="dev-section">
-                <div className="dev-section-head">
-                  <h3>照片列表</h3>
-                  <button onClick={addPhoto}>添加照片</button>
-                </div>
-                <p className="dev-inline-note">编辑列表最新照片在最上方；网站展示顺序保持最新照片在最下方。</p>
-                {[...content.photography].reverse().map((photo, index) => (
+              </div>
+              <ContentWorkspace key="photos" label="照片" addLabel="添加照片" onAdd={addPhoto} categories={content.photoCategories}
+                items={[...content.photography].reverse().map(photo=>({id:photo.id,title:photo.title,image:photo.image,subtitle:photo.category,category:photo.category,search:`${photo.caption} ${photo.note}`,visible:photo.visible}))}
+                onReorder={(from,to)=>onChange({...content,photography:reorderWorkspaceItems([...content.photography].reverse(),from,to).reverse()})}
+                renderEditor={selectedId => [...content.photography].reverse().map((photo,index) => photo.id===selectedId ? (
                   <article className="dev-photo-editor" key={photo.id}>
                     <div className="dev-photo-preview">
                       <img src={photo.image} alt={photo.title} />
@@ -1798,8 +1890,8 @@ export function DevEditor({
                       <button onClick={() => removePhoto(photo.id)}>删除</button>
                     </div>
                   </article>
-                ))}
-              </section>
+                ) : null)}
+              />
             </>
           ) : (
             <>

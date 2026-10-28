@@ -1,0 +1,90 @@
+/* Shared thumbnail library / single inspector, scoped to the admin editor. */
+.workspace-container { container-type:inline-size; display:flex; flex:1; min-width:0; min-height:0; }
+.dev-editor.is-workspace-wide { width: min(1080px,calc(100vw - 32px)); }
+.dev-editor.has-content-workspace .dev-editor-body { display:flex; flex-direction:column; gap:10px; overflow:hidden; }
+.dev-editor.has-content-workspace .dev-editor-body > .dev-note { flex-shrink:0; margin:0; }
+.dev-editor .workspace-global-settings { flex-shrink:0; margin:0; padding:0 12px; max-height:40%; overflow:auto; border-radius:10px; }
+.dev-editor .workspace-global-settings > summary { padding:10px 0; color:var(--accent-deep); font-size:12px; font-weight:500; cursor:pointer; }
+.dev-editor .workspace-global-settings[open] { padding-bottom:12px; }
+.workspace-head-actions { display:flex; align-items:center; gap:8px; }
+.dev-editor-head .workspace-head-actions .workspace-size-toggle { display:inline-flex; width:auto; height:32px; padding:6px 10px; border-radius:8px; font-size:11px; white-space:nowrap; }
+.content-workspace { flex:1; display:grid; grid-template-columns:minmax(0,1fr) minmax(300px,38%); gap:14px; min-height:0; min-width:0; }
+.workspace-library { display:flex; flex-direction:column; min-width:0; min-height:0; }
+.workspace-toolbar { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:9px; flex-shrink:0; padding:2px 0 10px; }
+.workspace-heading { grid-column:1/-1; display:flex; align-items:center; gap:10px; }
+.workspace-heading h3 { margin:0; font-size:15px; font-weight:600; }
+.workspace-heading > span { font-size:11px; color:var(--muted); font-variant-numeric:tabular-nums; }
+.dev-editor .workspace-heading button { margin-left:auto; min-height:34px; padding:7px 12px; background:var(--accent-deep); color:var(--surface); font-size:12px; }
+.workspace-search { min-width:0; }
+.workspace-search input,.workspace-category select { width:100%; min-width:0; height:38px; padding:8px 11px; border:1px solid var(--studio-border); border-radius:9px; background:var(--studio-field); color:var(--ink); font:400 13px/1.4 var(--sans); }
+.workspace-search:last-of-type { grid-column:1/-1; }
+.workspace-search:has(+.workspace-category) { grid-column:auto; }
+.workspace-category select { max-width:140px; }
+.workspace-hint { grid-column:1/-1; margin:0; color:var(--muted); font-size:11px; line-height:1.5; }
+.workspace-grid-scroll { flex:1; min-height:0; overflow-y:auto; overscroll-behavior:contain; scrollbar-width:thin; padding:3px 5px 12px 2px; }
+.workspace-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(138px,1fr)); gap:12px; align-content:start; }
+.workspace-item { position:relative; min-width:0; border:2px solid transparent; border-radius:12px; background:var(--studio-panel); overflow:hidden; }
+.workspace-item.is-selected { border-color:var(--accent); background:var(--accent-soft); }
+.workspace-item.is-dragging { opacity:.45; }
+.dev-editor .workspace-select { display:block; width:100%; min-width:0; padding:0 0 10px; border-radius:0; text-align:left; background:transparent; color:var(--ink); }
+.workspace-thumbnail { display:block; position:relative; aspect-ratio:4/3; overflow:hidden; background:var(--surface-2); }
+.workspace-thumbnail img { width:100%; height:100%; object-fit:cover; }
+.workspace-item-title { display:block; padding:9px 10px 0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:12px; font-weight:550; }
+.workspace-item-subtitle { display:block; padding:4px 10px 0; color:var(--muted); font-size:11px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.dev-editor .workspace-drag { position:absolute; top:6px; right:6px; display:grid; place-items:center; width:30px; height:30px; padding:0; border:1px solid var(--studio-border); border-radius:7px; background:var(--studio-panel); color:var(--accent-deep); font-size:20px; cursor:grab; touch-action:none; }
+.dev-editor .workspace-drag:disabled { opacity:.3; cursor:default; }
+.workspace-hidden-badge { position:absolute; left:6px; bottom:6px; padding:4px 6px; border-radius:5px; background:var(--studio-panel); color:var(--muted); font-size:10px; }
+.workspace-inspector { min-width:0; min-height:0; display:flex; flex-direction:column; border:1px solid var(--studio-border); border-radius:13px; background:var(--studio-panel); overflow:hidden; }
+.workspace-inspector-head { display:flex; align-items:center; flex-wrap:wrap; gap:8px; padding:11px 12px; border-bottom:1px solid var(--studio-border); }
+.workspace-inspector-head > strong { flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:13px; }
+.workspace-adjacent { display:flex; gap:5px; align-items:center; }
+.workspace-adjacent > span { font-size:11px; color:var(--muted); font-variant-numeric:tabular-nums; }
+.dev-editor .workspace-adjacent button { width:28px; height:28px; padding:0; color:var(--accent-deep); background:var(--studio-canvas); font-size:20px; }
+.dev-editor .workspace-back { display:none; padding:7px 0; color:var(--accent-deep); background:transparent; font-size:12px; }
+.workspace-inspector-scroll { flex:1; min-height:0; overflow-y:auto; overscroll-behavior:contain; scrollbar-width:thin; padding:0 12px 14px; }
+.dev-editor .workspace-inspector .dev-hobby-editor,.dev-editor .workspace-inspector .dev-photo-editor { margin:0; padding:14px 0 0; border:0; border-radius:0; background:transparent; }
+.workspace-empty { padding:25px 12px; color:var(--muted); font-size:13px; line-height:1.6; text-align:center; }
+.workspace-empty strong { color:var(--ink); font-weight:500; }
+.dev-editor .workspace-empty button { padding:8px 12px; background:var(--studio-field); color:var(--accent-deep); }
+.workspace-detail-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+.dev-editor .workspace-detail-grid .dev-hobby-photo-row { display:flex; flex-direction:column; min-width:0; align-items:stretch; justify-content:start; gap:4px; margin:0; padding:0; border:1px solid var(--studio-border); border-radius:8px; overflow:hidden; }
+.dev-editor .workspace-detail-grid .dev-hobby-photo-row img { display:block; width:100%; height:auto; aspect-ratio:4/3; border-radius:0; }
+.dev-editor .workspace-detail-grid .dev-row-actions { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:3px; padding:4px; }
+.dev-editor .workspace-detail-grid .dev-row-actions button { min-width:0; padding:5px 2px; }
+.dev-editor.is-workspace-wide .dev-editor-tabs { grid-template-columns:repeat(6,minmax(0,1fr)); }
+@container (max-width:680px) {
+  .content-workspace { display:flex; flex-direction:column; }
+  .workspace-inspector { display:none; flex:1; }
+  .workspace-library { flex:1; }
+  .content-workspace.is-editing .workspace-library { display:none; }
+  .content-workspace.is-editing .workspace-inspector { display:flex; }
+  .dev-editor .workspace-back { display:inline-flex; }
+  .workspace-inspector-head > strong { flex-basis:100%; order:3; }
+  .workspace-adjacent { margin-left:auto; }
+  .workspace-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width:760px) {
+  .dev-editor.is-workspace-wide { width:auto; }
+  .dev-editor.is-workspace-wide .dev-editor-tabs { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .dev-editor-head .workspace-head-actions .workspace-size-toggle { display:none; }
+  .dev-editor.has-content-workspace .dev-editor-body { gap:8px; }
+  .dev-editor.has-content-workspace .dev-editor-body > .dev-note { display:none; }
+  .dev-editor .workspace-global-settings > summary { min-height:40px; padding:11px 0; }
+  .workspace-search input,.workspace-category select { height:44px; font-size:14px; }
+  .dev-editor .workspace-heading button { min-height:40px; }
+  .dev-editor .workspace-drag { width:36px; height:36px; }
+  .dev-editor .workspace-back,.dev-editor .workspace-adjacent button { min-height:44px; }
+  .dev-editor .workspace-adjacent button { width:38px; }
+  .workspace-item-title { font-size:12px; }
+  .workspace-detail-grid .dev-row-actions button { min-height:44px; }
+}
+
+.dev-editor.has-content-workspace .dev-editor-body > .dev-note { display:none; }
+.workspace-global-row { display:flex; align-items:flex-start; gap:10px; flex-shrink:0; max-height:35%; overflow:auto; }
+.dev-editor .workspace-global-row > .workspace-global-settings { flex:1; min-width:0; max-height:180px; }
+.dev-editor.is-workspace-wide .dev-editor-head { padding-top:14px; padding-bottom:12px; }
+@media (max-width:760px) {
+  .workspace-global-row { gap:6px; }
+  .dev-editor .workspace-global-row > .workspace-global-settings { padding-left:9px; padding-right:9px; }
+  .dev-editor .workspace-global-settings > summary { font-size:11px; }
+}

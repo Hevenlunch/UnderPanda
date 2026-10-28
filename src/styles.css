@@ -2626,17 +2626,17 @@ a {
   background: var(--surface-2);
 }
 
-.dev-city-photo-sortable {
+.dev-city-photo-sortable, .dev-hobby-photo-sortable {
   cursor: default;
 }
 
-.dev-city-photo-sortable img {
+.dev-city-photo-sortable img, .dev-hobby-photo-sortable img {
   cursor: grab;
   touch-action: none;
   user-select: none;
 }
 
-.dev-city-photo-sortable.is-dragging {
+.dev-city-photo-sortable.is-dragging, .dev-hobby-photo-sortable.is-dragging {
   opacity: 0.48;
   outline: 2px dashed var(--accent);
   outline-offset: 2px;
@@ -4327,3 +4327,195 @@ a {
   left: 0;
   margin-bottom: 0;
 }
+
+
+/* Personal city impressions */
+.city-card-title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 16px;
+}
+.city-rating-badge {
+  flex-shrink: 0;
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+.city-rating-badge-unit { font-size: 0.68rem; opacity: 0.78; }
+.city-rating {
+  margin-top: 28px;
+  padding: 24px 0 20px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+}
+.city-rating-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.city-rating-eyebrow {
+  margin: 0 0 6px;
+  color: var(--accent-deep);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+}
+.city-rating h3 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 400;
+}
+.city-revisit {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 11px;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+.city-revisit > span { opacity: 0.8; font-size: 0.68rem; }
+.city-rating-overview { margin: 18px 0; }
+.city-rating-total { margin: 0; color: var(--accent-deep); font-variant-numeric: tabular-nums; }
+.city-rating-total > span:first-child { font-family: var(--serif); font-size: 3rem; line-height: 1.15; }
+.city-rating-total > span:last-child { font-size: 0.85rem; color: var(--muted); }
+.city-rating-meta, .city-rating-disclaimer {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 0.72rem;
+  line-height: 1.7;
+}
+.city-rating-pending { margin: 0; font-family: var(--serif); font-size: 1.5rem; }
+.city-rating-details summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  gap: 12px;
+  color: var(--accent-deep);
+  font-size: 0.82rem;
+  cursor: pointer;
+  list-style: none;
+}
+.city-rating-details summary::-webkit-details-marker { display: none; }
+.city-rating-details summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.city-rating-chevron { font-size: 1.1rem; }
+.city-rating-collapse, .city-rating-details[open] .city-rating-expand { display: none; }
+.city-rating-details[open] .city-rating-collapse { display: inline; }
+.city-rating-details[open] .city-rating-chevron { transform: rotate(180deg); }
+.city-rating-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px 32px;
+  padding: 16px 0 20px;
+}
+.city-rating-item { min-width: 0; }
+.city-rating-item-heading { display: flex; justify-content: space-between; gap: 12px; font-size: 0.83rem; }
+.city-rating-value { flex-shrink: 0; color: var(--accent-deep); font-variant-numeric: tabular-nums; }
+.city-rating-track { height: 5px; margin-top: 10px; overflow: hidden; background: var(--surface-2); border-radius: 4px; }
+.city-rating-track > span { display: block; height: 100%; background: var(--accent); border-radius: inherit; }
+.city-rating-reason { margin: 9px 0 0; font-size: 0.76rem; color: var(--muted); line-height: 1.7; white-space: pre-line; overflow-wrap: anywhere; }
+.city-rating-disclaimer { margin-top: 12px; }
+.city-rating-editor .dev-toggle-row { margin-bottom: 14px; }
+.city-rating-editor-note { margin-top: 14px; }
+.city-rating-editor-fields { display: grid; gap: 18px; margin-bottom: 20px; }
+.city-rating-editor-field { min-width: 0; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+.city-rating-editor-label { display: grid; gap: 5px; margin-bottom: 10px; }
+.city-rating-editor-label > span { font-size: 0.85rem; }
+.city-rating-editor-label > small { color: var(--muted); font-size: 0.72rem; line-height: 1.6; }
+.city-score-control { display: flex; gap: 6px; align-items: center; }
+.city-score-control button { min-width: 38px; min-height: 38px; padding: 6px 9px; background: var(--surface-2); color: var(--ink); font-size: 0.85rem; }
+.city-score-control button:disabled { opacity: 0.4; cursor: default; }
+.city-score-control input { width: 100px; min-width: 0; min-height: 38px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); text-align: center; font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+.city-score-control input:focus-visible, .city-score-control button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.city-score-control .city-score-clear { margin-left: auto; font-size: 0.75rem; background: transparent; }
+.city-score-error { margin: 8px 0; color: #a03f30; font-size: 0.74rem; line-height: 1.6; }
+.city-rating-reason-field { margin: 10px 0 0; }
+.city-rating-reason-field textarea { min-height: 60px; }
+.city-rating-editor-summary { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; padding: 12px 0; font-size: 0.78rem; font-variant-numeric: tabular-nums; }
+.city-rating-editor-summary strong { color: var(--accent-deep); font-weight: 500; }
+.city-rating-editor-preview .city-rating { margin: 14px 0; }
+@media (max-width: 640px) {
+  .city-rating-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .city-rating { padding-top: 20px; }
+  .city-rating-heading { gap: 12px; }
+  .city-rating-total > span:first-child { font-size: 2.6rem; }
+  .city-rating-editor .city-score-control button, .city-rating-editor .city-score-control input { min-height: 44px; }
+  .city-rating-editor .city-score-control input, .city-rating-editor .dev-field textarea, .city-rating-editor .dev-field select { font-size: 16px; }
+}
+
+.city-rating-editor-toggle { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 44px; color: var(--ink); font-size: 0.85rem; list-style: none; cursor: pointer; }
+.city-rating-editor-toggle::-webkit-details-marker { display: none; }
+.city-rating-editor-toggle > span:last-child { color: var(--muted); font-size: 0.72rem; flex-shrink: 0; }
+.city-rating-editor-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.city-rating-editor-content { padding-top: 14px; }
+
+
+/* Compact city ratings and slider controls */
+.city-rating-badge { font-size: 1.25rem; }
+.city-rating-badge-unit { font-size: 0.78rem; }
+.city-rating { margin-top: 16px; padding: 14px 0 4px; }
+.city-rating-heading { gap: 8px; }
+.city-rating h3.eyebrow { margin: 0; font-family: var(--sans); font-size: 0.86rem; font-weight: 600; line-height: 1.5; letter-spacing: 0.12em; color: var(--accent-deep); }
+.city-rating-overview { display: block; margin: 6px 0 2px; }
+.city-rating-total > span:first-child { font-size: 2.3rem; }
+.city-rating-disclaimer { margin: 3px 0 0; font-size: 0.7rem; line-height: 1.5; }
+.city-rating-meta { margin: 0; }
+.city-rating-details summary { min-height: 36px; }
+.city-score-slider { gap: 10px; }
+.city-score-control input[type="range"] { flex: 1; width: 100%; height: 38px; min-width: 50px; margin: 0; padding: 0; appearance: none; border: 0; background: transparent; cursor: ew-resize; touch-action: pan-y; }
+.city-score-control input[type="range"]::-webkit-slider-runnable-track { height: 6px; border-radius: 3px; background: linear-gradient(to right, var(--accent) var(--score-fill), var(--surface-2) var(--score-fill)); }
+.city-score-control input[type="range"]::-webkit-slider-thumb { appearance: none; width: 18px; height: 18px; margin-top: -6px; border: 2px solid var(--surface); border-radius: 50%; background: var(--accent); box-shadow: 0 1px 4px rgba(31,48,55,.2); }
+.city-score-control input[type="range"]::-moz-range-track { height: 6px; border-radius: 3px; background: var(--surface-2); }
+.city-score-control input[type="range"]::-moz-range-progress { height: 6px; background: var(--accent); }
+.city-score-control input[type="range"]::-moz-range-thumb { width: 16px; height: 16px; border: 2px solid var(--surface); border-radius: 50%; background: var(--accent); }
+.city-score-output { min-width: 46px; text-align: right; color: var(--accent-deep); font-size: .85rem; font-variant-numeric: tabular-nums; }
+@media (max-width: 640px) {
+  .city-rating h3.eyebrow { font-size: .78rem; letter-spacing: .07em; }
+  .city-rating-total > span:first-child { font-size: 2.1rem; }
+  .city-rating-disclaimer { flex-basis: 180px; }
+  .city-rating-details summary { min-height: 44px; }
+}
+
+
+/* Searchable visual settings: editor-only controls */
+.visual-settings-tools,.visual-settings-modes,.visual-settings-active,.visual-setting-label,.visual-setting-inputs,.visual-setting-color { display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
+.visual-settings-tools { margin-bottom:14px; }
+.visual-settings-tools button,.visual-settings-modes button,.visual-settings-active button,.visual-setting-label button,.visual-setting-color button { padding:8px 10px; background:var(--surface-2); color:var(--ink); font-size:.74rem; }
+.visual-settings-tools select { padding:7px; max-width:100%; background:var(--surface); color:var(--ink); border:1px solid var(--line); }
+.visual-settings-modes { margin:14px 0; }
+.visual-settings-modes button[aria-pressed="true"],.visual-settings-tools button[aria-pressed="true"] { color:var(--surface); background:var(--accent-deep); }
+.visual-settings-active { justify-content:space-between; padding:12px 0; border-top:1px solid var(--line); font-size:.85rem; }
+.visual-setting-field { margin:16px 0; }
+.visual-setting-label { justify-content:space-between; font-size:.78rem; }
+.visual-setting-label > span:last-child { display:flex; align-items:center; gap:8px; color:var(--muted); font-size:.7rem; }
+.visual-setting-inputs { flex-wrap:nowrap; margin-top:6px; }
+.visual-setting-inputs input[type="range"] { flex:1; min-width:0; accent-color:var(--accent); }
+.visual-setting-inputs input[type="number"] { width:72px; min-width:0; padding:6px; color:var(--ink); background:var(--surface); border:1px solid var(--line); }
+.visual-setting-color { justify-content:space-between; margin:14px 0; font-size:.76rem; }
+.visual-setting-color label { display:flex; align-items:center; gap:10px; }
+.visual-setting-color input { width:38px; height:30px; padding:1px; border:1px solid var(--line); background:var(--surface); }
+.visual-setting-color > span { color:var(--muted); }
+.visual-settings button:disabled { opacity:.4; cursor:default; }
+.visual-settings input:focus-visible,.visual-settings button:focus-visible,.visual-settings select:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+.visual-settings-notice { padding:10px; background:var(--accent-soft); color:var(--accent-deep); font-size:.78rem; line-height:1.6; }
+.visual-settings-directory,.visual-settings-raw { margin-top:20px; border-top:1px solid var(--line); padding-top:14px; }
+.visual-settings-directory summary,.visual-settings-raw > summary { padding:8px 0; font-size:.78rem; color:var(--accent-deep); cursor:pointer; }
+.visual-settings-directory > button { display:block; width:100%; text-align:left; padding:9px 0; background:transparent; color:var(--ink); font-size:.76rem; }
+.visual-settings-highlight { pointer-events:none; z-index:99998; outline:2px solid var(--accent); background:rgba(63,130,144,.08); }
+@media (pointer:coarse) { .visual-settings button,.visual-settings select,.visual-setting-inputs input { min-height:44px; } .visual-settings input,.visual-settings textarea { font-size:16px; } }
+
+.visual-settings > .dev-note { margin-bottom:8px; }
+.visual-settings > .dev-field { margin-bottom:10px; }
+.visual-settings-tools { gap:6px; margin-bottom:10px; }
+.visual-settings-modes { margin:10px 0; }
+.visual-settings-active { padding:8px 0; font-size:.72rem; color:var(--muted); }
+.visual-setting-field { margin:12px 0; }

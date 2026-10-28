@@ -1,5 +1,7 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { PhotoGallery } from "./PhotoGallery";
+import { CityRatingPanel } from "./CityRating";
+import type { CityRating } from "../types";
 
 interface PasswordLock {
   password: string;
@@ -11,6 +13,9 @@ interface DetailDrawerProps {
   kicker: string;
   title: string;
   description: string;
+  body?: string;
+  cityId?: string;
+  cityRating?: CityRating;
   image: string;
   photos?: string[];
   imageMeta?: Record<string, { width: number; height: number }>;
@@ -26,6 +31,9 @@ export function DetailDrawer({
   kicker,
   title,
   description,
+  body,
+  cityId,
+  cityRating,
   image,
   photos = [],
   imageMeta = {},
@@ -130,6 +138,8 @@ export function DetailDrawer({
           <p className="eyebrow">{kicker}</p>
           <h2>{title}</h2>
           <p className="drawer-description">{description}</p>
+          {heroVariant === "city" && <CityRatingPanel key={cityId} rating={cityRating} />}
+          {body && <p className="drawer-description">{body}</p>}
           {photos.length > 0 && adaptivePhotos ? (
             <div className="drawer-adaptive-gallery">
               <PhotoGallery

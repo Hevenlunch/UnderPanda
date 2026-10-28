@@ -57,6 +57,20 @@ export interface HobbyItem {
   password?: string;
 }
 
+export type CityRatingKey =
+  | "scenery" | "food" | "transport" | "affordability" | "culture"
+  | "atmosphere" | "activities" | "comfort" | "photography" | "hospitality";
+
+export type RevisitIntention = "definitely" | "maybe" | "once";
+
+export interface CityRating {
+  enabled: boolean;
+  scores: Partial<Record<CityRatingKey, number | null>>;
+  reasons?: Partial<Record<CityRatingKey, string>>;
+  revisit?: RevisitIntention | "";
+  updatedAt?: string;
+}
+
 export interface CityItem {
   id: string;
   name: string;
@@ -65,6 +79,7 @@ export interface CityItem {
   image: string;
   photos: string[];
   paragraphs?: string[];
+  rating?: CityRating;
 }
 
 export interface WorkNote {
@@ -165,6 +180,7 @@ export interface ImageMeta {
 }
 
 export interface SiteContent {
+  visualStyles?: import("./visualSettings").VisualStyles;
   siteEnabled?: boolean;
   showStats?: boolean;
   appearance?: Appearance;

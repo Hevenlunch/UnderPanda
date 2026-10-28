@@ -8,6 +8,8 @@ import { PhotoGallery } from "./components/PhotoGallery";
 import { SiteClosed } from "./components/SiteClosed";
 import { SiteOpening } from "./components/SiteOpening";
 import { TravelRoute } from "./components/TravelRoute";
+import { CityRatingBadge } from "./components/CityRating";
+import { visualStylesCss } from "./visualSettings";
 import {
   loadTypography,
   normalizeTypography,
@@ -29,6 +31,8 @@ const DevEditor = lazy(() =>
 );
 
 interface DrawerContent {
+  cityId?: string;
+  body?: string;
   kicker: string;
   title: string;
   description: string;
@@ -206,7 +210,9 @@ function App() {
       drawer: {
       kicker: content.pageText.travel.drawerKicker,
       title: city.name,
-      description: [city.date, city.note, ...paragraphs].filter(Boolean).join("\n\n"),
+      description: [city.date, city.note].filter(Boolean).join("\n\n"),
+      body: paragraphs.join("\n\n"),
+      cityId: city.id,
       image: city.image,
       photos: city.photos,
       adaptivePhotos: true,
@@ -248,6 +254,7 @@ function App() {
       className="site"
       style={{ ...typographyCssVariables(typography), ...appearanceStyle } as CSSProperties}
     >
+      <style>{visualStylesCss(content.visualStyles)}</style>
       <SiteOpening name={content.profile.name} englishName={content.profile.englishName} />
       <Header content={content} />
 
@@ -473,7 +480,10 @@ function App() {
                   <span className="city-index">{String(index + 1).padStart(2, "0")}</span>
                   <span className="city-copy">
                     <small>{city.date}</small>
-                    <strong>{city.name}</strong>
+                    <span className="city-card-title-row">
+                      <strong>{city.name}</strong>
+                      <CityRatingBadge rating={city.rating} />
+                    </span>
                     <p>{city.note}</p>
                     <em>{content.pageText.actions.cityAction}</em>
                   </span>
@@ -554,6 +564,9 @@ function App() {
         kicker={drawer?.kicker ?? ""}
         title={drawer?.title ?? ""}
         description={drawer?.description ?? ""}
+        body={drawer?.body}
+        cityId={drawer?.cityId}
+        cityRating={content.cities.find((city) => city.id === drawer?.cityId)?.rating}
         image={drawer?.image ?? ""}
         photos={drawer?.photos}
         adaptivePhotos={drawer?.adaptivePhotos}
