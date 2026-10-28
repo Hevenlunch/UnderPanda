@@ -353,18 +353,18 @@
       "rating": {
         "enabled": true,
         "scores": {
-          "scenery": 6.5,
+          "scenery": 10,
           "food": 7,
-          "transport": 7.5,
-          "affordability": 7,
-          "culture": 7.5,
-          "atmosphere": 8.5,
-          "activities": 7,
-          "comfort": 7,
-          "photography": 7,
-          "hospitality": 8
+          "transport": 10,
+          "affordability": 7.5,
+          "culture": 9,
+          "atmosphere": 10,
+          "activities": 10,
+          "comfort": 10,
+          "photography": 10,
+          "hospitality": 10
         },
-        "updatedAt": "2026-10-28T10:18:46.033Z",
+        "updatedAt": "2026-10-28T15:46:45.636Z",
         "revisit": "definitely"
       }
     },
