@@ -850,6 +850,53 @@ export function DevEditor({
     });
   };
 
+  const reorderCityPhoto = (id: string, from: number, to: number) => {
+    updateCityItem(id, (city) => {
+      if (from === to || from < 0 || to < 0 || from >= city.photos.length || to >= city.photos.length) return city;
+      const photos = [...city.photos];
+      const [photo] = photos.splice(from, 1);
+      photos.splice(to, 0, photo);
+      return { ...city, photos };
+    });
+  };
+
+  const cityPhotoDrag = useRef<{ cityId: string; index: number } | null>(null);
+  const cityPhotoLongPressTimer = useRef<number | null>(null);
+  const cityPhotoTouchStart = useRef<{ x: number; y: number } | null>(null);
+  const [draggingCityPhoto, setDraggingCityPhoto] = useState<{ cityId: string; index: number } | null>(null);
+
+  useEffect(() => {
+    const onPointerMove = (event: PointerEvent) => {
+      if (!cityPhotoDrag.current) return;
+      const target = document.elementFromPoint(event.clientX, event.clientY)?.closest<HTMLElement>("[data-city-photo-index]");
+      if (!target) return;
+      const to = Number(target.dataset.cityPhotoIndex);
+      const { cityId, index: from } = cityPhotoDrag.current;
+      if (target.dataset.cityId === cityId && Number.isInteger(to) && to !== from) {
+        reorderCityPhoto(cityId, from, to);
+        cityPhotoDrag.current.index = to;
+        setDraggingCityPhoto({ cityId, index: to });
+      }
+    };
+    const onPointerUp = () => {
+      if (cityPhotoLongPressTimer.current !== null) {
+        window.clearTimeout(cityPhotoLongPressTimer.current);
+        cityPhotoLongPressTimer.current = null;
+      }
+      cityPhotoTouchStart.current = null;
+      cityPhotoDrag.current = null;
+      setDraggingCityPhoto(null);
+    };
+    window.addEventListener("pointermove", onPointerMove);
+    window.addEventListener("pointerup", onPointerUp);
+    window.addEventListener("pointercancel", onPointerUp);
+    return () => {
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("pointerup", onPointerUp);
+      window.removeEventListener("pointercancel", onPointerUp);
+    };
+  }, [content.cities]);
+
   const uploadCityCover = async (id: string, file: File) => {
     setStatus("正在优化并上传城市封面…");
     try {
@@ -1432,8 +1479,36 @@ export function DevEditor({
                         </label>
                       </div>
                       {city.photos.map((photo, photoIndex) => (
-                        <div className="dev-hobby-photo-row" key={`${city.id}-photo-${photoIndex}`}>
-                          <img src={photo} alt={`${city.name} ${photoIndex + 1}`} />
+                        <div
+                          className={`dev-hobby-photo-row dev-city-photo-sortable${draggingCityPhoto?.cityId === city.id && draggingCityPhoto.index === photoIndex ? " is-dragging" : ""}`}
+                          key={`${city.id}-photo-${photoIndex}`}
+                          data-city-id={city.id}
+                          data-city-photo-index={photoIndex}
+                          draggable={false}
+                          onPointerDown={(event) => {
+                            if (!(event.target instanceof HTMLImageElement)) return;
+                            if (event.pointerType === "mouse") {
+                              cityPhotoDrag.current = { cityId: city.id, index: photoIndex };
+                              setDraggingCityPhoto({ cityId: city.id, index: photoIndex });
+                              return;
+                            }
+                            cityPhotoTouchStart.current = { x: event.clientX, y: event.clientY };
+                            cityPhotoLongPressTimer.current = window.setTimeout(() => {
+                              cityPhotoDrag.current = { cityId: city.id, index: photoIndex };
+                              setDraggingCityPhoto({ cityId: city.id, index: photoIndex });
+                              cityPhotoLongPressTimer.current = null;
+                            }, 350);
+                          }}
+                          onPointerMove={(event) => {
+                            if (!cityPhotoTouchStart.current || cityPhotoDrag.current) return;
+                            if (Math.hypot(event.clientX - cityPhotoTouchStart.current.x, event.clientY - cityPhotoTouchStart.current.y) > 10) {
+                              if (cityPhotoLongPressTimer.current !== null) window.clearTimeout(cityPhotoLongPressTimer.current);
+                              cityPhotoLongPressTimer.current = null;
+                              cityPhotoTouchStart.current = null;
+                            }
+                          }}
+                        >
+                          <img src={photo} alt={`${city.name} ${photoIndex + 1}`} draggable={false} />
                           <div className="dev-row-actions">
                             <button onClick={() => moveCityPhoto(city.id, photoIndex, -1)}>↑</button>
                             <button onClick={() => moveCityPhoto(city.id, photoIndex, 1)}>↓</button>
