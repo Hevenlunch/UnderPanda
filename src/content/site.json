@@ -490,11 +490,32 @@
     {
       "id": "city-1793168923189",
       "name": "长沙",
-      "date": "城市记录",
+      "date": "夜生活",
       "note": "点击这里修改城市简介。",
       "image": "/images/uploads/1793169066343-IMG_20261024_175214.webp",
       "paragraphs": [],
-      "photos": []
+      "photos": [
+        "/images/uploads/1793169363620-IMG_20261024_195843.webp",
+        "/images/uploads/1793169367798-IMG_20261025_173832.webp",
+        "/images/uploads/1793169371767-IMG_20261024_162052.webp",
+        "/images/uploads/1793169375794-IMG_20261024_195940.webp",
+        "/images/uploads/1793169379987-IMG_20261024_140858.webp",
+        "/images/uploads/1793169393980-file_00000000f1cc81fdb96bcd73a676e1fd.webp",
+        "/images/uploads/1793169398103-IMG_20261025_155044.webp",
+        "/images/uploads/1793169403066-IMG_20261024_163719.webp",
+        "/images/uploads/1793169407810-IMG_20261025_201609.webp",
+        "/images/uploads/1793169412416-IMG_20261025_174854.webp",
+        "/images/uploads/1793169416865-file_00000000b1a081fdbb7f79325eee19b5.webp",
+        "/images/uploads/1793169421135-retouch_2026102708380793.webp",
+        "/images/uploads/1793169425713-IMG_20261027_110632.webp",
+        "/images/uploads/1793169431254-IMG_20261026_142008.webp",
+        "/images/uploads/1793169436888-file_000000005d5081f881eddf37bc04ca92.webp",
+        "/images/uploads/1793169441730-IMG_20261025_154014.webp",
+        "/images/uploads/1793169446532-file_00000000ec4081fdba381bd29fc4632b.webp",
+        "/images/uploads/1793169451145-IMG_20261024_194719.webp",
+        "/images/uploads/1793169455840-Collage_20261027_111920.webp",
+        "/images/uploads/1793169460907-IMG_20261024_175214.webp"
+      ]
     }
   ],
   "work": {
@@ -1227,6 +1248,86 @@
       "height": 1467
     },
     "/images/uploads/1793169066343-IMG_20261024_175214.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1793169363620-IMG_20261024_195843.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1793169367798-IMG_20261025_173832.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1793169371767-IMG_20261024_162052.webp": {
+      "width": 2200,
+      "height": 975
+    },
+    "/images/uploads/1793169375794-IMG_20261024_195940.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1793169379987-IMG_20261024_140858.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1793169393980-file_00000000f1cc81fdb96bcd73a676e1fd.webp": {
+      "width": 1448,
+      "height": 1086
+    },
+    "/images/uploads/1793169398103-IMG_20261025_155044.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1793169403066-IMG_20261024_163719.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1793169407810-IMG_20261025_201609.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1793169412416-IMG_20261025_174854.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1793169416865-file_00000000b1a081fdbb7f79325eee19b5.webp": {
+      "width": 1448,
+      "height": 1086
+    },
+    "/images/uploads/1793169421135-retouch_2026102708380793.webp": {
+      "width": 2200,
+      "height": 1650
+    },
+    "/images/uploads/1793169425713-IMG_20261027_110632.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1793169431254-IMG_20261026_142008.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1793169436888-file_000000005d5081f881eddf37bc04ca92.webp": {
+      "width": 1086,
+      "height": 1448
+    },
+    "/images/uploads/1793169441730-IMG_20261025_154014.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1793169446532-file_00000000ec4081fdba381bd29fc4632b.webp": {
+      "width": 1086,
+      "height": 1448
+    },
+    "/images/uploads/1793169451145-IMG_20261024_194719.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1793169455840-Collage_20261027_111920.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1793169460907-IMG_20261024_175214.webp": {
       "width": 1650,
       "height": 2200
     }
