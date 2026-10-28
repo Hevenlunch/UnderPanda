@@ -486,6 +486,15 @@
         "/images/photo-street.svg",
         "/images/photo-travel.svg"
       ]
+    },
+    {
+      "id": "city-1793168923189",
+      "name": "长沙",
+      "date": "城市记录",
+      "note": "点击这里修改城市简介。",
+      "image": "/images/uploads/1793169066343-IMG_20261024_175214.webp",
+      "paragraphs": [],
+      "photos": []
     }
   ],
   "work": {
@@ -1216,6 +1225,10 @@
     "/images/uploads/1792148665185-mmexport1729837226654.webp": {
       "width": 2200,
       "height": 1467
+    },
+    "/images/uploads/1793169066343-IMG_20261024_175214.webp": {
+      "width": 1650,
+      "height": 2200
     }
   },
   "typography": {
