@@ -492,7 +492,7 @@
       "name": "长沙",
       "date": "夜生活",
       "note": "点击这里修改城市简介。",
-      "image": "/images/uploads/1793169066343-IMG_20261024_175214.webp",
+      "image": "/images/uploads/1793169511841-IMG_20261026_165811.webp",
       "paragraphs": [],
       "photos": [
         "/images/uploads/1793169363620-IMG_20261024_195843.webp",
@@ -1328,6 +1328,10 @@
       "height": 2200
     },
     "/images/uploads/1793169460907-IMG_20261024_175214.webp": {
+      "width": 1650,
+      "height": 2200
+    },
+    "/images/uploads/1793169511841-IMG_20261026_165811.webp": {
       "width": 1650,
       "height": 2200
     }
