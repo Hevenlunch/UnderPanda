@@ -31,14 +31,15 @@ export function ContentWorkspace({label,items,categories,onAdd,addLabel,onReorde
   const drag=useRef<{id:string;x:number;y:number;moved:boolean}|null>(null);
   const reorderRef=useRef(onReorder);reorderRef.current=onReorder;
   const canDragRef=useRef(canDrag);canDragRef.current=canDrag;
+  const mobileScroll=()=>window.matchMedia("(max-width:760px)").matches ? root.current?.closest<HTMLElement>(".dev-editor-body") : null;
   const choose=(nextId:string)=>{
-    if(list.current && list.current.clientHeight>0)listScroll.current=list.current.scrollTop;
+    if(list.current && list.current.clientHeight>0)listScroll.current=(mobileScroll() ?? list.current).scrollTop;
     lastIndex.current=items.findIndex(item=>item.id===nextId);
     setSelectedId(nextId);setEditing(true);
   };
   const back=()=>{
     setEditing(false);
-    requestAnimationFrame(()=>{if(list.current)list.current.scrollTop=listScroll.current;root.current?.querySelector<HTMLButtonElement>(`[data-workspace-id="${selectedId}"] .workspace-select`)?.focus({preventScroll:true});});
+    requestAnimationFrame(()=>{const scroll=mobileScroll() ?? list.current;if(scroll)scroll.scrollTop=listScroll.current;root.current?.querySelector<HTMLButtonElement>(`[data-workspace-id="${selectedId}"] .workspace-select`)?.focus({preventScroll:true});});
   };
   useEffect(()=>{
     const added=items.filter(item=>!previousIds.current.has(item.id));
@@ -50,7 +51,7 @@ export function ContentWorkspace({label,items,categories,onAdd,addLabel,onReorde
     }
     if(category && !categories?.includes(category))setCategory("");
   },[items,selectedId,category,categories]);
-  useEffect(()=>{if(inspector.current)inspector.current.scrollTop=0;},[selectedId]);
+  useEffect(()=>{const scroll=mobileScroll() ?? inspector.current;if(scroll && editing)scroll.scrollTop=0;},[selectedId,editing]);
   useEffect(()=>{
     const move=(event:PointerEvent)=>{
       const current=drag.current;if(!current || !canDragRef.current)return;
@@ -58,8 +59,9 @@ export function ContentWorkspace({label,items,categories,onAdd,addLabel,onReorde
       current.moved=true;event.preventDefault();
       const tile=document.elementFromPoint(event.clientX,event.clientY)?.closest<HTMLElement>('[data-workspace-id]');
       if(tile && root.current?.contains(tile) && tile.dataset.workspaceId && tile.dataset.workspaceId!==current.id)reorderRef.current(current.id,tile.dataset.workspaceId);
-      const box=list.current?.getBoundingClientRect();
-      if(box && list.current){if(event.clientY<box.top+36)list.current.scrollTop-=12;else if(event.clientY>box.bottom-36)list.current.scrollTop+=12;}
+      const scroll=mobileScroll() ?? list.current;
+      const box=scroll?.getBoundingClientRect();
+      if(box && scroll){if(event.clientY<box.top+36)scroll.scrollTop-=12;else if(event.clientY>box.bottom-36)scroll.scrollTop+=12;}
     };
     const stop=()=>{drag.current=null;setDragging(null);};
     window.addEventListener('pointermove',move,{passive:false});window.addEventListener('pointerup',stop);window.addEventListener('pointercancel',stop);

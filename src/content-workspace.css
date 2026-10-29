@@ -88,3 +88,28 @@
   .dev-editor .workspace-global-row > .workspace-global-settings { padding-left:9px; padding-right:9px; }
   .dev-editor .workspace-global-settings > summary { font-size:11px; }
 }
+
+.dev-editor .detail-photo-drag { display:none; }
+@media (max-width:760px) {
+  .dev-editor.has-content-workspace .dev-editor-body { display:block; overflow-y:auto; padding:8px 10px; touch-action:pan-y; }
+  .dev-editor .workspace-global-row { max-height:none; overflow:visible; margin-bottom:8px; }
+  .dev-editor .workspace-global-row > .workspace-global-settings { max-height:none; overflow:visible; }
+  .dev-editor .workspace-global-settings > summary { min-height:36px; padding:9px 0; }
+  .workspace-container { display:block; flex:none; }
+  .content-workspace, .workspace-library, .workspace-inspector { flex:none; }
+  .workspace-inspector { overflow:visible; }
+  .workspace-grid-scroll, .workspace-inspector-scroll { flex:none; overflow:visible; }
+  .workspace-inspector-head { position:sticky; top:-8px; z-index:2; flex-wrap:nowrap; gap:6px; padding:4px 8px; border-radius:12px 12px 0 0; background:var(--studio-panel); }
+  .workspace-inspector-head > strong { flex:1; flex-basis:auto; order:0; font-size:12px; }
+  .dev-editor .workspace-back { flex-shrink:0; font-size:11px; }
+  .workspace-adjacent { flex-shrink:0; gap:2px; }
+  .dev-editor .workspace-adjacent button { width:30px; }
+  .dev-editor .workspace-detail-grid .dev-hobby-photo-row { position:relative; }
+  .dev-editor .dev-city-photo-sortable img, .dev-editor .dev-hobby-photo-sortable img { touch-action:pan-y; cursor:default; }
+  .dev-editor .detail-photo-drag { display:grid; place-items:center; position:absolute; top:5px; right:5px; width:40px; height:40px; padding:0; border:1px solid var(--studio-border); background:var(--studio-panel); color:var(--accent-deep); font-size:22px; touch-action:none; user-select:none; }
+}
+
+@media (max-width:760px) {
+  .dev-editor .dev-editor-head, .dev-editor.is-open.is-workspace-wide .dev-editor-head { padding:4px 12px; }
+  .dev-editor .dev-editor-tabs { flex-wrap:nowrap; }
+}

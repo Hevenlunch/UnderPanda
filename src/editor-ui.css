@@ -167,3 +167,22 @@
   .dev-editor .dev-note, .dev-editor .dev-empty-note, .dev-editor .dev-inline-note { font-size:11px; line-height:1.6; }
   .dev-editor .dev-section-head h3 { font-size:13px; }
 }
+
+/* Mobile editing: keep navigation compact and give the content one scroll surface. */
+.dev-editor .dev-auth-help { display:none; }
+@media (max-width:760px) {
+  .dev-editor-head, .dev-editor.is-workspace-wide .dev-editor-head { padding:4px 12px; min-height:52px; touch-action:pan-y; cursor:default; }
+  .dev-editor-head > div > span { display:none; }
+  .dev-editor-head h2 { margin:0; font-size:17px; }
+  .dev-editor .dev-auth-panel { position:relative; flex-wrap:wrap; gap:6px; margin:0 10px 6px; padding:5px 9px; border-radius:9px; }
+  .dev-editor .dev-auth-panel > div { flex:1; min-width:0; }
+  .dev-editor .dev-auth-panel strong { font-size:11px; }
+  .dev-editor .dev-auth-panel small { display:none; }
+  .dev-editor .dev-auth-panel.is-help-open small { display:block; margin-top:5px; }
+  .dev-editor .dev-auth-panel button { min-height:36px; padding:5px 8px; font-size:11px; }
+  .dev-editor .dev-auth-help { display:block; background:transparent; color:var(--muted); }
+  .dev-editor .dev-editor-tabs { display:flex; gap:4px; margin:0 10px 6px; padding:3px; overflow-x:auto; scrollbar-width:none; }
+  .dev-editor-tabs::-webkit-scrollbar { display:none; }
+  .dev-editor .dev-editor-tabs button { flex:0 0 auto; min-height:40px; padding:8px 12px; white-space:nowrap; }
+  .dev-editor-foot { min-height:58px; padding:7px 12px; padding-bottom:calc(7px + env(safe-area-inset-bottom)); }
+}

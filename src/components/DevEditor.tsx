@@ -225,6 +225,7 @@ export function DevEditor({
   const [open, setOpen] = useState(false);
   const [view, setView] = useState<EditorView>("content");
   const [workspaceWide,setWorkspaceWide]=useState(true);
+  const [authHelpOpen,setAuthHelpOpen]=useState(false);
   const workspaceMode=view==="photos" || view==="hobbies" || view==="travel";
   useEffect(()=>{setDragPosition(null);},[view]);
   const [draft, setDraft] = useState(() => JSON.stringify(contentForJson(content), null, 2));
@@ -1102,7 +1103,7 @@ export function DevEditor({
         </div>
 
         {isPreviewEnvironment ? (
-          <div className="dev-auth-panel">
+          <div className={`dev-auth-panel${authHelpOpen ? " is-help-open" : ""}`}>
             <div>
               <strong>{auth ? `预览站已登录 @${auth.login}` : "预览站可测试登录"}</strong>
               <small>
@@ -1111,6 +1112,7 @@ export function DevEditor({
                   : "登录 GitHub 可测试手机和电脑登录流程，但不能发布或上传。"}
               </small>
             </div>
+            <button type="button" className="dev-auth-help" aria-expanded={authHelpOpen} onClick={()=>setAuthHelpOpen(value=>!value)}>说明</button>
             {auth ? (
               <button onClick={handleLogout}>退出</button>
             ) : (
@@ -1120,11 +1122,12 @@ export function DevEditor({
             )}
           </div>
         ) : isOnline && (
-          <div className="dev-auth-panel">
+          <div className={`dev-auth-panel${authHelpOpen ? " is-help-open" : ""}`}>
             <div>
               <strong>{auth ? `已登录 @${auth.login}` : "登录 GitHub 后即可发布"}</strong>
               <small>修改会立即在右侧网页预览，发布后约 1 分钟自动上线。</small>
             </div>
+            <button type="button" className="dev-auth-help" aria-expanded={authHelpOpen} onClick={()=>setAuthHelpOpen(value=>!value)}>说明</button>
             {auth ? (
               <button onClick={handleLogout}>退出</button>
             ) : (
@@ -1135,7 +1138,9 @@ export function DevEditor({
           </div>
         )}
 
-        <div className="dev-editor-tabs">
+        <div className="dev-editor-tabs" onClick={event=>{
+          if(window.matchMedia("(max-width:760px)").matches && event.target instanceof HTMLButtonElement)event.target.scrollIntoView({block:"nearest",inline:"nearest"});
+        }}>
           <button className={view === "content" ? "active" : ""} onClick={() => setView("content")}>
             常用内容
           </button>
@@ -1553,6 +1558,7 @@ export function DevEditor({
                           draggable={false}
                           onPointerDown={(event) => {
                             if (!(event.target instanceof HTMLImageElement)) return;
+                            if (window.matchMedia("(max-width:760px)").matches) return;
                             if (event.pointerType === "mouse") {
                               cityPhotoDrag.current = { cityId: city.id, index: photoIndex };
                               setDraggingCityPhoto({ cityId: city.id, index: photoIndex });
@@ -1575,6 +1581,12 @@ export function DevEditor({
                           }}
                         >
                           <img src={photo} alt={`${city.name} ${photoIndex + 1}`} draggable={false} />
+                          <button type="button" className="detail-photo-drag" aria-label={`拖动排序第${photoIndex + 1}张照片`} onPointerDown={event=>{
+                            if(event.button!==0)return;
+                            event.preventDefault();
+                            cityPhotoDrag.current={cityId:city.id,index:photoIndex};
+                            setDraggingCityPhoto({cityId:city.id,index:photoIndex});
+                          }}>⠿</button>
                           <div className="dev-row-actions">
                             <button onClick={() => moveCityPhoto(city.id, photoIndex, -1)}>↑</button>
                             <button onClick={() => moveCityPhoto(city.id, photoIndex, 1)}>↓</button>
@@ -1737,6 +1749,7 @@ export function DevEditor({
                           draggable={false}
                           onPointerDown={(event) => {
                             if (!(event.target instanceof HTMLImageElement)) return;
+                            if (window.matchMedia("(max-width:760px)").matches) return;
                             if (event.pointerType === "mouse") {
                               hobbyPhotoDrag.current = { hobbyId: hobby.id, index: photoIndex };
                               setDraggingHobbyPhoto({ hobbyId: hobby.id, index: photoIndex });
@@ -1759,6 +1772,12 @@ export function DevEditor({
                           }}
                         >
                           <img src={photo} alt={`${hobby.title} ${photoIndex + 1}`} draggable={false} />
+                          <button type="button" className="detail-photo-drag" aria-label={`拖动排序第${photoIndex + 1}张照片`} onPointerDown={event=>{
+                            if(event.button!==0)return;
+                            event.preventDefault();
+                            hobbyPhotoDrag.current={hobbyId:hobby.id,index:photoIndex};
+                            setDraggingHobbyPhoto({hobbyId:hobby.id,index:photoIndex});
+                          }}>⠿</button>
                           <div className="dev-row-actions">
                             <button onClick={() => moveHobbyPhoto(hobby.id, photoIndex, -1)}>↑</button>
                             <button onClick={() => moveHobbyPhoto(hobby.id, photoIndex, 1)}>↓</button>
